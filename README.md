@@ -1,6 +1,8 @@
 # WageWizard - Gross salary Calculator
 
-🚧 This project is under active development 🚧
+🚧 This project is under active development 🚧  
+  
+:hammer: C# | .NET Core | React | TypeScript | SQL Server | Cypress :hammer:
 
 ## About
 
@@ -10,7 +12,11 @@
 #### Backend
 - Entity Framework
 - Dependenct Injection
-- Authentication: JwtBearer (JSON Web Token)
+
+## Features
+
+- download pdf / excel
+- 
 ## Tavoitteet
 
 Suomessa palkansaajan bruttopalkan määrään vaikuttavat veroprosentti, asuinpaikkakunta, eläke- ja työttömyysvakuutusmaksut, peruskulut ja muut mahdolliset sivukulut. Tämä palkanlaskentasovellus pyrkii laskemaan maksettavan palkan määrän mahdollisimman tarkasti riippuen käyttäjän syöttämistä tiedoista.  
