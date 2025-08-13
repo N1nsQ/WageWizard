@@ -2,6 +2,11 @@
 
 🚧 This project is under active development 🚧
 
+## About
+
+- This project uses BFF pattern (Backend for frontend)
+  - [An itrodiction to BFF pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
+
 ## Tavoitteet
 
 Suomessa palkansaajan bruttopalkan määrään vaikuttavat veroprosentti, asuinpaikkakunta, eläke- ja työttömyysvakuutusmaksut, peruskulut ja muut mahdolliset sivukulut. Tämä palkanlaskentasovellus pyrkii laskemaan maksettavan palkan määrän mahdollisimman tarkasti riippuen käyttäjän syöttämistä tiedoista.  
