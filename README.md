@@ -4,8 +4,8 @@
 
 ## About
 
-- This project uses BFF pattern (Backend for frontend)
-  - [An itrodiction to BFF pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
+- This project uses [microservice architecture](https://microservices.io/)
+- This project uses BFF pattern (Backend for frontend) --> [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
 
 ## Tavoitteet
 
