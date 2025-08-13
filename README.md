@@ -7,6 +7,10 @@
 - This project uses [microservice architecture](https://microservices.io/)
 - This project uses BFF pattern (Backend for frontend) --> [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
 
+#### Backend
+- Entity Framework
+- Dependenct Injection
+- Authentication: JwtBearer (JSON Web Token)
 ## Tavoitteet
 
 Suomessa palkansaajan bruttopalkan määrään vaikuttavat veroprosentti, asuinpaikkakunta, eläke- ja työttömyysvakuutusmaksut, peruskulut ja muut mahdolliset sivukulut. Tämä palkanlaskentasovellus pyrkii laskemaan maksettavan palkan määrän mahdollisimman tarkasti riippuen käyttäjän syöttämistä tiedoista.  
