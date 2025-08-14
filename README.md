@@ -14,9 +14,13 @@
 - Dependenct Injection
 
 ## Features
+**Payroll Administrator**  
+- create & save employment contracts
 
+**Employee**  
 - download pdf / excel
-- 
+
+
 ## Tavoitteet
 
 Suomessa palkansaajan bruttopalkan määrään vaikuttavat veroprosentti, asuinpaikkakunta, eläke- ja työttömyysvakuutusmaksut, peruskulut ja muut mahdolliset sivukulut. Tämä palkanlaskentasovellus pyrkii laskemaan maksettavan palkan määrän mahdollisimman tarkasti riippuen käyttäjän syöttämistä tiedoista.  
