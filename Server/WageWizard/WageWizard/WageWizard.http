@@ -1,0 +1,6 @@
+@WageWizard_HostAddress = http://localhost:5080
+
+GET {{WageWizard_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
