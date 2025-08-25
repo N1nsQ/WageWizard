@@ -14,6 +14,7 @@
 #### Backend
 - Entity Framework
 - Dependency Injection
+- LINQ
 
 ## Features
 **Payroll Administrator**  
