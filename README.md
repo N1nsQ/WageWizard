@@ -2,9 +2,11 @@
 
 🚧 This project is under active development 🚧  
   
-:hammer: C# | .NET Core | React | TypeScript | SQL Server | Cypress :hammer:
+
 
 ## About
+
+:hammer: C# | .NET Core | React | TypeScript | SQL Server | Cypress :hammer:  
 
 - This project uses [microservice architecture](https://microservices.io/)
 - This project uses BFF pattern (Backend for frontend) --> [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
