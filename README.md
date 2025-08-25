@@ -19,6 +19,7 @@
 ## Features
 **Payroll Administrator**  
 - create & save employment contracts
+- Calculate monthly salary
 
 **Employee**  
 - download pdf / excel
