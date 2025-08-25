@@ -1,0 +1,25 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WageWizard.Models;
+
+namespace WageWizard.Controllers
+{
+    [ApiController]
+    [Route("api/Employees")]
+    public class EmployeesController : ControllerBase
+    {
+        private readonly PayrollContext _context;
+
+        public EmployeesController(PayrollContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        {
+            return await _context.Employees.ToListAsync();
+        }
+        
+    }
+}
