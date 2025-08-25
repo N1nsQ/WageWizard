@@ -13,7 +13,7 @@
 
 #### Backend
 - Entity Framework
-- Dependenct Injection
+- Dependency Injection
 
 ## Features
 **Payroll Administrator**  
