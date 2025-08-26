@@ -15,5 +15,19 @@ namespace WageWizard.Models
             configurationBuilder.Properties<decimal>().HavePrecision(18, 2);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Role>().HasData(
+                Enum.GetValues(typeof(UserRole))
+                .Cast<UserRole>()
+                .Select(r => new Role
+                {
+                    RoleId = r,
+                    RoleName = r.ToString(),
+                }));
+        }
+
     }
 }

@@ -4,6 +4,6 @@ CREATE TABLE Users
 	UserName NVARCHAR(100) NULL,
 	Email NVARCHAR(100) NULL,
 	PasswordHash NVARCHAR(100) NULL,
-	Role NVARCHAR(50) NULL,
+	RoleId INT NOT NULL,
 	IsActive BIT
 );
