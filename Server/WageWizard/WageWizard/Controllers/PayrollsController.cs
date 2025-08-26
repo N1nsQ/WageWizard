@@ -6,14 +6,9 @@ namespace WageWizard.Controllers
 {
     [ApiController]
     [Route("api/Payrolls")]
-    public class PayrollsController : ControllerBase
+    public class PayrollsController(PayrollContext context) : ControllerBase
     {
-        private readonly PayrollContext _context;
-
-        public PayrollsController(PayrollContext context)
-        {
-            _context = context;
-        }
+        private readonly PayrollContext _context = context;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Payroll>>> GetPayrolls()
