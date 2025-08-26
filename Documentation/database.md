@@ -37,3 +37,18 @@ Palkkalaskelmaan tarvittavat tiedot
 - EmployeePensionContribution = Työntekijän TyEL-maksu
 - UnemploymentInsuranceContribution = Työttömyysvakuutusmaksu
 - UnionMembershipFee = AY-jäsenmaksu
+
+## Users (table)
+
+Henkilöt, joilla on oikeus käyttää sovellusta. Käyttäjätunnuksen luominen ei ole mahdollista turvallisuussyistä. Tunnukset järjestelmään saadaan IT-tukihenkilöltä, joka lisää uudet käyttäjät tietokantaan ja poistaa sellaiset henkilöt, joilla ei ole enää oikeutta käyttää sovellusta.
+
+- Id = Uniikki id, GUID
+  -UserName = Käyttäjänimi, jolla käyttäjä kirjautuu sisään järjestelmään
+- Email = Käyttäjän sähköpostiosoite
+- PasswordHash = salattu salasana
+- RoleId = Viittaus Role-taulun rooleihin (FK)
+- IsActive = Boolean-arvo joka kertoo onko käyttäjä aktiivinen vai ei
+
+## Roles (table)
+
+Sisältää tiedon mahdollisista käyttäjärooleista. Roolit tulevat enumista (UserRole). RodeId ja RoleName ovat aina Key - Value -pari.
