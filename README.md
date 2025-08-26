@@ -16,6 +16,9 @@
 - Dependency Injection
 - LINQ
 
+### Frontend
+- React, Vite
+
 ## Features
 **Payroll Administrator**  
 - create & save employment contracts
