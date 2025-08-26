@@ -1,0 +1,17 @@
+CREATE TABLE Employees
+(
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    FirstName NVARCHAR(50) NULL,
+    LastName NVARCHAR(100) NULL,
+    JobTitle NVARCHAR(50) NULL,
+    Email NVARCHAR(100) NULL,
+    HomeAddress NVARCHAR(150) NULL,
+    PostalCode NVARCHAR(5) NULL,
+    City NVARCHAR(40) NULL,
+    BankAccountNumber NVARCHAR(18) NULL,
+    TaxPercentage DECIMAL(18,2) NULL,
+    SalaryAmount DECIMAL(18,2) NULL,
+    StartDate DATETIME2 NULL,
+    CreatedAt DATETIME2 NOT NULL,
+    UpdatedAt DATETIME2 NULL
+);
