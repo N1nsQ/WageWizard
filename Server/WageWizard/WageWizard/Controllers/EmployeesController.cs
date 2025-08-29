@@ -5,7 +5,7 @@ using WageWizard.Models;
 namespace WageWizard.Controllers
 {
     [ApiController]
-    [Route("api/Employees")]
+    [Route("api/[controller]")]
     public class EmployeesController(PayrollContext context) : ControllerBase
     {
         private readonly PayrollContext _context = context;
