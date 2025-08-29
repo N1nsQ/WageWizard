@@ -18,6 +18,7 @@
 
 ### Frontend
 - React, Vite
+- Redux Toolkit
 
 ## Features
 **Payroll Administrator**  
