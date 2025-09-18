@@ -1,7 +1,16 @@
 {
-  "common": {},
-  "employees": {},
-  "home": {},
+  "common": {
+    "wage_wizard": "Wage Wizard"
+  },
+  "employees": {
+    "title": "Employees"
+  },
+  "home": {
+    "contracts": "Contracts",
+    "employees": "Employees",
+    "salary_statements": "Salary Statements",
+    "title": "Home"
+  },
   "login": {
     "login": "Login",
     "password": "Password",

@@ -1,17 +1,20 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Home() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div>
-        <Typography variant="h1">Etusivu</Typography>
+        <Typography variant="h4">{t("home.title")}</Typography>
       </div>
       <div>
         <Card sx={{ width: 400, borderRadius: 3, boxShadow: 4 }}>
           <CardContent>
             <Typography variant="h5" align="center" gutterBottom>
-              Sopimukset
+              {t("home.contracts")}
             </Typography>
 
             <Box
@@ -27,7 +30,7 @@ export function Home() {
         <Card sx={{ width: 400, borderRadius: 3, boxShadow: 4 }}>
           <CardContent>
             <Typography variant="h5" align="center" gutterBottom>
-              Palkkalaskelmat
+              {t("home.salary_statements")}
             </Typography>
 
             <Box
@@ -60,7 +63,7 @@ export function Home() {
         >
           <CardContent>
             <Typography variant="h5" align="center" gutterBottom>
-              Työntekijät
+              {t("home.employees")}
             </Typography>
 
             <Box

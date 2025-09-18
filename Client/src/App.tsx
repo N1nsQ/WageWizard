@@ -9,10 +9,12 @@ import { Home } from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import { Typography } from "@mui/material";
 import Employees from "./pages/Employees/Employees";
+import NavBar from "./common_components/NavBar/NavBar";
 
 function App() {
   return (
     <>
+      <NavBar />
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />

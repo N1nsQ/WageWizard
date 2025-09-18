@@ -1,7 +1,16 @@
 {
-  "common": {},
-  "employees": {},
-  "home": {},
+  "common": {
+    "wage_wizard": "Wage Wizard"
+  },
+  "employees": {
+    "title": "Työntekijät"
+  },
+  "home": {
+    "contracts": "Sopimukset",
+    "employees": "Työntekijät",
+    "salary_statements": "Palkkalaskelmat",
+    "title": "Etusivu"
+  },
   "login": {
     "login": "Kirjaudu",
     "password": "Salasana",
