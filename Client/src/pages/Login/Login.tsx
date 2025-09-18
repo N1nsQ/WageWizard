@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { isLoading, error } = useSelector((state: RootState) => state.auth);
+  const { isLoading } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
         />
         {authState.error && (
           <Typography color="error" variant="body2">
-            {authState.error}
+            {t("backend_error_messages.invalid_username")}
           </Typography>
         )}
         <Button variant="contained" onClick={handleLogin} sx={{ mt: 2 }}>
@@ -86,10 +86,9 @@ const Login: React.FC = () => {
               color: "#fff",
             }}
           >
-            <CircularProgress color="inherit" />
+            {authState.isLoading && <CircularProgress color="inherit" />}
           </div>
         )}
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </Box>
     </div>
   );

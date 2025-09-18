@@ -17,7 +17,7 @@ namespace WageWizard.Controllers
 
             if (user == null)
             {
-                return Unauthorized(new { message = "Invalid username or password" });
+                return Unauthorized(new { code = "backend_error_messages.invalid_username" });
             }
 
             return Ok(new

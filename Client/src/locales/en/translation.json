@@ -1,4 +1,7 @@
 {
+  "backend_error_messages": {
+    "invalid_username": "Invalid username or password"
+  },
   "common": {
     "wage_wizard": "Wage Wizard"
   },

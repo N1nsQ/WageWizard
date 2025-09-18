@@ -1,4 +1,7 @@
 {
+  "backend_error_messages": {
+    "invalid_username": "Virheellinen käyttäjätunnus tai salasana"
+  },
   "common": {
     "wage_wizard": "Wage Wizard"
   },
