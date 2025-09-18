@@ -1,8 +1,9 @@
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { LanguageSelector } from "../LanguageSelector/LanguageSelector";
+import LanguageSelector from "../LanguageSelector/LanguageSelector";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   const { t } = useTranslation();
 
   return (

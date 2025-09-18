@@ -1,8 +1,8 @@
-import { Button, ButtonGroup } from "@mui/material";
 import React from "react";
+import { Button, ButtonGroup } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-export const LanguageSelector: React.FC = () => {
+const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
@@ -16,3 +16,5 @@ export const LanguageSelector: React.FC = () => {
     </ButtonGroup>
   );
 };
+
+export default LanguageSelector;
