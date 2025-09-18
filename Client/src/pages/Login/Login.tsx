@@ -37,13 +37,7 @@ const Login: React.FC = () => {
 
   return (
     <div>
-      <Box
-        display="flex"
-        flexDirection="column"
-        maxWidth={400}
-        margin="auto"
-        mt={10}
-      >
+      <Box className="login-container">
         <Typography variant="h4" mb={2}>
           {t("login.title")}
         </Typography>
@@ -61,7 +55,7 @@ const Login: React.FC = () => {
           margin="normal"
         />
         {authState.error && (
-          <Typography color="error" variant="body2">
+          <Typography className="error-message" variant="body2">
             {t("backend_error_messages.invalid_username")}
           </Typography>
         )}
@@ -70,22 +64,7 @@ const Login: React.FC = () => {
         </Button>
 
         {isLoading && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100vh",
-              height: "100vh",
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 9999,
-              color: "#fff",
-            }}
-          >
+          <div className="loading-overlay">
             {authState.isLoading && <CircularProgress color="inherit" />}
           </div>
         )}
