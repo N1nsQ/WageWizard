@@ -1,0 +1,11 @@
+{
+  "common": {},
+  "employees": {},
+  "home": {},
+  "login": {
+    "login": "Login",
+    "password": "Password",
+    "title": "Login",
+    "username": "Username"
+  }
+}

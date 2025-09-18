@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/authSlice";
 import type { RootState, AppDispatch } from "../../redux/store";
 import type { LoginDto } from "../../models/LoginDto";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,16 +45,16 @@ const Login: React.FC = () => {
         mt={10}
       >
         <Typography variant="h4" mb={2}>
-          Login
+          {t("login.title")}
         </Typography>
         <TextField
-          label="Username"
+          label={t("login.username")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           margin="normal"
         />
         <TextField
-          label="Password"
+          label={t("login.password")}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -64,7 +66,7 @@ const Login: React.FC = () => {
           </Typography>
         )}
         <Button variant="contained" onClick={handleLogin} sx={{ mt: 2 }}>
-          Login
+          {t("login.login")}
         </Button>
 
         {isLoading && (

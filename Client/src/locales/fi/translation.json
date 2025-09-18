@@ -1,0 +1,11 @@
+{
+  "common": {},
+  "employees": {},
+  "home": {},
+  "login": {
+    "login": "Kirjaudu",
+    "password": "Salasana",
+    "title": "Kirjaudu sisään",
+    "username": "Käyttäjätunnus"
+  }
+}
