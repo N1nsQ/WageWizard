@@ -33,7 +33,12 @@ const LoginFormWrapper = () => {
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <LoginForm authState={authState} />
-            <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+            <Button
+              data-testid="login-submit"
+              type="submit"
+              variant="contained"
+              sx={{ mt: 2 }}
+            >
               {t("login.login")}
             </Button>
             <LoadingOverlay isLoading={authState.isLoading} />

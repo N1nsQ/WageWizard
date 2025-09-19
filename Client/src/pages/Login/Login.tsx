@@ -9,7 +9,7 @@ const Login = () => {
   return (
     <div>
       <Box className="login-container">
-        <Typography variant="h4" mb={2}>
+        <Typography data-testid="login-title" variant="h4" mb={2}>
           {t("login.title")}
         </Typography>
         <LoginFormWrapper />
