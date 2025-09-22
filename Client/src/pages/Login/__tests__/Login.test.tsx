@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
@@ -7,7 +7,7 @@ import authReducer from "../../../redux/slices/authSlice";
 import Login from "../Login";
 import userEvent from "@testing-library/user-event";
 
-//mockataan i18next-kirjaston käyttö
+// mockataan i18next-kirjaston käyttö
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
@@ -74,5 +74,53 @@ describe("Login page", () => {
     };
     renderWithProviders(<Login />, preloadedState);
     expect(screen.getByTestId("login-error-message")).toBeInTheDocument();
+  });
+});
+
+describe("Login page should show loading spinner", () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("shows spinner while loginUser thunk is pending", async () => {
+    // mockataan fetch niin että se resolvaa viiveen jälkeen
+    vi.spyOn(global, "fetch").mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                ok: true,
+                json: async () => ({
+                  userId: "123",
+                  username: "TestUser",
+                  role: 1,
+                }),
+              } as Response),
+            200
+          )
+        )
+    );
+
+    renderWithProviders(<Login />);
+
+    const usernameInput = screen.getByTestId("username-field");
+    const passwordInput = screen.getByTestId("password-field");
+    const loginButton = screen.getByTestId("login-submit");
+
+    await userEvent.type(usernameInput, "TestUser");
+    await userEvent.type(passwordInput, "password123");
+    await userEvent.click(loginButton);
+
+    // spinnerin pitäisi näkyä heti dispatchin jälkeen
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+
+    // spinner katoaa, kun mockattu fetch palauttaa datan
+    await waitFor(
+      () => {
+        expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
+      },
+      { timeout: 1000 }
+    );
   });
 });
