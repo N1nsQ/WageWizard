@@ -1,5 +1,6 @@
 {
   "backend_error_messages": {
+    "employees_not_found": "Työntekijöitä ei löytynyt",
     "invalid_username": "Virheellinen käyttäjätunnus tai salasana"
   },
   "common": {
