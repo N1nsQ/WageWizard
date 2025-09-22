@@ -17,18 +17,20 @@ namespace WageWizard.Controllers
 
             if (user == null)
             {
-                return Unauthorized(new { code = "backend_error_messages.invalid_username" });
+                return Unauthorized(new ErrorResponseDto 
+                { 
+                    Code = "backend_error_messages.invalid_username" 
+                });
             }
 
-            return Ok(new
+            return Ok(new LoginResponseDto
             {
-                message = "Login successful",
-                userId = user.Id,
-                username = user.Username,
-                role = user.RoleId
+                Success = true,
+                Message = "Login successful",
+                UserId = user.Id,
+                Username = loginDto.Username,
+                Role = user.RoleId ?? UserRole.TestUser
             });
         }
-
-        
     }
 }
