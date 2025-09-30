@@ -57,11 +57,13 @@ const EmployeesSummaryTable = () => {
           ? `${API_BASE}${params.value}`
           : "/default.png";
         return (
-          <img
-            src={src}
-            alt="employee"
-            style={{ width: 40, height: 40, borderRadius: "50%" }}
-          />
+          <div className="employee-image-cell">
+            <img
+              src={src}
+              alt="employee"
+              style={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </div>
         );
       },
     },
@@ -73,7 +75,7 @@ const EmployeesSummaryTable = () => {
       {isLoading && <p>{t("loading")}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box className="employees-table-container">
         <DataGrid
           autoHeight
           rows={employees}

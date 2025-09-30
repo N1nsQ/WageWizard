@@ -44,6 +44,28 @@ COMMON
 }
 
 /* ======================
+EMPLOYEES
+====================== */
+
+.employee-image-cell {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.employee-image-cell img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 0;
+}
+
+.employees-table-container {
+  height: 400px;
+  width: 100%;
+}
+
+/* ======================
 LOGIN
 ====================== */
 
