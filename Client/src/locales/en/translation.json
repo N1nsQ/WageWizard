@@ -1,12 +1,17 @@
 {
   "backend_error_messages": {
     "employees_not_found": "No employees found",
-    "invalid_username": "Invalid username or password"
+    "invalid_username": "Invalid username or password",
+    "server_unreachable": "Server unreachable"
   },
   "common": {
     "wage_wizard": "Wage Wizard"
   },
   "employees": {
+    "email": "Email",
+    "firstname": "First name",
+    "jobtitle": "Job title",
+    "lastname": "Last name",
     "title": "Employees"
   },
   "home": {

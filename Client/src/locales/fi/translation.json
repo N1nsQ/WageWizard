@@ -1,12 +1,18 @@
 {
   "backend_error_messages": {
     "employees_not_found": "Työntekijöitä ei löytynyt",
-    "invalid_username": "Virheellinen käyttäjätunnus tai salasana"
+    "invalid_username": "Virheellinen käyttäjätunnus tai salasana",
+    "server_unreachable": "Palvelin ei vastaa"
   },
   "common": {
     "wage_wizard": "Wage Wizard"
   },
   "employees": {
+    "email": "Sähköposti",
+    "firstname": "Etunimi",
+    "image": "Kuva",
+    "jobtitle": "Ammattinimike",
+    "lastname": "Sukunimi",
     "title": "Työntekijät"
   },
   "home": {

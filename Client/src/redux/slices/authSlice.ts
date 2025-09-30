@@ -1,11 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { LoginDto } from "../../models/LoginDto"; // Tämän mukana tulee käyttäjän syöttämät kirjautumistiedot
-
-// virheviestin rajapinta
-interface LoginError {
-  code: string; // esim. "backend_error_messages.invalid_username"
-  message?: string; // vapaaehtoinen viesti, backend voi antaa
-}
+import type { ErrorMessage } from "../../models/ErrorMessage";
 
 // AuthState rajapinta, kuvaa reduxin tilan rakennetta
 interface AuthState {
@@ -30,7 +25,7 @@ export const loginUser = createAsyncThunk<
   // Argument type
   LoginDto,
   // ThunkAPI type
-  { rejectValue: LoginError }
+  { rejectValue: ErrorMessage }
 >("auth/loginUser", async (loginData: LoginDto, thunkAPI) => {
   try {
     const response = await fetch("https://localhost:7032/api/Login/login", {
@@ -40,7 +35,7 @@ export const loginUser = createAsyncThunk<
     });
 
     if (!response.ok) {
-      const data: LoginError = await response.json();
+      const data: ErrorMessage = await response.json();
       return thunkAPI.rejectWithValue(data);
     }
 
@@ -48,7 +43,6 @@ export const loginUser = createAsyncThunk<
   } catch {
     return thunkAPI.rejectWithValue({
       code: "backend_error_messages.server_unreachable",
-      message: "Could not connect to server",
     });
   }
 });

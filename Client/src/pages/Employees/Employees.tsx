@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import EmployeesSummaryTable from "./EmployeesSummaryTable";
 
 const Employees = () => {
   const { t } = useTranslation();
@@ -7,6 +8,11 @@ const Employees = () => {
   return (
     <div>
       <Typography variant="h4">{t("employees.title")}</Typography>
+      <EmployeesSummaryTable />
+      {/* 
+          Taulukko, jossa renderöidään tietoja kaikista työntekijöistä
+      
+      */}
     </div>
   );
 };
