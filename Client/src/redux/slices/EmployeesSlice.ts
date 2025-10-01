@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { EmployeesSummary } from "../../models/EmployeesSummary";
 import type { ErrorMessage } from "../../models/ErrorMessage";
+import { API_BASE } from "../../config";
 
 interface EmployeeSummaryState {
   data: EmployeesSummary[];
@@ -21,9 +22,7 @@ const fetchEmployeesSummary = createAsyncThunk<
   { rejectValue: ErrorMessage }
 >("employees/fetchSummary", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch(
-      "https://localhost:7032/api/Employees/summary"
-    );
+    const response = await fetch(`${API_BASE}/api/Employees/summary`);
     if (!response.ok) {
       const data: ErrorMessage = await response.json();
       return rejectWithValue(data);
