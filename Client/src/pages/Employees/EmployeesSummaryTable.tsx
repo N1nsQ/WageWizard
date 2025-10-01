@@ -9,6 +9,7 @@ import { type AppDispatch, type RootState } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconLinkCell from "../../common/IconLinkCell";
 import { API_BASE } from "../../config";
+import LoadingOverlay from "../../common/LoadingOverlay";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const EmployeesSummaryTable = () => {
 
   useEffect(() => {
     dispatch(fetchEmployeesSummary());
-  }, [dispatch]);
+  }, [dispatch, employees.length]);
 
   const columns: GridColDef<EmployeesSummary>[] = [
     {
@@ -82,12 +83,11 @@ const EmployeesSummaryTable = () => {
 
   return (
     <div>
-      {isLoading && <p>{t("loading")}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div>{isLoading && <LoadingOverlay isLoading={isLoading} />}</div>
+      <div className="error-message">{error && <p>{t(error)}</p>}</div>
 
       <Box className="employees-table-container">
         <DataGrid
-          autoHeight
           rows={employees}
           getRowId={(row) => row.email}
           columns={columns}

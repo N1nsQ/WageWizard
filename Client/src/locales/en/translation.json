@@ -5,7 +5,8 @@
     "server_unreachable": "Server unreachable"
   },
   "common": {
-    "wage_wizard": "Wage Wizard"
+    "wage_wizard": "Wage Wizard",
+    "loading": "Loading..."
   },
   "employees": {
     "email": "Email",
