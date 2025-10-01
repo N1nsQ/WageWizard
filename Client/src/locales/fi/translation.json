@@ -1,5 +1,6 @@
 {
   "backend_error_messages": {
+    "employee_not_found": "Työntekijää ei löytynyt",
     "employees_not_found": "Työntekijöitä ei löytynyt",
     "invalid_username": "Virheellinen käyttäjätunnus tai salasana",
     "server_unreachable": "Palvelin ei vastaa"

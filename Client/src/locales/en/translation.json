@@ -1,5 +1,6 @@
 {
   "backend_error_messages": {
+    "employee_not_found": "Employee not found",
     "employees_not_found": "No employees found",
     "invalid_username": "Invalid username or password",
     "server_unreachable": "Server unreachable"

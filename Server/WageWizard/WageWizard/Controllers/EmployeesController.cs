@@ -49,5 +49,36 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("id")]
+        public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetEmployeeDetails(Guid id)
+        {
+            var employee = await _context.Employees
+                .Where(e => e.Id == id)
+                .Select(e => new EmployeeDetailsDto
+                {
+                    Id=e.Id,
+                    FirstName=e.FirstName,
+                    LastName=e.LastName,
+                    JobTitle=e.JobTitle,
+                    ImageUrl = e.ImageUrl,
+                    Email = e.Email,
+                    HomeAddress = e.HomeAddress,
+                    PostalCode = e.PostalCode,
+                    City = e.City,
+                    BankAccountNumber = e.BankAccountNumber,
+                    TaxPercentage = e.TaxPercentage,
+                    SalaryAmount = e.SalaryAmount,
+                    StartDate = e.StartDate,
+                 })
+                 .FirstOrDefaultAsync();
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(employee);
+        }
+
     }
 }
