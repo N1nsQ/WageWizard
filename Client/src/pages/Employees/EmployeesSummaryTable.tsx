@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
 import { type AppDispatch, type RootState } from "../../redux/store";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -23,6 +24,28 @@ const EmployeesSummaryTable = () => {
   const API_BASE = "https://localhost:7032";
 
   const columns: GridColDef<EmployeesSummary>[] = [
+    {
+      field: "imageUrl",
+      headerName: t("employees.image"),
+      headerAlign: "center",
+      align: "center",
+      flex: 0.3,
+      renderCell: (params) => {
+        console.log("Image URL:", params.value);
+        const src = params.value
+          ? `${API_BASE}${params.value}`
+          : "/default.png";
+        return (
+          <div className="employee-image-cell">
+            <img
+              src={src}
+              alt="employee"
+              style={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </div>
+        );
+      },
+    },
     {
       field: "firstName",
       headerName: t("employees.firstname"),
@@ -48,21 +71,16 @@ const EmployeesSummaryTable = () => {
       editable: true,
     },
     {
-      field: "imageUrl",
-      headerName: t("employees.image"),
-      flex: 0.5,
-      renderCell: (params) => {
-        console.log("Image URL:", params.value);
-        const src = params.value
-          ? `${API_BASE}${params.value}`
-          : "/default.png";
+      field: "link",
+      headerName: t("employees.open_details"),
+      headerAlign: "center",
+      align: "center",
+      flex: 0.3,
+      renderCell: () => {
+        //const src = params.value
         return (
-          <div className="employee-image-cell">
-            <img
-              src={src}
-              alt="employee"
-              style={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
+          <div>
+            <OpenInNewIcon />
           </div>
         );
       },
@@ -79,7 +97,7 @@ const EmployeesSummaryTable = () => {
         <DataGrid
           autoHeight
           rows={employees}
-          getRowId={(row) => row.email} // indeksistä uniikki id
+          getRowId={(row) => row.email}
           columns={columns}
           initialState={{
             pagination: {

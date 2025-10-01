@@ -10,8 +10,10 @@
   "employees": {
     "email": "Email",
     "firstname": "First name",
+    "image": "Image",
     "jobtitle": "Job title",
     "lastname": "Last name",
+    "open_details": "Details",
     "title": "Employees"
   },
   "home": {
