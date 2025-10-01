@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
 import { type AppDispatch, type RootState } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { Link } from "react-router-dom";
+import IconLinkCell from "../../common/IconLinkCell";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -37,11 +37,7 @@ const EmployeesSummaryTable = () => {
           : "/default.png";
         return (
           <div className="employee-image-cell">
-            <img
-              src={src}
-              alt="employee"
-              style={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
+            <img src={src} alt="employee" />
           </div>
         );
       },
@@ -77,9 +73,10 @@ const EmployeesSummaryTable = () => {
       align: "center",
       flex: 0.3,
       renderCell: (params) => (
-        <Link to={`/employees/${params.row.id}`}>
-          <OpenInNewIcon />
-        </Link>
+        <IconLinkCell
+          to={`/employees/${params.row.id}`}
+          icon={<OpenInNewIcon />}
+        />
       ),
     },
   ];
