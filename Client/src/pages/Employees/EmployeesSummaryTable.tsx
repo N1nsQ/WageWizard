@@ -8,6 +8,7 @@ import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
 import { type AppDispatch, type RootState } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconLinkCell from "../../common/IconLinkCell";
+import { API_BASE } from "../../config";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -21,8 +22,6 @@ const EmployeesSummaryTable = () => {
   useEffect(() => {
     dispatch(fetchEmployeesSummary());
   }, [dispatch]);
-
-  const API_BASE = "https://localhost:7032";
 
   const columns: GridColDef<EmployeesSummary>[] = [
     {
