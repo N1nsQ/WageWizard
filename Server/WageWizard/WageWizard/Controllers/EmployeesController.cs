@@ -18,14 +18,15 @@ namespace WageWizard.Controllers
         }
 
         [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<EmployeesListDto>>> GetEmployeesSummary()
+        public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummary()
         {
             
 
             var employees = await _context.Employees
                 .OrderBy(e => e.LastName)
-                .Select(e => new EmployeesListDto
+                .Select(e => new EmployeesSummaryDto
                 {
+                    Id = e.Id,
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     JobTitle = e.JobTitle,

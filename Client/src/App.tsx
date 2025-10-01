@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login";
 import { Typography } from "@mui/material";
 import Employees from "./pages/Employees/Employees";
 import NavBar from "./common/NavBar/NavBar";
+import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/employees" element={<Employees />} />
+          <Route path="/employees/:id" element={<EmployeeDetails />} />
           <Route
             path="*"
             element={<Typography variant="h3">PAGE NOT FOUND</Typography>}

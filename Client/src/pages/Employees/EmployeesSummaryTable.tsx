@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
 import { type AppDispatch, type RootState } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Link } from "react-router-dom";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -31,7 +32,6 @@ const EmployeesSummaryTable = () => {
       align: "center",
       flex: 0.3,
       renderCell: (params) => {
-        console.log("Image URL:", params.value);
         const src = params.value
           ? `${API_BASE}${params.value}`
           : "/default.png";
@@ -76,18 +76,14 @@ const EmployeesSummaryTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 0.3,
-      renderCell: () => {
-        //const src = params.value
-        return (
-          <div>
-            <OpenInNewIcon />
-          </div>
-        );
-      },
+      renderCell: (params) => (
+        <Link to={`/employees/${params.row.id}`}>
+          <OpenInNewIcon />
+        </Link>
+      ),
     },
   ];
 
-  console.log("Employees: ", employees);
   return (
     <div>
       {isLoading && <p>{t("loading")}</p>}
