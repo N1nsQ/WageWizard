@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { LoginDto } from "../../models/LoginDto"; // Tämän mukana tulee käyttäjän syöttämät kirjautumistiedot
 import type { ErrorMessage } from "../../models/ErrorMessage";
+import { API_BASE } from "../../config";
 
 // AuthState rajapinta, kuvaa reduxin tilan rakennetta
 interface AuthState {
@@ -28,7 +29,7 @@ export const loginUser = createAsyncThunk<
   { rejectValue: ErrorMessage }
 >("auth/loginUser", async (loginData: LoginDto, thunkAPI) => {
   try {
-    const response = await fetch("https://localhost:7032/api/Login/login", {
+    const response = await fetch(`${API_BASE}/api/Login/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
