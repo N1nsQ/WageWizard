@@ -1,7 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using WageWizard.Models;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddImageSharp(options =>
+{
+    options.BrowserMaxAge = TimeSpan.FromDays(7);
+    options.CacheMaxAge = TimeSpan.FromDays(365);
+});
 
 // Add services to the container.
 
@@ -34,6 +41,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
+app.UseImageSharp();
 app.UseStaticFiles();
 app.MapControllers();
 app.Run();

@@ -10,12 +10,16 @@
     "loading": "Lataa..."
   },
   "employees": {
+    "altTextNotAvailable": "Kuvatekstiä ei saatavilla",
     "email": "Sähköposti",
+    "employeeImg": "Kuva työntekijästä",
     "firstname": "Etunimi",
     "image": "Kuva",
+    "imageNotAvailable": "Kuvaa ei saatavilla",
     "jobtitle": "Ammattinimike",
     "lastname": "Sukunimi",
     "open_details": "Tiedot",
+    "thumbImage": "Esikatselukuva",
     "title": "Työntekijät"
   },
   "home": {

@@ -8,8 +8,9 @@ import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
 import { type AppDispatch, type RootState } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconLinkCell from "../../common/IconLinkCell";
-import { API_BASE } from "../../config";
 import LoadingOverlay from "../../common/LoadingOverlay";
+import "../../App.css";
+import Thumb from "../../common/Thumb";
 
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
@@ -32,13 +33,8 @@ const EmployeesSummaryTable = () => {
       align: "center",
       flex: 0.3,
       renderCell: (params) => {
-        const src = params.value
-          ? `${API_BASE}${params.value}`
-          : "/default.png";
         return (
-          <div className="employee-image-cell">
-            <img src={src} alt="employee" />
-          </div>
+          <Thumb imageUrl={params.value} alt={t("employees.thumbImage")} />
         );
       },
     },

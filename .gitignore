@@ -124,6 +124,9 @@ $RECYCLE.BIN/
 .history/
 *.code-workspace
 
+# ImageSharp cache
+wwwroot/is-cache/
+
 # =========================
 # Node / React (frontend)
 # =========================

@@ -10,12 +10,16 @@
     "loading": "Loading..."
   },
   "employees": {
+    "altTextNotAvailable": "Alt text not available",
     "email": "Email",
+    "employeeImg": "Image of the employee",
     "firstname": "First name",
     "image": "Image",
+    "imageNotAvailable": "Image not available",
     "jobtitle": "Job title",
     "lastname": "Last name",
     "open_details": "Details",
+    "thumbImage": "Thumbnail image",
     "title": "Employees"
   },
   "home": {
