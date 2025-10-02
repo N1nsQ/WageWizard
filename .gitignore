@@ -125,7 +125,7 @@ $RECYCLE.BIN/
 *.code-workspace
 
 # ImageSharp cache
-wwwroot/is-cache/
+Server/WageWizard/WageWizard/wwwroot/is-cache/
 
 # =========================
 # Node / React (frontend)
