@@ -13,8 +13,6 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { formatIban } from "../../utils/formatIban";
 import { formatDate } from "../../utils/formatDate";
 
-import type { EmployeeDetails } from "../../models/EmployeeDetails";
-
 import {
   Box,
   Card,
@@ -25,7 +23,7 @@ import {
 } from "@mui/material";
 import "../../App.css";
 
-const EmployeeDetails = () => {
+const EmployeeDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -100,4 +98,4 @@ const EmployeeDetails = () => {
   );
 };
 
-export default EmployeeDetails;
+export default EmployeeDetailsPage;
