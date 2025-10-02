@@ -1,23 +1,38 @@
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store";
 import { useEffect } from "react";
-import { fetchEmployeeDetails } from "../../redux/slices/EmployeeDetailsSlice";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Img300px from "../../common/Img300px";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+
+import type { AppDispatch, RootState } from "../../redux/store";
+import { fetchEmployeeDetails } from "../../redux/slices/EmployeeDetailsSlice";
+
+import InfoField from "../../common/InfoField";
+import Img300px from "../../common/Img300px";
+
+import { formatCurrency } from "../../utils/formatCurrency";
+import { formatIban } from "../../utils/formatIban";
+import { formatDate } from "../../utils/formatDate";
+
+import type { EmployeeDetails } from "../../models/EmployeeDetails";
+
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Stack,
+  Typography,
+} from "@mui/material";
+import "../../App.css";
 
 const EmployeeDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const {
-    data: employee,
-    isLoading,
-    error,
-  } = useSelector((state: RootState) => state.employeeDetails);
+  const { data: employee } = useSelector(
+    (state: RootState) => state.employeeDetails
+  );
 
   useEffect(() => {
     if (id) {
@@ -26,63 +41,59 @@ const EmployeeDetails = () => {
   }, [dispatch, id]);
 
   return (
-    <div>
+    <div className="center-content">
       <Card>
         <CardContent>
-          <div>
-            <Grid>
-              <Img300px
-                imageUrl={employee?.imageUrl ?? null}
-                alt={t("employees.employeeImg")}
-              />
-            </Grid>
-          </div>
+          <Stack spacing={2} textAlign={"left"} margin={3}>
+            <Img300px
+              imageUrl={employee?.imageUrl ?? null}
+              alt={t("employees.employeeImg")}
+            />
 
-          <Grid container spacing={2}>
-            <Typography variant="h4">
-              {employee?.firstName} {employee?.lastName}
-            </Typography>
-            <Typography variant="body1">{employee?.jobTitle}</Typography>
-          </Grid>
-
-          <Grid container spacing={2}>
-            <Grid size={8}>
-              <Typography variant="subtitle2">Email</Typography>
-              <Typography>{employee?.email}</Typography>
-            </Grid>
-
-            <Grid size={8}>
-              <Typography variant="subtitle2">Address</Typography>
-              <Typography>
-                {employee?.homeAddress + ", "} {employee?.postalCode}{" "}
-                {employee?.city}
+            <InfoField
+              label={t("employees.name")}
+              value={`${employee?.firstName} ${employee?.lastName}`}
+            />
+            <Divider />
+            <InfoField
+              label={t("employees.jobtitle")}
+              value={employee?.jobTitle}
+            />
+            <Divider />
+            <InfoField label={t("employees.email")} value={employee?.email} />
+            <Divider />
+            <Box mb={2}>
+              <Typography variant="subtitle2" color="textSecondary">
+                {t("employees.homeAddress")}
               </Typography>
-            </Grid>
-
-            <Grid size={8}>
-              <Typography variant="subtitle2">Bank Account</Typography>
-              <Typography>{employee?.bankAccountNumber}</Typography>
-            </Grid>
-
-            <Grid size={8}>
-              <Typography variant="subtitle2">tax</Typography>
-              <Typography>{employee?.taxPercentage}</Typography>
-            </Grid>
-
-            <Grid size={8}>
-              <Typography variant="subtitle2">Start Date</Typography>
-              <Typography>
-                {employee?.startDate
-                  ? new Date(employee.startDate).toLocaleDateString()
-                  : ""}
+              <Typography variant="body1">
+                {employee?.homeAddress || "-"}
               </Typography>
-            </Grid>
-
-            <Grid size={8}>
-              <Typography variant="subtitle2">Salary</Typography>
-              <Typography>{employee?.salaryAmount}</Typography>
-            </Grid>
-          </Grid>
+              <Typography variant="body1">
+                {employee?.postalCode} {employee?.city}
+              </Typography>
+            </Box>
+            <Divider />
+            <InfoField
+              label={t("employees.bankAccountNumber")}
+              value={formatIban(employee?.bankAccountNumber)}
+            />
+            <Divider />
+            <InfoField
+              label={t("employees.taxPercentage")}
+              value={`${employee?.taxPercentage}%`}
+            />
+            <Divider />
+            <InfoField
+              label={t("employees.salaryAmount")}
+              value={formatCurrency(employee?.salaryAmount)}
+            />
+            <Divider />
+            <InfoField
+              label={t("employees.startDate")}
+              value={formatDate(employee?.startDate)}
+            />
+          </Stack>
         </CardContent>
       </Card>
     </div>

@@ -22,6 +22,12 @@
 COMMON
 ====================== */
 
+.center-content {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+}
+
 .error-message {
   color: red;
   font-size: 0.875rem;
