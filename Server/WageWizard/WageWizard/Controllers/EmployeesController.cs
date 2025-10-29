@@ -98,17 +98,26 @@ namespace WageWizard.Controllers
 
             var employees = await _context.Employees
                 .OrderBy(e => e.LastName)
-                .Select(e => new EmployeesSalaryDetailsDto
+                .ToListAsync();
+
+            var result = employees.Select(e =>
+            {
+                var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
+                var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
+                var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
+
+                return new EmployeesSalaryDetailsDto
                 {
                     Id = e.Id,
                     FirstName = e.FirstName,
                     LastName = e.LastName,
-                    Age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
+                    Age = age,
+                    TyELPercent = tyelPercent,
+                    UnemploymentInsurance = unemploymentInsurance,
                     TaxPercentage = e.TaxPercentage,
-                    SalaryAmount = e.SalaryAmount,
-
-                })
-                .ToListAsync();
+                    SalaryAmount = e.SalaryAmount
+                };
+            }).ToList();
 
             if (employees == null)
             {
@@ -121,7 +130,7 @@ namespace WageWizard.Controllers
 
             }
 
-            return Ok(employees);
+            return Ok(result);
         }
         // Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
         [HttpGet("PayrollDetailsById")]

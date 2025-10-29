@@ -26,9 +26,18 @@ const SalaryStatementFields = () => {
     console.log("Selected Employee:", selectedEmployee);
 
     if (selectedEmployee) {
+      const tyelPercent = Number(
+        (selectedEmployee.tyELPercent * 100).toFixed(2)
+      ); // 7.15
+      const unemploymentPercent = Number(
+        (selectedEmployee.unemploymentInsurance * 100).toFixed(1)
+      ); // 1.5
+
       form.change("veroprosentti", selectedEmployee.taxPercentage);
       form.change("peruspalkka", selectedEmployee.salaryAmount);
       form.change("age", selectedEmployee.age);
+      form.change("tyELPercent", tyelPercent);
+      form.change("unemploymentInsurance", unemploymentPercent);
     } else {
       form.change("veroprosentti", "");
       form.change("peruspalkka", "");
@@ -98,6 +107,36 @@ const SalaryStatementFields = () => {
                 fullWidth
                 type="number"
                 label="Ikä"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            )}
+          </Field>
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Field name="tyELPercent">
+            {({ input }) => (
+              <TextField
+                {...input}
+                fullWidth
+                type="number"
+                label="TyEL %"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            )}
+          </Field>
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <Field name="unemploymentInsurance">
+            {({ input }) => (
+              <TextField
+                {...input}
+                fullWidth
+                type="number"
+                label="Työttömyysvakuutus %"
                 variant="outlined"
                 onChange={handleChange}
               />
