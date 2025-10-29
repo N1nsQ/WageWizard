@@ -11,6 +11,7 @@ import { Typography } from "@mui/material";
 import Employees from "./pages/Employees/Employees";
 import NavBar from "./common/NavBar/NavBar";
 import EmployeeDetailsPage from "./pages/Employees/EmployeeDetails";
+import SalaryStatements from "./pages/SalaryStatements/SalaryStatements";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/employees/:id" element={<EmployeeDetailsPage />} />
+          <Route path="/salarystatements" element={<SalaryStatements />} />
           <Route
             path="*"
             element={<Typography variant="h3">PAGE NOT FOUND</Typography>}

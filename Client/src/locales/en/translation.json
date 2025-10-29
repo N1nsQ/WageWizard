@@ -10,6 +10,7 @@
     "loading": "Loading..."
   },
   "employees": {
+    "age": "Age",
     "altTextNotAvailable": "Alt text not available",
     "bankAccountNumber": "Bank account number",
     "email": "Email",
@@ -20,6 +21,7 @@
     "imageNotAvailable": "Image not available",
     "jobtitle": "Job title",
     "lastname": "Last name",
+    "link": "Employee details link",
     "name": "Name",
     "open_details": "Details",
     "salaryAmount": "Montly salary",
@@ -39,5 +41,13 @@
     "password": "Password",
     "title": "Login",
     "username": "Username"
+  },
+  "salary": {
+    "age": "Age",
+    "calculate": "Calculate salary",
+    "form_title": "Salary Calculator",
+    "gross_salary": "Gross salary",
+    "select_employee": "Select employee",
+    "tax_percentage": "Tax percentage"
   }
 }

@@ -1,29 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../../../redux/slices/authSlice";
 import Login from "../Login";
 import userEvent from "@testing-library/user-event";
-
-// mockataan i18next-kirjaston käyttö
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key: string) => key }),
-}));
-
-const renderWithProviders = (ui: React.ReactNode, preloadedState = {}) => {
-  const store = configureStore({
-    reducer: { auth: authReducer },
-    preloadedState,
-  });
-
-  return render(
-    <Provider store={store}>
-      <MemoryRouter>{ui}</MemoryRouter>
-    </Provider>
-  );
-};
+import { renderWithProviders } from "../../../utils/__tests__/test-utils";
 
 // Otsikko renderöityy oikein
 describe("Login page", () => {

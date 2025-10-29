@@ -72,6 +72,8 @@ const EmployeesSummaryTable = () => {
         <IconLinkCell
           to={`/employees/${params.row.id}`}
           icon={<OpenInNewIcon />}
+          label={t("employees.link")}
+          data-testid={`employee-link-${params.row.id}`}
         />
       ),
     },

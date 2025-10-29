@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WageWizard.DTOs;
 using WageWizard.Models;
+using WageWizard.Utils;
 
 namespace WageWizard.Controllers
 {
@@ -59,7 +60,8 @@ namespace WageWizard.Controllers
                     Id=e.Id,
                     FirstName=e.FirstName,
                     LastName=e.LastName,
-                    JobTitle=e.JobTitle,
+                    Age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
+                    JobTitle =e.JobTitle,
                     ImageUrl = e.ImageUrl,
                     Email = e.Email,
                     HomeAddress = e.HomeAddress,
@@ -74,10 +76,47 @@ namespace WageWizard.Controllers
 
             if (employee == null)
             {
-                return NotFound();
+                var error = new ErrorResponseDto
+                {
+                    Code = "backend_error_messages.employees_not_found"
+                };
+
+                return NotFound(error);
+
             }
 
             return Ok(employee);
+        }
+
+        [HttpGet("paymentDetails")]
+        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetails()
+        {
+            var employees = await _context.Employees
+                .OrderBy(e => e.LastName)
+                .Select(e => new EmployeesSalaryDetailsDto
+                {
+                    Id = e.Id,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    Age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
+                    TaxPercentage = e.TaxPercentage,
+                    SalaryAmount = e.SalaryAmount,
+
+                })
+                .ToListAsync();
+
+            if (employees == null)
+            {
+                var error = new ErrorResponseDto
+                {
+                    Code = "backend_error_messages.employees_not_found"
+                };
+
+                return NotFound(error);
+
+            }
+
+            return Ok(employees);
         }
 
     }

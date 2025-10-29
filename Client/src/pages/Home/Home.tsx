@@ -27,7 +27,23 @@ export function Home() {
         </Card>
       </div>
       <div>
-        <Card sx={{ width: 400, borderRadius: 3, boxShadow: 4 }}>
+        <Card
+          component={Link}
+          to="/salarystatements"
+          sx={{
+            display: "block",
+            width: 400,
+            borderRadius: 3,
+            boxShadow: 4,
+            textDecoration: "none",
+            color: "inherit",
+            transition: "transform 0.2s, box-shadow 0.2s",
+            "&:hover": {
+              transform: "scale(1.02)",
+              boxShadow: 6,
+            },
+          }}
+        >
           <CardContent>
             <Typography variant="h5" align="center" gutterBottom>
               {t("home.salary_statements")}

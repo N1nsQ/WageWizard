@@ -53,6 +53,8 @@ const EmployeeDetailsPage = () => {
               value={`${employee?.firstName} ${employee?.lastName}`}
             />
             <Divider />
+            <InfoField label={t("employees.age")} value={`${employee?.age}`} />
+            <Divider />
             <InfoField
               label={t("employees.jobtitle")}
               value={employee?.jobTitle}

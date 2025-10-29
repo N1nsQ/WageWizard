@@ -2,6 +2,7 @@ export interface EmployeeDetails {
   id: string;
   firstName: string;
   lastName: string;
+  age: number;
   jobTitle: string;
   imageUrl: string;
   email: string;

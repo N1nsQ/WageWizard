@@ -9,5 +9,10 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/setupTests.ts",
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    server: {
+      deps: {
+        inline: ["@mui/x-data-grid"],
+      },
+    },
   },
 });

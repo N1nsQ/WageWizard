@@ -10,6 +10,7 @@
     "loading": "Lataa..."
   },
   "employees": {
+    "age": "Ikä",
     "altTextNotAvailable": "Kuvatekstiä ei saatavilla",
     "bankAccountNumber": "Tilinumero",
     "email": "Sähköposti",
@@ -20,6 +21,7 @@
     "imageNotAvailable": "Kuvaa ei saatavilla",
     "jobtitle": "Ammattinimike",
     "lastname": "Sukunimi",
+    "link": "Linkki työntekijän tietoihin",
     "name": "Nimi",
     "open_details": "Tiedot",
     "salaryAmount": "Kuukausipalkka",
@@ -39,5 +41,13 @@
     "password": "Salasana",
     "title": "Kirjaudu sisään",
     "username": "Käyttäjätunnus"
+  },
+  "salary": {
+    "age": "Ikä",
+    "calculate": "Laske palkka",
+    "form_title": "Laske palkka",
+    "gross_salary": "Bruttopalkka",
+    "select_employee": "Valitse työntekijä",
+    "tax_percentage": "Veroprosentti"
   }
 }
