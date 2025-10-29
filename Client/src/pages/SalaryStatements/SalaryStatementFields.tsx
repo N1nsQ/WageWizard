@@ -37,11 +37,7 @@ const SalaryStatementFields = () => {
 
   return (
     <div>
-      <p>SalaryStatementFields</p>
-
-      {/* Käytetään Grid containeria heti alusta */}
       <Grid container spacing={2}>
-        {/* Ylin rivi: työntekijän valinta */}
         <Grid size={{ xs: 12 }}>
           <Field name="employeeId">
             {({ input }) => (
@@ -64,8 +60,6 @@ const SalaryStatementFields = () => {
             )}
           </Field>
         </Grid>
-
-        {/* Alempi rivi: kolme kenttää vierekkäin */}
         <Grid size={{ xs: 12, sm: 4 }}>
           <Field name="veroprosentti">
             {({ input }) => (
