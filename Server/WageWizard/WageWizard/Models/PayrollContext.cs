@@ -9,6 +9,7 @@ namespace WageWizard.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Payroll> Payrolls { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PayrollRates> PayrollRates { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
