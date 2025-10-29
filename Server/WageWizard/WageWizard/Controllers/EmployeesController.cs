@@ -12,12 +12,14 @@ namespace WageWizard.Controllers
     {
         private readonly PayrollContext _context = context;
 
-        [HttpGet()]
+        // Haetaan kaikki työntekijät
+        [HttpGet("employees")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
             return await _context.Employees.ToListAsync();
         }
 
+        // Tiedot Työntekijät-sivulle taulukkoon, lyhyt kooste
         [HttpGet("summary")]
         public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummary()
         {
@@ -50,6 +52,7 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
+        // Haetaan yksittäisen työntekijän tiedot Työntekijä-sivun näkymään
         [HttpGet("id")]
         public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetEmployeeDetails(Guid id)
         {
@@ -88,9 +91,11 @@ namespace WageWizard.Controllers
             return Ok(employee);
         }
 
+        // Haentaan kaikkien työntekijöiden tiedot palkanlaskentaa varten
         [HttpGet("paymentDetails")]
         public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetails()
         {
+
             var employees = await _context.Employees
                 .OrderBy(e => e.LastName)
                 .Select(e => new EmployeesSalaryDetailsDto
@@ -117,6 +122,39 @@ namespace WageWizard.Controllers
             }
 
             return Ok(employees);
+        }
+        // Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
+        [HttpGet("PayrollDetailsById")]
+        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsById (Guid id)
+        {
+            var employee = await _context.Employees
+        .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (employee == null)
+            {
+                return NotFound(new ErrorResponseDto
+                {
+                    Code = "backend_error_messages.employees_not_found"
+                });
+            }
+
+            var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
+            var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
+            var UnemploymentInsuranceRate = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
+
+            var employeeDto = new EmployeesSalaryDetailsDto
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Age = age,
+                TyELPercent = tyelPercent,
+                UnemploymentInsurance = UnemploymentInsuranceRate,
+                TaxPercentage = employee.TaxPercentage,
+                SalaryAmount = employee.SalaryAmount
+            };
+
+            return Ok(employeeDto);
         }
 
     }

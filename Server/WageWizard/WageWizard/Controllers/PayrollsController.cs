@@ -15,5 +15,12 @@ namespace WageWizard.Controllers
         {
             return await _context.Payrolls.ToListAsync();
         }
+
+        [HttpGet("PayrollRates")]
+        public async Task<ActionResult<IEnumerable<PayrollRates>>> GetTyELRates()
+        {
+            return await _context.PayrollRates.ToListAsync();
+        }
+
     }
 }
