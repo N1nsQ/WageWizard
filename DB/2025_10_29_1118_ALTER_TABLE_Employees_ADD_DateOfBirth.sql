@@ -1,0 +1,1 @@
+ALTER TABLE employees Add DateOfBirth DATE;
