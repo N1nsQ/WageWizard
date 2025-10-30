@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import employeesSummaryReducer from "./slices/EmployeesSlice";
 import employeeDetailsReducer from "./slices/EmployeeDetailsSlice";
 import employeesSalaryDetailsReducer from "./slices/employeesSalaryDetailsSlice";
+import salaryStatementCalculationsReducer from "./slices/SalaryStatementSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     employeesSummary: employeesSummaryReducer,
     employeeDetails: employeeDetailsReducer,
     employeesSalaryDetails: employeesSalaryDetailsReducer,
+    salaryStatementCalculation: salaryStatementCalculationsReducer,
   },
 });
 

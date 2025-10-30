@@ -1,9 +1,10 @@
-import { Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Field, useForm, useFormState } from "react-final-form";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import Result from "./Result";
 
 const SalaryStatementFields = () => {
   const form = useForm();
@@ -146,6 +147,12 @@ const SalaryStatementFields = () => {
           </Field>
         </Grid>
       </Grid>
+      <div>
+        <Button>{t("salary.calculate")}</Button>
+      </div>
+      <div>
+        <Result employeeId={values?.employeeId} />
+      </div>
     </div>
   );
 };
