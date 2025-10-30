@@ -46,22 +46,22 @@
 ### About
 
 #### Login
-<img width="1068" height="902" alt="image" src="https://github.com/user-attachments/assets/40280f4c-ee94-45ae-aa76-cf134f8e0228" />
+<img width="1068" height="902" alt="image" src="https://github.com/user-attachments/assets/40280f4c-ee94-45ae-aa76-cf134f8e0228" />  
 Users log in with the provided credentials. Creating a personal account is currently not available. The application can be tested using the test credentials:  
   
 **Username:** Tessa Testaaja  
 **Password:** SalainenSalasana987!  
 
 #### Employees Page
-<img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />
+<img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />  
 Displays a list of all employees showing minimal information: first name, last name, job title, and email. If an employee has an image, it is shown; otherwise, a default image is used. Each employee entry includes a link to their detailed profile page.
 
 #### Employee Details
-<img width="737" height="1545" alt="image" src="https://github.com/user-attachments/assets/b27b72c1-2c51-435b-b251-f2af5116744d" />
+<img width="737" height="1545" alt="image" src="https://github.com/user-attachments/assets/b27b72c1-2c51-435b-b251-f2af5116744d" />  
 This view shows detailed information about the selected employee. Editing the information is not currently available.
 
 #### Payroll Page
-<img width="1295" height="792" alt="image" src="https://github.com/user-attachments/assets/6e4ddf7a-2da0-4d4c-996b-c9df4f195732" />
+<img width="1295" height="792" alt="image" src="https://github.com/user-attachments/assets/6e4ddf7a-2da0-4d4c-996b-c9df4f195732" />  
 The user selects an employee from the list whose salary they want to calculate. The rest of the form updates automatically based on the selected employee, and the application calculates the salary, showing all applicable deductions (see the first image in this document). All data comes from the database and cannot be edited.
 
 
