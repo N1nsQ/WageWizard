@@ -58,6 +58,7 @@ Displays a list of all employees showing minimal information: first name, last n
 
 #### Employee Details
 <img width="737" height="1545" alt="image" src="https://github.com/user-attachments/assets/b27b72c1-2c51-435b-b251-f2af5116744d" />  
+  
 This view shows detailed information about the selected employee. Editing the information is not currently available.
 
 #### Payroll Page
