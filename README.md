@@ -7,7 +7,8 @@
   
 ## Wage Wizard 1.0 now available!
 
-<img width="1231" height="1220" alt="image" src="https://github.com/user-attachments/assets/65985ab5-2960-45ae-8221-6cb4f5a93a16" />  
+<img width="1521" height="1289" alt="image" src="https://github.com/user-attachments/assets/63e67001-9e9b-44ea-a0a3-9695c8219ccf" />
+  
 
 ### Features:
 
