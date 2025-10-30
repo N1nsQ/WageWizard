@@ -44,10 +44,10 @@ namespace WageWizard.Services
 
         public static SalaryStatementCalculationDto CollectSalaryStatementCalculations(decimal grossSalary, decimal taxPercent, decimal tyelPercent, decimal unemploymentInsurancePercent)
         {
-            var tyelAmount = CalculateTyELAmount(grossSalary, tyelPercent);
-            var unemploymentInsuranceAmount = CalculateUnemploymentInsuranceAmount(grossSalary, unemploymentInsurancePercent);
-            var withholdingTax = CalculateWithholdingTaxAmount(grossSalary, taxPercent);
-            var netSalary = CalculateNetSalaryAmount(grossSalary,taxPercent, tyelPercent, unemploymentInsurancePercent);
+            decimal tyelAmount = CalculateTyELAmount(grossSalary, tyelPercent);
+            decimal unemploymentInsuranceAmount = CalculateUnemploymentInsuranceAmount(grossSalary, unemploymentInsurancePercent);
+            decimal withholdingTax = CalculateWithholdingTaxAmount(grossSalary, taxPercent);
+            decimal netSalary = CalculateNetSalaryAmount(grossSalary,taxPercent, tyelPercent, unemploymentInsurancePercent);
 
             return new SalaryStatementCalculationDto
             {
