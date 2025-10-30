@@ -47,7 +47,7 @@
     "calculate": "Laske palkka",
     "employee_pension_contribution": "TyEL %",
     "form_title": "Laske palkka",
-    "gross_salary": "Bruttopalkka",
+    "gross_salary": "Bruttopalkka €",
     "net_salary": "Nettopalkka",
     "no_selection": "Ei valintaa",
     "salary_statement": "Palkkalaskelma",
@@ -55,7 +55,7 @@
     "select_employee_tooltip": "Valitse työntekijä nähdäksesi palkkalaskelman.",
     "unemployment_contribution": "Työttömyysvakuutus",
     "unemployment_insurance_contribution": "Työttömyysvakuutusmaksu",
-    "tax_percentage": "Veroprosentti",
+    "tax_percentage": "Veroprosentti %",
     "tyel_contribution": "Työeläkemaksu",
     "withholding_tax": "Ennakonpidätys"
   }
