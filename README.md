@@ -62,7 +62,8 @@ Displays a list of all employees showing minimal information: first name, last n
 This view shows detailed information about the selected employee. Editing the information is not currently available.
 
 #### Payroll Page
-<img width="1295" height="792" alt="image" src="https://github.com/user-attachments/assets/6e4ddf7a-2da0-4d4c-996b-c9df4f195732" />  
+<img width="1528" height="1100" alt="image" src="https://github.com/user-attachments/assets/e7dbf223-8ba4-4789-a511-397dc32af368" />  
+  
 The user selects an employee from the list whose salary they want to calculate. The rest of the form updates automatically based on the selected employee, and the application calculates the salary, showing all applicable deductions (see the first image in this document). All data comes from the database and cannot be edited.
 
 
