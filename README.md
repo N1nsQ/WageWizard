@@ -66,13 +66,37 @@ This view shows detailed information about the selected employee. Editing the in
 The user selects an employee from the list whose salary they want to calculate. The rest of the form updates automatically based on the selected employee, and the application calculates the salary, showing all applicable deductions (see the first image in this document). All data comes from the database and cannot be edited.
 
 
-## Coming Features
-**Payroll Administrator**  
-- create & save employment contracts
-- Calculate monthly salary
+## 🚀 Coming Features
 
-**Employee**  
-- download pdf / excel
+#### 👥 Employee Management
+- Add new employees
+- Edit employee information
+- Mark employees as inactive / no longer employed
+- Track job titles and department history
+
+#### 💰 Payroll Enhancements
+- Generate salary statements for all employees at once
+- Download salary statements as PDF files
+- Add support for hourly and monthly salary types
+- Automatic calculation of holiday pay and sick leave
+- Include fringe benefits, bonuses, and overtime pay
+- Handle unpaid leave and deductions
+- Save and view salary history per employee
+
+#### 📊 Reporting & Data Export
+- Export payroll data to Excel or CSV
+- Payroll summary report by month or department
+- Visual charts of total salary expenses
+- Tax and insurance cost analysis
+
+#### 🧭 UI & Usability
+- Navigation bar for improved navigation and accessibility
+- Logo and branding
+- Light mode / dark mode
+
+
+
+
 
 
 
