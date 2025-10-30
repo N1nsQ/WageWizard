@@ -42,7 +42,7 @@
 - **SQL Server** – Stores employee information, payroll rates, and related payroll data
 - **All data comes from the database** – Including employee info, payroll rates, and computed payroll details
 - **Accessed via EF Core and LINQ queries** – Simplifies querying and filtering data
-- **All scripts availbale**
+- **All scripts available**
 
 ### About
 
