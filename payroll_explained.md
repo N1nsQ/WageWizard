@@ -1,5 +1,8 @@
-# Terminology | Sanastoa
+# Payroll Terms and Processes Explained
 
+*I am writing this documents currently in finnish language - translation will be available later*
+
+### Palkanlaskennan termisöä suomi - englanti
 
 - **Salary Statements** = palkkalaskelma
   - Viittaa nimenomaan yksittäisiin palkkalaskelmiin, jotka työntekijä saa esimerkiksi kuukauden lopussa.
