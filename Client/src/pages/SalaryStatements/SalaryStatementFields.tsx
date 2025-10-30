@@ -30,8 +30,11 @@ const SalaryStatementFields = () => {
         (selectedEmployee.tyELPercent * 100).toFixed(2)
       );
       const unemploymentPercent = Number(
-        (selectedEmployee.unemploymentInsurance * 100).toFixed(1)
+        (selectedEmployee.unemploymentInsurance * 100).toFixed(2)
       );
+
+      console.log("Employee TVM: ", unemploymentPercent);
+
       form.change("veroprosentti", selectedEmployee.taxPercentage);
       form.change("peruspalkka", selectedEmployee.salaryAmount);
       form.change("age", selectedEmployee.age);
