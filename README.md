@@ -70,6 +70,8 @@ The user selects an employee from the list whose salary they want to calculate. 
 
 ## 🚀 Coming Features
 
+Planned future updates will expand Wage Wizard into a more complete and versatile payroll management system. The upcoming features will enhance employee management, automate complex payroll calculations, and provide powerful reporting and data export tools for deeper financial insights.
+
 #### 👥 Employee Management
 - Add new employees
 - Edit employee information
