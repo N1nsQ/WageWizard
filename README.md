@@ -48,8 +48,9 @@
 #### Login
 <img width="1068" height="902" alt="image" src="https://github.com/user-attachments/assets/40280f4c-ee94-45ae-aa76-cf134f8e0228" />
 Users log in with the provided credentials. Creating a personal account is currently not available. The application can be tested using the test credentials:  
+  
 **Username:** Tessa Testaaja  
-**Password:** SalainenSalasana987!
+**Password:** SalainenSalasana987!  
 
 #### Employees Page
 <img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />
