@@ -3,6 +3,7 @@ import { fetchSalaryStatementCalculations } from "../../redux/slices/SalaryState
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
+import { useTranslation } from "react-i18next";
 
 interface ResultProps {
   employeeId: string | null;
@@ -10,12 +11,12 @@ interface ResultProps {
 
 const Result = ({ employeeId }: ResultProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   const { data, isLoading, error } = useSelector(
     (state: RootState) => state.salaryStatementCalculation
   );
 
-  // 🔹 Hae palkkalaskelma kun työntekijä vaihtuu
   useEffect(() => {
     if (employeeId) {
       dispatch(fetchSalaryStatementCalculations(employeeId));
@@ -41,7 +42,7 @@ const Result = ({ employeeId }: ResultProps) => {
   if (!data) {
     return (
       <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography>Valitse työntekijä nähdäksesi palkkalaskelman.</Typography>
+        <Typography>{t("salary.select_employee_tooltip")}</Typography>
       </Paper>
     );
   }
@@ -51,11 +52,11 @@ const Result = ({ employeeId }: ResultProps) => {
   return (
     <Paper sx={{ padding: 2, marginTop: 2 }}>
       <Typography variant="h6" gutterBottom>
-        Palkkalaskelma
+        {t("salary.salary_statement")}
       </Typography>
       <Grid container spacing={1}>
         <Grid size={{ xs: 6 }}>
-          <Typography>Ennakonpidätys</Typography>
+          <Typography>{t("salary.withholding_tax")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">
@@ -64,14 +65,16 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
 
         <Grid size={{ xs: 6 }}>
-          <Typography>Työeläkemaksu</Typography>
+          <Typography>{t("salary.tyel_contribution")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">{data.tyELAmount.toFixed(2)} €</Typography>
         </Grid>
 
         <Grid size={{ xs: 6 }}>
-          <Typography>Työttömyysvakuutusmaksu</Typography>
+          <Typography>
+            {t("salary.unemployment_insurance_contribution")}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">
@@ -80,7 +83,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
 
         <Grid size={{ xs: 6 }}>
-          <Typography fontWeight="bold">Nettopalkka</Typography>
+          <Typography fontWeight="bold">{t("salary.net_salary")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right" fontWeight="bold">

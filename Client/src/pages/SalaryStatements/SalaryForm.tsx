@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { useEffect } from "react";
@@ -7,7 +6,6 @@ import { Form } from "react-final-form";
 import SalaryStatementFields from "./SalaryStatementFields";
 
 const SalaryForm = () => {
-  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
   const { data: employees } = useSelector(

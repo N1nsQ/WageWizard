@@ -61,7 +61,7 @@ const SalaryStatementFields = () => {
                 label={t("salary.select_employee")}
               >
                 <MenuItem value="">
-                  <em>Ei valintaa</em>
+                  <em>{t("salary.no_selection")}</em>
                 </MenuItem>
                 {employees?.map((emp) => (
                   <MenuItem key={emp.id} value={emp.id}>
@@ -79,7 +79,7 @@ const SalaryStatementFields = () => {
                 {...input}
                 fullWidth
                 type="number"
-                label="Veroprosentti"
+                label={t("salary.tax_percentage")}
                 variant="outlined"
                 onChange={handleChange}
               />
@@ -94,7 +94,7 @@ const SalaryStatementFields = () => {
                 {...input}
                 fullWidth
                 type="number"
-                label="Peruspalkka"
+                label={t("salary.gross_salary")}
                 variant="outlined"
                 onChange={handleChange}
               />
@@ -109,7 +109,7 @@ const SalaryStatementFields = () => {
                 {...input}
                 fullWidth
                 type="number"
-                label="Ikä"
+                label={t("salary.age")}
                 variant="outlined"
                 onChange={handleChange}
               />
@@ -124,7 +124,7 @@ const SalaryStatementFields = () => {
                 {...input}
                 fullWidth
                 type="number"
-                label="TyEL %"
+                label={t("salary.employee_pension_contribution")}
                 variant="outlined"
                 onChange={handleChange}
               />
@@ -139,7 +139,7 @@ const SalaryStatementFields = () => {
                 {...input}
                 fullWidth
                 type="number"
-                label="Työttömyysvakuutus %"
+                label={t("salary.unemployment_contribution")}
                 variant="outlined"
                 onChange={handleChange}
               />

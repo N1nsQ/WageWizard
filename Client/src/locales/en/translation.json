@@ -45,9 +45,18 @@
   "salary": {
     "age": "Age",
     "calculate": "Calculate salary",
+    "employee_pension_contribution": "Employee pension contribution %",
     "form_title": "Salary Calculator",
     "gross_salary": "Gross salary",
+    "net_salary": "Net salary",
+    "no_selection": "No selection",
+    "salary_statement": "Salary Statement",
     "select_employee": "Select employee",
-    "tax_percentage": "Tax percentage"
+    "select_employee_tooltip": "Select employee to see salary statement.",
+    "unemployment_contribution": "Unemployment contribution %",
+    "unemployment_insurance_contribution": "Unemployment insurance contribution",
+    "tax_percentage": "Tax percentage",
+    "tyel_contribution": "TyEL Contribution",
+    "withholding_tax": "Withholding tax"
   }
 }
