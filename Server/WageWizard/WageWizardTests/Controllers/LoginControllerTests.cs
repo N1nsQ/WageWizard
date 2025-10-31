@@ -19,14 +19,13 @@ namespace WageWizardTests.Controllers
 
         public LoginControllerTests()
         {
-            // in-memory tietokannan alustus
             var options = new DbContextOptionsBuilder<PayrollContext>()
                 .UseInMemoryDatabase(databaseName: "TestDb")
                 .Options;
 
             _payrollContext = new PayrollContext(options);
 
-            // Lisätään testikäyttäjä tietokantaan
+
             _payrollContext.Users.Add(new User
             {
                 Id = Guid.NewGuid(),
@@ -36,7 +35,6 @@ namespace WageWizardTests.Controllers
             });
             _payrollContext.SaveChanges();
 
-            // Luodaan kontrolleri testiteitokannan kanssa
             _loginController = new LoginController(_payrollContext);
         }
 
@@ -44,18 +42,18 @@ namespace WageWizardTests.Controllers
         public void Login_CorrectCredentialsReturnsOk()
         {
             // arrange
-            var loginDto = new LoginRequestDto // tämä saadaan käyttäjältä
+            var loginDto = new LoginRequestDto
             {
                 Username = "TestUser",
                 Password = "password123"
             };
 
             // act
-            var result = _loginController.Login(loginDto); // kutsutaan Login-metodia
+            var result = _loginController.Login(loginDto);
 
             // assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var data = Assert.IsType<LoginResponseDto>(okResult.Value); // okResult.Value viittaa controllerin palauttamaan LoginResponseDto -olioon
+            var data = Assert.IsType<LoginResponseDto>(okResult.Value); 
 
             Assert.Equal("Login successful", data.Message); 
             Assert.Equal("TestUser", data.Username);
