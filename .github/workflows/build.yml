@@ -45,4 +45,5 @@ jobs:
           cd Server/WageWizard/WageWizard
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage.cobertura.xml
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="coverage.cobertura.xml"
