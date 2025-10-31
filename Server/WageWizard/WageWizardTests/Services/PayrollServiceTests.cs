@@ -19,6 +19,7 @@ namespace WageWizardTests.Services
 
         private const decimal TyelBasic = 0.0715m;
         private const decimal TyelSenior = 0.0865m;
+        internal const decimal UnemploymentInsurancePercent = 0.0059m;
 
         [Theory]
         [InlineData(2500.00, "Basic", 178.75)]   
@@ -37,6 +38,19 @@ namespace WageWizardTests.Services
 
             // Act
             var result = PayrollServices.CalculateTyELAmount(grossSalary, tyelPercent);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(2500.00, 14.75)]
+        [InlineData(3000.00, 17.70)]
+        [InlineData(3458.44, 20.4022)]     
+        public void CalculateUnemploymentInsuranceAmount_Calculates_Correctly(decimal grossSalary, decimal expected)
+        {
+            // Act
+            var result = PayrollServices.CalculateUnemploymentInsuranceAmount(grossSalary, UnemploymentInsurancePercent);
 
             // Assert
             Assert.Equal(expected, result);
