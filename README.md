@@ -68,10 +68,10 @@ git clone https://github.com/N1nsQ/WageWizard.git
 
 ## Setup database
 
-- If you are using Windows you can run the batch script to build database.
-  - run build_database.bat found in root folder
-- Otherwise you need to manually run the SQL scripts in DB folder
-
+- On **Windows**, you can run the batch script to build the database:
+  - Run `build_database.bat` located in the root folder.
+- On other systems, run the SQL scripts found in the DB folder manually.
+  
 ## Setup backend
 
 - Edit the `appsettings.json` file and update the connection string with your database name.
