@@ -52,7 +52,7 @@
 
 Follow these steps to set up and run the Wage Wizard application locally.
 
-## 🧩 Prerequisites
+### 🧩 Prerequisites
 
 These are the tools I used to build Wage Wizard, and I recommend using the same setup when testing the application.
 You can use similar alternatives, but the following instructions assume you are using the same tech stack.
@@ -70,26 +70,26 @@ After that you can clone the repo:
 git clone https://github.com/N1nsQ/WageWizard.git
 ```
 
-## Setup database
+### Setup database
 
 - On **Windows**, you can run the batch script to build the database:
   - Run `build_database.bat` located in the root folder.
 - On other systems, run the SQL scripts found in the DB folder manually.
   
-## Setup backend
+### Setup backend
 
 - Open the `appsettings.json` file
   - Update the connection string with your database name (e.g. WageWizard).
   - Verify that the `AllowedOrigin` value matches the URL and port used by your frontend application (for example, `http://localhost:5173`).
 
-## Setup frontend
+### Setup frontend
 
 - install all required packages: `npm install`
 - create a `.env` file in the project root and define API_BASE url.
   - `VITE_API_BASE=https://localhost:3000`
   - ⚠️ Make sure the API URL matches your backend server address and port.
 
-## Run the Application
+### Run the Application
 
 - Start backend service
 - Start frontend with `npm run dev`
@@ -99,22 +99,22 @@ git clone https://github.com/N1nsQ/WageWizard.git
 - Alternatively, you can manually add a new user to the Users table in the database.
 
 
-### About WageWizard
+## About WageWizard
 
-#### Login
+### Login
 <img width="1068" height="902" alt="image" src="https://github.com/user-attachments/assets/40280f4c-ee94-45ae-aa76-cf134f8e0228" />  
 Users log in with the provided credentials. Creating a personal account is currently not available. The application can be tested using the test credentials. (See Setup & Configuration page in documentation.)
 
-#### Employees Page
+### Employees Page
 <img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />  
 Displays a list of all employees showing minimal information: first name, last name, job title, and email. If an employee has an image, it is shown; otherwise, a default image is used. Each employee entry includes a link to their detailed profile page.
 
-#### Employee Details
+### Employee Details
 <img width="737" height="1545" alt="image" src="https://github.com/user-attachments/assets/b27b72c1-2c51-435b-b251-f2af5116744d" />  
   
 This view shows detailed information about the selected employee. Editing the information is not currently available.
 
-#### Payroll Page
+### Payroll Page
 <img width="1528" height="1100" alt="image" src="https://github.com/user-attachments/assets/e7dbf223-8ba4-4789-a511-397dc32af368" />  
   
 The user selects an employee from the list whose salary they want to calculate. The rest of the form updates automatically based on the selected employee, and the application calculates the salary, showing all applicable deductions (see the first image in this document). All data comes from the database and cannot be edited.
