@@ -42,6 +42,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+          cd Server/WageWizard/WageWizard   # siirrytään csproj:n juureen
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
