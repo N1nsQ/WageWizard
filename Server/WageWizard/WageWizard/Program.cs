@@ -20,11 +20,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PayrollContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("WageWizard")));
 
+var allowedOrigin = builder.Configuration["AllowedOrigin"] ?? "";
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy => policy
-            .WithOrigins("http://localhost:5173")
+            .WithOrigins(allowedOrigin)
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
