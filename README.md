@@ -1,16 +1,17 @@
+![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white) ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white) 
 # WageWizard - Salary Calculator
 
 🚧 This project is under active development 🚧  
 
-## 🛠️ Tech Stack  
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white) ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white) 
+🛠️ Tech Stack: 
+
   
 ## Wage Wizard 1.0 now available!
 
 <img width="1521" height="1289" alt="image" src="https://github.com/user-attachments/assets/63e67001-9e9b-44ea-a0a3-9695c8219ccf" />
   
 
-### Features:
+#### Features:
 
 - Login with test user
 - List of employees
@@ -18,7 +19,7 @@
 - Calculate salary for selected employee and view payroll calculation results
 - Finnish / English translations
 
-### Frontend
+#### Frontend
 - **React** – Component-based UI
 - **Vite** – Fast development server and build tool
 - **TypeScript** – Type safety and autocomplete
@@ -29,22 +30,25 @@
 - **React Router Dom** – Routing between pages
 - **Vitest** – Unit and integration testing
 
-### Backend
+#### Backend
 
 - **C# / ASP.NET Core** – Web API and application logic (.NET 8.0)
 - **Entity Framework Core** - ORM for database access
 - **LINQ** – Querying database entities
 - **xUnit** – Unit testing
-- **BFF pattern (Backend for frontend)** – [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf) 
+- **BFF pattern (Backend for frontend)** – [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf)
 
-### Databasse
+#### Quality, Security, Maintainability and Test Coverage
+- **SonarQube** – Continuous code quality analysis for identifying bugs, vulnerabilities, code smells, and monitoring test coverage
+
+#### Databasse
 
 - **SQL Server** – Stores employee information, payroll rates, and related payroll data
 - **All data comes from the database** – Including employee info, payroll rates, and computed payroll details
 - **Accessed via EF Core and LINQ queries** – Simplifies querying and filtering data
 - **All scripts available**
 
-# Setup & Configuration
+## Setup & Configuration
 
 Follow these steps to set up and run the Wage Wizard application locally.
 
