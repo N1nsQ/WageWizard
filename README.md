@@ -74,15 +74,15 @@ git clone https://github.com/N1nsQ/WageWizard.git
   
 ## Setup backend
 
-- Edit the `appsettings.json` file and update the connection string with your database name.
-- Open `Program.cs` and review the `AddCors` configuration.
-  - Replace `.WithOrigins("http://localhost:5173")` with the correct origin and port used by your frontend application.
+- Open the `appsettings.json` file
+  - Update the connection string with your database name (e.g. WageWizard).
+  - Verify that the `AllowedOrigin` value matches the URL and port used by your frontend application (for example, `http://localhost:5173`).
 
 ## Setup frontend
 
 - install all required packages: `npm install`
 - create a `.env` file in the project root and define API_BASE url.
-  - `VITE_API_BASE=https://localhost:0000`
+  - `VITE_API_BASE=https://localhost:3000`
   - ⚠️ Make sure the API URL matches your backend server address and port.
 
 ## Run the Application
