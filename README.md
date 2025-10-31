@@ -2,9 +2,6 @@
 # WageWizard - Salary Calculator
 
 🚧 This project is under active development 🚧  
-
-🛠️ Tech Stack: 
-
   
 ## Wage Wizard 1.0 now available!
 
