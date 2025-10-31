@@ -55,5 +55,18 @@ namespace WageWizardTests.Services
             // Assert
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(2500.00, 10.0, 250.00)] 
+        [InlineData(3000.00, 15.0, 450.00)] 
+        [InlineData(4000.00, 0.0, 0.00)]
+        public void CalculateWithholdingTaxAmount_Calculates_Correctly(decimal grossSalary, decimal taxPercent, decimal expected)
+        {
+            // Act
+            var result = PayrollServices.CalculateWithholdingTaxAmount(grossSalary, taxPercent);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
     }
 }
