@@ -19,7 +19,7 @@
 #### Frontend
 - **React** – Component-based UI
 - **Vite** – Fast development server and build tool
-- **TypeScript** – Type safety and autocomplete
+- **TypeScript** – Type safety and intelligent code completion
 - **Redux Toolkit** – State management
 - **Final Form** – Form handling and form state management
 - **MUI (Material UI)** – UI components and layout
