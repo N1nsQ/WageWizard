@@ -35,15 +35,15 @@
 - **xUnit** – Unit testing
 - **BFF pattern (Backend for frontend)** – [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf)
 
-#### Quality, Security, Maintainability and Test Coverage
-- **SonarQube** – Continuous code quality analysis for identifying bugs, vulnerabilities, code smells, and monitoring test coverage
-
 #### Databasse
 
 - **SQL Server** – Stores employee information, payroll rates, and related payroll data
 - **All data comes from the database** – Including employee info, payroll rates, and computed payroll details
 - **Accessed via EF Core and LINQ queries** – Simplifies querying and filtering data
 - **All scripts available**
+
+#### Quality
+- **SonarQube** – Continuous code quality analysis for identifying bugs, vulnerabilities, code smells, and monitoring test coverage
 
 ## Setup & Configuration
 
