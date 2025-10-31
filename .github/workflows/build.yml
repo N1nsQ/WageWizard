@@ -43,7 +43,15 @@ jobs:
         shell: powershell
         run: |
           cd Server/WageWizard/WageWizard
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
+            /k:"N1nsQ_WageWizard" `
+            /o:"n1nsq" `
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonar.cs.opencover.reportsPaths="coverage.cobertura.xml"
+
           dotnet build
+
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage.cobertura.xml
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="coverage.cobertura.xml"
+
+          # End SonarQube analysis
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
