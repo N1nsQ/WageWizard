@@ -55,14 +55,14 @@ jobs:
             /k:"N1nsQ_WageWizard" `
             /o:"n1nsq" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.cs.opencover.reportsPaths="WageWizardTests/coverage.xml"
+            /d:sonar.cs.opencover.reportsPaths="WageWizardTests/TestResults/*/coverage.xml"
 
           dotnet build --no-incremental
 
           dotnet test WageWizardTests `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=opencover `
-            /p:CoverletOutput=WageWizardTests/coverage.xml `
+            /p:CoverletOutput=.\WageWizardTests\TestResults\coverage.xml `
             --no-build
 
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
