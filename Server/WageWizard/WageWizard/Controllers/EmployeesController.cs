@@ -12,6 +12,8 @@ namespace WageWizard.Controllers
     {
         private readonly PayrollContext _context = context;
 
+        const string employeesNotFound = "backend_error_messages.employees_not_found";
+
         // Haetaan kaikki työntekijät
         [HttpGet("employees")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
@@ -42,7 +44,7 @@ namespace WageWizard.Controllers
             {
                 var error = new ErrorResponseDto
                 {
-                    Code = "backend_error_messages.employees_not_found"
+                    Code = employeesNotFound
                 };
 
             return NotFound(error);
@@ -81,7 +83,7 @@ namespace WageWizard.Controllers
             {
                 var error = new ErrorResponseDto
                 {
-                    Code = "backend_error_messages.employees_not_found"
+                    Code = employeesNotFound
                 };
 
                 return NotFound(error);
@@ -123,7 +125,7 @@ namespace WageWizard.Controllers
             {
                 var error = new ErrorResponseDto
                 {
-                    Code = "backend_error_messages.employees_not_found"
+                    Code = employeesNotFound
                 };
 
                 return NotFound(error);
@@ -143,7 +145,7 @@ namespace WageWizard.Controllers
             {
                 return NotFound(new ErrorResponseDto
                 {
-                    Code = "backend_error_messages.employees_not_found"
+                    Code = employeesNotFound
                 });
             }
 
