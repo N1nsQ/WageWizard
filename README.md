@@ -2,7 +2,7 @@
 # WageWizard - Salary Calculator
 
 🚧 This project is under active development 🚧  
-🔨 See [Setup & Configuration](https://github.com/N1nsQ/WageWizard/blob/main/Documentation/setup_instructions.md) for details on running WageWizard locally.  
+💻 See [Setup & Configuration](https://github.com/N1nsQ/WageWizard/blob/main/Documentation/setup_instructions.md) for details on running WageWizard locally.  
   
 ## Wage Wizard 1.0 now available!
 
