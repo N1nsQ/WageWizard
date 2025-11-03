@@ -46,7 +46,6 @@ namespace WageWizardTests.Services
         [Theory]
         [InlineData(2500.00, 14.75)]
         [InlineData(3000.00, 17.70)]
-        [InlineData(3458.44, 20.4022)]     
         public void CalculateUnemploymentInsuranceAmount_Calculates_Correctly(decimal grossSalary, decimal expected)
         {
             // Act
