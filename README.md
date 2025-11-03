@@ -45,6 +45,7 @@
 #### Quality
 - **SonarQube** – Continuous code quality analysis for identifying bugs, vulnerabilities, code smells, and monitoring test coverage
 - **Coverlet** –  Code coverage tool for backend (.NET)
+- **Secret Manager** – Hide sensitive information
 
 ## Setup & Configuration
 
