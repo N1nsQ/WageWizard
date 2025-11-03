@@ -156,7 +156,7 @@ coverage/
 .env.production.local
 
 # Test coverage output
+coverage.xml
 coverage-report/
 coverage.cobertura.xml
 TestResults/
-
