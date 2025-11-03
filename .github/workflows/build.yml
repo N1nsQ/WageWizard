@@ -11,19 +11,17 @@ jobs:
     name: Build and analyze
     runs-on: windows-latest
     steps:
-      # 1️⃣ Set up JDK
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu'
+          distribution: zulu
 
-      # 2️⃣ Checkout code
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 3️⃣ Cache SonarQube packages
       - name: Cache SonarQube Cloud packages
         uses: actions/cache@v4
         with:
@@ -31,7 +29,6 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      # 4️⃣ Cache SonarScanner
       - name: Cache SonarScanner
         id: cache-sonar-scanner
         uses: actions/cache@v4
@@ -40,7 +37,6 @@ jobs:
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
-      # 5️⃣ Install SonarScanner
       - name: Install SonarScanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
@@ -48,26 +44,21 @@ jobs:
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
-      # 6️⃣ Build, test and analyze backend
       - name: Build and analyze backend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
           cd Server/WageWizard/WageWizard
-
-          # Begin SonarQube analysis (coverage path defined in begin)
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
             /k:"N1nsQ_WageWizard" `
             /o:"n1nsq" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.cs.opencover.reportsPaths="coverage.cobertura.xml"
-
-          # Build project
-          dotnet build
-
-          # Run tests with coverage
-          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage.cobertura.xml
-
-          # End SonarQube analysis
+            /d:sonar.cs.opencover.reportsPaths="Server/WageWizard/WageWizardTests/coverage.cobertura.xml"
+          dotnet build --no-incremental
+          dotnet test Server/WageWizard/WageWizardTests `
+            /p:CollectCoverage=true `
+            /p:CoverletOutputFormat=cobertura `
+            /p:CoverletOutput=Server/WageWizard/WageWizardTests/coverage.cobertura.xml `
+            --no-build
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
