@@ -59,16 +59,14 @@ const Result = ({ employeeId }: ResultProps) => {
           <Typography>{t("salary.withholding_tax")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <Typography align="right">
-            {data.withholdingTax.toFixed(2)} €
-          </Typography>
+          <Typography align="right">{data.withholdingTax} €</Typography>
         </Grid>
 
         <Grid size={{ xs: 6 }}>
           <Typography>{t("salary.tyel_contribution")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <Typography align="right">{data.tyELAmount.toFixed(2)} €</Typography>
+          <Typography align="right">{data.tyELAmount} €</Typography>
         </Grid>
 
         <Grid size={{ xs: 6 }}>
@@ -78,7 +76,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">
-            {data.unemploymentInsuranceAmount.toFixed(2)} €
+            {data.unemploymentInsuranceAmount} €
           </Typography>
         </Grid>
 
@@ -87,7 +85,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right" fontWeight="bold">
-            {data.netSalary.toFixed(2)} €
+            {data.netSalary} €
           </Typography>
         </Grid>
       </Grid>

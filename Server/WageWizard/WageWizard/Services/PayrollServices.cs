@@ -6,21 +6,21 @@ namespace WageWizard.Services
     {
         public static decimal CalculateTyELAmount(decimal grossSalary, decimal tyelPercent)
         {
-            decimal tyelAmount = grossSalary * tyelPercent; 
+            decimal tyelAmount = Math.Round((grossSalary * tyelPercent), 2, MidpointRounding.AwayFromZero); 
 
             return tyelAmount;
         }
 
         public static decimal CalculateUnemploymentInsuranceAmount(decimal grossSalary, decimal unemploymentInsurancePercent)
         {
-            decimal unemploymentInsuranceAmount = grossSalary * unemploymentInsurancePercent;
+            decimal unemploymentInsuranceAmount = Math.Round((grossSalary * unemploymentInsurancePercent), 2, MidpointRounding.AwayFromZero);
 
             return unemploymentInsuranceAmount;
         }
 
         public static decimal CalculateWithholdingTaxAmount(decimal grossSalary, decimal taxPercent)
         {
-            decimal withholdingTaxAmount = grossSalary * (taxPercent / 100);
+            decimal withholdingTaxAmount = Math.Round((grossSalary * (taxPercent / 100)), 2, MidpointRounding.AwayFromZero);
 
             return withholdingTaxAmount;
         }
@@ -35,7 +35,7 @@ namespace WageWizard.Services
             decimal tyel = CalculateTyELAmount(grossSalary, tyelPercent);
             decimal unemploymentInsurance = CalculateUnemploymentInsuranceAmount(grossSalary, unemploymentInsurancePercent);
 
-            decimal netSalary = grossSalary - (withholdingTax + tyel + unemploymentInsurance); 
+            decimal netSalary = Math.Round((grossSalary - (withholdingTax + tyel + unemploymentInsurance)),2, MidpointRounding.AwayFromZero); 
 
             return netSalary;
 
