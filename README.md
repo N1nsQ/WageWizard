@@ -3,6 +3,15 @@
 
 🚧 This project is under active development 🚧  
 💻 See [Setup & Configuration](https://github.com/N1nsQ/WageWizard/blob/main/Documentation/setup_instructions.md) for details on running WageWizard locally.  
+
+#### SonarQube Statistics for backend: 
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=N1nsQ_WageWizard&metric=bugs)](https://sonarcloud.io/summary/new_code?id=N1nsQ_WageWizard)  
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=N1nsQ_WageWizard&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=N1nsQ_WageWizard)  
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N1nsQ_WageWizard&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N1nsQ_WageWizard)  
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=N1nsQ_WageWizard&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=N1nsQ_WageWizard)  
+
+#### SonarQube Statistics for frontend: 
+(coming soon)
   
 ## Wage Wizard 1.0 now available!
 
