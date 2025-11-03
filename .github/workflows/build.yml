@@ -49,19 +49,20 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          cd Server/WageWizard/WageWizard
+          cd Server/WageWizard
+
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
             /k:"N1nsQ_WageWizard" `
             /o:"n1nsq" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.cs.opencover.reportsPaths="../WageWizardTests/coverage.xml"
+            /d:sonar.cs.opencover.reportsPaths="WageWizardTests/coverage.xml"
 
           dotnet build --no-incremental
 
-          dotnet test ../WageWizardTests `
+          dotnet test WageWizardTests `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=opencover `
-            /p:CoverletOutput=../WageWizardTests/coverage.xml `
+            /p:CoverletOutput=WageWizardTests/coverage.xml `
             --no-build
 
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
