@@ -1,52 +1,86 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using WageWizard.DTOs;
 
-namespace WageWizard.Middleware
+public class ErrorHandlingMiddleware
 {
-    public class ErrorHandlingMiddleware(RequestDelegate next)
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ErrorHandlingMiddleware> _logger;
+    private readonly IWebHostEnvironment _env;
+
+    public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger, IWebHostEnvironment env)
     {
-        private readonly RequestDelegate _next = next;
+        _next = next ?? throw new ArgumentNullException(nameof(next));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _env = env ?? throw new ArgumentNullException(nameof(env));
+    }
 
-        public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
         {
-            try
-            {
-                // Jatketaan requestin käsittelyä
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                // Käsitellään poikkeus
-                await HandleExceptionAsync(context, ex);
-            }
+            await _next(context);
         }
-
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        catch (Exception ex)
         {
-            context.Response.ContentType = "application/json";
+            _logger.LogError(ex, "Unhandled exception occurred while processing request {Method} {Path}",
+                context.Request?.Method, context.Request?.Path);
 
-            // Esimerkkinä palautetaan aina 500 Internal Server Error
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var response = new ErrorResponseDto
-            {
-                Code = "server_error",
-
-            };
-
-            var json = JsonSerializer.Serialize(response);
-
-            return context.Response.WriteAsync(json);
+            await HandleExceptionAsync(context, ex);
         }
     }
 
-    // Extension-metodi middlewaren helpompaan rekisteröintiin Startupissa/Program.cs
-    public static class ErrorHandlingMiddlewareExtensions
+    private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder)
+
+        if (context.Response.HasStarted)
         {
-            return builder.UseMiddleware<ErrorHandlingMiddleware>();
+            _logger.LogWarning("Response has already started, cannot write error response for request {Path}", context.Request?.Path);
+
+            throw exception;
         }
+
+
+        var status = HttpStatusCode.InternalServerError;
+        var errorCode = "server_error";
+
+        switch (exception)
+        {
+            case UnauthorizedAccessException:
+                status = HttpStatusCode.Unauthorized;
+                errorCode = "unauthorized";
+                break;
+            case KeyNotFoundException:
+                status = HttpStatusCode.NotFound;
+                errorCode = "not_found";
+                break;
+        }
+
+        context.Response.Clear();
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)status;
+
+
+        var response = new ErrorResponseDto
+        {
+            Code = errorCode,
+            Message = _env.IsDevelopment() ? exception.Message : "An unexpected error occurred."
+        };
+
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var json = JsonSerializer.Serialize(response, options);
+
+        return context.Response.WriteAsync(json);
+    }
+}
+
+// Extension
+public static class ErrorHandlingMiddlewareExtensions
+{
+    public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<ErrorHandlingMiddleware>();
     }
 }
