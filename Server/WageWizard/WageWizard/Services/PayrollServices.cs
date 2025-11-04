@@ -2,7 +2,7 @@
 
 namespace WageWizard.Services
 {
-    public class PayrollServices
+    public static class PayrollServices
     {
         public static decimal CalculateTyELAmount(decimal grossSalary, decimal tyelPercent)
         {
