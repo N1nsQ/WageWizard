@@ -1,6 +1,6 @@
 ﻿namespace WageWizard.Utils
 {
-    public class EmployeeHelperFunctions
+    public static class EmployeeHelperFunctions
     {
         public static int CalculateAge(DateTime dateOfBirth)
         {
