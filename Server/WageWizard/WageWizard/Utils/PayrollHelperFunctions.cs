@@ -2,7 +2,7 @@
 
 namespace WageWizard.Utils
 {
-    public class PayrollHelperFunctions
+    public static class PayrollHelperFunctions
     {
         public static decimal CalculateTyEL(int age, int year, PayrollContext context)
         {
