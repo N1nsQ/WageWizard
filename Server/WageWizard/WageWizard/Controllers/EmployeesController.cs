@@ -13,6 +13,7 @@ namespace WageWizard.Controllers
         private readonly PayrollContext _context = context;
 
         const string employeesNotFound = "backend_error_messages.employees_not_found";
+        const string databaseConnectionError = "Database connection error: ";
 
         // Haetaan kaikki työntekijät
         [HttpGet("employees")]
@@ -97,42 +98,64 @@ namespace WageWizard.Controllers
         [HttpGet("paymentDetails")]
         public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetails()
         {
-
-            var employees = await _context.Employees
+            try
+            {
+                var employees = await _context.Employees
                 .OrderBy(e => e.LastName)
                 .ToListAsync();
 
-            var result = employees.Select(e =>
-            {
-                var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
-                var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
-                var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
-
-                return new EmployeesSalaryDetailsDto
+                if (employees.Count == 0)
                 {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Age = age,
-                    TyELPercent = tyelPercent,
-                    UnemploymentInsurance = unemploymentInsurance,
-                    TaxPercentage = e.TaxPercentage,
-                    SalaryAmount = e.SalaryAmount
-                };
-            }).ToList();
+                    var error = new ErrorResponseDto
+                    {
+                        Code = employeesNotFound
+                    };
 
-            if (employees == null)
-            {
-                var error = new ErrorResponseDto
+                    return NotFound(error);
+
+                }
+
+                var result = employees.Select(e =>
                 {
-                    Code = employeesNotFound
-                };
+                    var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
+                    var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
+                    var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
 
-                return NotFound(error);
+                    return new EmployeesSalaryDetailsDto
+                    {
+                        Id = e.Id,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        Age = age,
+                        TyELPercent = tyelPercent,
+                        UnemploymentInsurance = unemploymentInsurance,
+                        TaxPercentage = e.TaxPercentage,
+                        SalaryAmount = e.SalaryAmount
+                    };
+                }).ToList();
+
+                return Ok(result);
 
             }
 
-            return Ok(result);
+            catch (Exception ex)
+            {
+                var error = new ErrorResponseDto
+                {
+                    Code = databaseConnectionError,
+                    Message = ex.Message
+                };
+
+                return StatusCode(StatusCodes.Status500InternalServerError, error);
+            }
+
+
+
+
+
+
+
+
         }
         // Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
         [HttpGet("PayrollDetailsById")]
