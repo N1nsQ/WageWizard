@@ -158,5 +158,6 @@ coverage/
 # Test coverage output
 coverage.xml
 coverage-report/
+coveragereport/
 coverage.cobertura.xml
 TestResults/
