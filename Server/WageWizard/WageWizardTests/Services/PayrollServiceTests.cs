@@ -10,13 +10,6 @@ namespace WageWizardTests.Services
 {
     public class PayrollServiceTests
     {
-        private readonly PayrollServices _payrollServices;
-
-        public PayrollServiceTests()
-        {
-            _payrollServices = new PayrollServices();
-        }
-
         private const decimal TyelBasic = 0.0715m;
         private const decimal TyelSenior = 0.0865m;
         internal const decimal UnemploymentInsurancePercent = 0.0059m;
