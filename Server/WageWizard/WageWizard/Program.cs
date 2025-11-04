@@ -46,4 +46,5 @@ app.UseAuthorization();
 app.UseImageSharp();
 app.UseStaticFiles();
 app.MapControllers();
-app.Run();
+
+await app.RunAsync();
