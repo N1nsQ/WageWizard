@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WageWizard.Models;
 using SixLabors.ImageSharp.Web.DependencyInjection;
+using WageWizard.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,8 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
+
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 var app = builder.Build();
 

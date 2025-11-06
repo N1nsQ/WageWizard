@@ -2,142 +2,134 @@
 using Microsoft.EntityFrameworkCore;
 using WageWizard.DTOs;
 using WageWizard.Models;
+using WageWizard.Repositories;
 using WageWizard.Utils;
 
 namespace WageWizard.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmployeesController(PayrollContext context) : ControllerBase
+    public class EmployeesController : ControllerBase
     {
-        private readonly PayrollContext _context = context;
+        //private readonly PayrollContext _context = context;
+        private readonly IEmployeeRepository _employeeRepository;
 
         const string employeesNotFound = "backend_error_messages.employees_not_found";
         const string databaseConnectionError = "Database connection error: ";
 
-        // Haetaan kaikki työntekijät
-        [HttpGet("employees")]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public EmployeesController(IEmployeeRepository employeeRepository)
         {
-            return await _context.Employees.ToListAsync();
+            _employeeRepository = employeeRepository;
         }
 
-        // Tiedot Työntekijät-sivulle taulukkoon, lyhyt kooste
-        [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummary()
+        // Get all information from all of the employees
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
-            
-
-            var employees = await _context.Employees
-                .OrderBy(e => e.LastName)
-                .Select(e => new EmployeesSummaryDto
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    JobTitle = e.JobTitle,
-                    ImageUrl = e.ImageUrl,
-                    Email = e.Email
-                })
-                .ToListAsync();
-
-            if (employees == null)
-            {
-                var error = new ErrorResponseDto
-                {
-                    Code = employeesNotFound
-                };
-
-            return NotFound(error);
-
-            }
-
+            var employees = await _employeeRepository.GetAllAsync();
             return Ok(employees);
         }
 
-        // Haetaan yksittäisen työntekijän tiedot Työntekijä-sivun näkymään
-        [HttpGet("id")]
-        public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetEmployeeDetails(Guid id)
-        {
-            var employee = await _context.Employees
-                .Where(e => e.Id == id)
-                .Select(e => new EmployeeDetailsDto
-                {
-                    Id=e.Id,
-                    FirstName=e.FirstName,
-                    LastName=e.LastName,
-                    Age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
-                    JobTitle =e.JobTitle,
-                    ImageUrl = e.ImageUrl,
-                    Email = e.Email,
-                    HomeAddress = e.HomeAddress,
-                    PostalCode = e.PostalCode,
-                    City = e.City,
-                    BankAccountNumber = e.BankAccountNumber,
-                    TaxPercentage = e.TaxPercentage,
-                    SalaryAmount = e.SalaryAmount,
-                    StartDate = e.StartDate,
-                 })
-                 .FirstOrDefaultAsync();
-
-            if (employee == null)
-            {
-                var error = new ErrorResponseDto
-                {
-                    Code = employeesNotFound
-                };
-
-                return NotFound(error);
-
-            }
-
-            return Ok(employee);
-        }
-
-        // Haentaan kaikkien työntekijöiden tiedot palkanlaskentaa varten
-        [HttpGet("paymentDetails")]
-        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetails()
+        // Get some basic information from all employees
+        // These details are shown in the summary-table in frontend
+        [HttpGet("summary")]
+        public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
         {
             try
             {
-                var employees = await _context.Employees
-                .OrderBy(e => e.LastName)
-                .ToListAsync();
+                var employees = await _employeeRepository.GetEmployeesSummaryAsync();
 
-                if (employees.Count == 0)
+                if (employees == null || !employees.Any())
                 {
                     var error = new ErrorResponseDto
                     {
                         Code = employeesNotFound
                     };
-
                     return NotFound(error);
-
                 }
 
-                var result = employees.Select(e =>
-                {
-                    var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
-                    var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
-                    var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
-
-                    return new EmployeesSalaryDetailsDto
-                    {
-                        Id = e.Id,
-                        FirstName = e.FirstName,
-                        LastName = e.LastName,
-                        Age = age,
-                        TyELPercent = tyelPercent,
-                        UnemploymentInsurance = unemploymentInsurance,
-                        TaxPercentage = e.TaxPercentage,
-                        SalaryAmount = e.SalaryAmount
-                    };
-                }).ToList();
-
-                return Ok(result);
-
+                return Ok(employees);
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"{databaseConnectionError}{ex.Message}");
+            }
+        }
 
+        //// EmployeeDetails page
+        [HttpGet("id")]
+        public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Guid id)
+        {
+            try
+            {
+                var employee = await _employeeRepository.GetByIdAsync(id);
+
+                if (employee == null)
+                {
+                    var error = new ErrorResponseDto
+                    {
+                        Code = employeesNotFound
+                    };
+                    return NotFound(error);
+                }
+
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"{databaseConnectionError}{ex.Message}");
+            }
+        }
+
+        //// Haentaan kaikkien työntekijöiden tiedot palkanlaskentaa varten
+        [HttpGet("paymentDetails")]
+        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
+        {
+            try
+            {
+                var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
+
+                if (!employees.Any())
+                {
+                    var error = new ErrorResponseDto
+                    {
+                        Code = employeesNotFound
+                    };
+                    return NotFound(error);
+                }
+
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorResponseDto
+                {
+                    Code = databaseConnectionError,
+                    Message = ex.Message
+                };
+
+                return StatusCode(StatusCodes.Status500InternalServerError, error);
+            }
+        }
+
+        //// Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
+        [HttpGet("PayrollDetailsById")]
+        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsByIdAsync(Guid id)
+        {
+            try
+            {
+                var employeeDto = await _employeeRepository.GetPayrollDetailsByIdAsync(id);
+
+                if (employeeDto == null)
+                {
+                    return NotFound(new ErrorResponseDto
+                    {
+                        Code = employeesNotFound
+                    });
+                }
+
+                return Ok(employeeDto);
+            }
             catch (Exception ex)
             {
                 var error = new ErrorResponseDto
@@ -149,47 +141,6 @@ namespace WageWizard.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, error);
             }
 
-
-
-
-
-
-
-
         }
-        // Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
-        [HttpGet("PayrollDetailsById")]
-        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsById (Guid id)
-        {
-            var employee = await _context.Employees
-        .FirstOrDefaultAsync(e => e.Id == id);
-
-            if (employee == null)
-            {
-                return NotFound(new ErrorResponseDto
-                {
-                    Code = employeesNotFound
-                });
-            }
-
-            var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
-            var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _context);
-            var UnemploymentInsuranceRate = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _context);
-
-            var employeeDto = new EmployeesSalaryDetailsDto
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Age = age,
-                TyELPercent = tyelPercent,
-                UnemploymentInsurance = UnemploymentInsuranceRate,
-                TaxPercentage = employee.TaxPercentage,
-                SalaryAmount = employee.SalaryAmount
-            };
-
-            return Ok(employeeDto);
-        }
-
     }
 }
