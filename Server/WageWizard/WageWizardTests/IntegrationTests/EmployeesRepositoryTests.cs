@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
@@ -352,6 +353,28 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
+        public async Task GetEmployeesSalaryPaymentDetails_WhenRepositoryThrows_ReturnsInternalServerError()
+        {
+            // Arrange
+            var mockRepo = new Mock<IEmployeeRepository>();
+            mockRepo.Setup(r => r.GetEmployeesSalaryPaymentDetailsAsync())
+                .ThrowsAsync(new Exception("Simulated database failure"));
+
+            var controller = new EmployeesController(mockRepo.Object);
+
+            // Act
+            var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
+
+            // Assert
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
+
+            var error = Assert.IsType<ErrorResponseDto>(objectResult.Value);
+            Assert.Equal("Database connection error: ", error.Code);
+            Assert.Contains("Simulated database failure", error.Message);
+        }
+
+        [Fact]
         public async Task GetPayrollDetailsById_WhenEmployeeExists_ReturnsDto()
         {
             var options = new DbContextOptionsBuilder<PayrollContext>()
@@ -398,7 +421,46 @@ namespace WageWizardTests.IntegrationTests
             Assert.InRange(dto.UnemploymentInsurance, 0, 0.1m);
         }
 
+        [Fact]
+        public async Task GetPayrollDetailsByIdAsync_WhenEmployeeNotFound_ReturnsNotFound()
+        {
+            // Arrange
+            var mockRepo = new Mock<IEmployeeRepository>();
+            mockRepo.Setup(r => r.GetPayrollDetailsByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((EmployeesSalaryDetailsDto?)null); // simuloi että työntekijää ei löytynyt
 
+            var controller = new EmployeesController(mockRepo.Object);
+
+            // Act
+            var result = await controller.GetPayrollDetailsByIdAsync(Guid.NewGuid());
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var error = Assert.IsType<ErrorResponseDto>(notFoundResult.Value);
+            Assert.Equal("backend_error_messages.employees_not_found", error.Code);
+        }
+
+        [Fact]
+        public async Task GetPayrollDetailsByIdAsync_WhenRepositoryThrows_ReturnsInternalServerError()
+        {
+            // Arrange
+            var mockRepo = new Mock<IEmployeeRepository>();
+            mockRepo.Setup(r => r.GetPayrollDetailsByIdAsync(It.IsAny<Guid>()))
+                .ThrowsAsync(new Exception("Simulated database failure"));
+
+            var controller = new EmployeesController(mockRepo.Object);
+
+            // Act
+            var result = await controller.GetPayrollDetailsByIdAsync(Guid.NewGuid());
+
+            // Assert
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
+
+            var error = Assert.IsType<ErrorResponseDto>(objectResult.Value);
+            Assert.Equal("Database connection error: ", error.Code);
+            Assert.Contains("Simulated database failure", error.Message);
+        }
 
     }
 }
