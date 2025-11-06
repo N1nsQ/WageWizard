@@ -331,6 +331,27 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
+        public async Task GetEmployeesSalaryPaymentDetails_WhenNoEmployees_ReturnsNotFound()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<PayrollContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            using var context = new PayrollContext(options);
+            var repository = new EmployeeRepository(context);
+            var controller = new EmployeesController(repository);
+
+            // Act
+            var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var error = Assert.IsType<ErrorResponseDto>(notFoundResult.Value);
+            Assert.Equal("backend_error_messages.employees_not_found", error.Code);
+        }
+
+        [Fact]
         public async Task GetPayrollDetailsById_WhenEmployeeExists_ReturnsDto()
         {
             var options = new DbContextOptionsBuilder<PayrollContext>()
