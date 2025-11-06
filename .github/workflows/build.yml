@@ -57,3 +57,22 @@ jobs:
           dotnet build --no-incremental
           dotnet test WageWizardTests /p:CollectCoverage=true /p:CoverletOutput=.\WageWizardTests\coverage.xml /p:CoverletOutputFormat=opencover --no-build
           & $scanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Generate HTML coverage report
+        shell: powershell
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator -reports:Server/WageWizard/WageWizardTests/coverage.xml -targetdir:Server/WageWizard/coveragereport
+
+      - name: Upload coverage report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: Server/WageWizard/coveragereport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: Server/WageWizard/WageWizardTests/coverage.xml
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
