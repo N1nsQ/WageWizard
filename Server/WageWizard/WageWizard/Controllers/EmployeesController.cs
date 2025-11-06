@@ -39,7 +39,7 @@ namespace WageWizard.Controllers
             {
                 var employees = await _employeeRepository.GetEmployeesSummaryAsync();
 
-                if (employees == null || !employees.Any())
+                if (!employees.Any())
                 {
                     var error = new ErrorResponseDto
                     {

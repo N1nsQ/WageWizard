@@ -16,7 +16,7 @@ namespace WageWizardTests.IntegrationTests
 {
     public class EmployeesRepositoryTests
     {
-        private PayrollContext CreateInMemoryContext()
+        private static PayrollContext CreateInMemoryContext()
         {
             var options = new DbContextOptionsBuilder<PayrollContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
