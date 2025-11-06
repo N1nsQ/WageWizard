@@ -24,7 +24,7 @@ namespace WageWizard.Controllers
 
         // Get all information from all of the employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Employee>>> GetAllAsync()
         {
             var employees = await _employeeRepository.GetAllAsync();
             return Ok(employees);
