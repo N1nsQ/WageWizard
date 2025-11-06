@@ -158,6 +158,48 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
+        public async Task GetEmployeesSummaryAsync_WhenRepositoryReturnsData_ReturnsOkResult()
+        {
+            // Arrange
+            var employees = new List<EmployeesSummaryDto>
+        {
+            new EmployeesSummaryDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Anna",
+                LastName = "Andersson",
+                Email = "anna@example.com",
+                JobTitle = "Developer"
+            },
+            new EmployeesSummaryDto
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Bertil",
+                LastName = "Berg",
+                Email = "bertil@example.com",
+                JobTitle = "Designer"
+            }
+        };
+
+                var mockRepo = new Mock<IEmployeeRepository>();
+                mockRepo.Setup(r => r.GetEmployeesSummaryAsync()).ReturnsAsync(employees);
+
+                var controller = new EmployeesController(mockRepo.Object);
+
+                // Act
+                var result = await controller.GetEmployeesSummaryAsync();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(result.Result);
+                var returnedEmployees = Assert.IsAssignableFrom<IEnumerable<EmployeesSummaryDto>>(okResult.Value);
+                Assert.Equal(2, returnedEmployees.Count());
+                Assert.Contains(returnedEmployees, e => e.FirstName == "Anna");
+                Assert.Contains(returnedEmployees, e => e.FirstName == "Bertil");
+
+                mockRepo.Verify(r => r.GetEmployeesSummaryAsync(), Times.Once);
+            }
+
+        [Fact]
         public async Task GetByIdAsync_WhenEmployeeExists_ReturnsEmployeeDetails()
         {
             // Arrange
