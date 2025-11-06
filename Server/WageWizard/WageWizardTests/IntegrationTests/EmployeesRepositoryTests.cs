@@ -25,6 +25,51 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
+        public void EmployeesController_CanBeConstructed_SetsRepository()
+        {
+            var mockRepo = new Mock<IEmployeeRepository>();
+            var controller = new EmployeesController(mockRepo.Object);
+
+            Assert.NotNull(controller);
+            var field = typeof(EmployeesController)
+                .GetField("_employeeRepository", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            Assert.NotNull(field);
+            var value = field!.GetValue(controller);
+            Assert.Same(mockRepo.Object, value);
+        }
+
+        [Fact]
+        public async Task GetEmployees_WhenRepositoryReturnsData_ReturnsOkResult()
+        {
+            // Arrange
+            var employees = new List<Employee>
+            {
+                new Employee { Id = Guid.NewGuid(), FirstName = "Anna", LastName = "Virtanen" },
+                new Employee { Id = Guid.NewGuid(), FirstName = "Matti", LastName = "Meikäläinen" }
+            };
+
+            var mockRepo = new Mock<IEmployeeRepository>();
+            mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(employees);
+
+            var controller = new EmployeesController(mockRepo.Object);
+
+            // Act
+            var result = await controller.GetEmployees();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnedEmployees = Assert.IsAssignableFrom<IEnumerable<Employee>>(okResult.Value);
+
+            Assert.Equal(2, returnedEmployees.Count());
+            Assert.Contains(returnedEmployees, e => e.FirstName == "Anna");
+            Assert.Contains(returnedEmployees, e => e.FirstName == "Matti");
+
+            // Lisäksi voidaan varmistaa, että repositoryn metodia kutsuttiin kerran
+            mockRepo.Verify(r => r.GetAllAsync(), Times.Once);
+        }
+
+        [Fact]
         public async Task GetAllAsync_ReturnsAllEmployees()
         {
             // Arrange
