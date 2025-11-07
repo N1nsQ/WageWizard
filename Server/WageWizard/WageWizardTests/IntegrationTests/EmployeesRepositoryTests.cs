@@ -66,7 +66,6 @@ namespace WageWizardTests.IntegrationTests
             Assert.Contains(returnedEmployees, e => e.FirstName == "Anna");
             Assert.Contains(returnedEmployees, e => e.FirstName == "Matti");
 
-            // Lisäksi voidaan varmistaa, että repositoryn metodia kutsuttiin kerran
             mockRepo.Verify(r => r.GetAllAsync(), Times.Once);
         }
 
@@ -304,7 +303,6 @@ namespace WageWizardTests.IntegrationTests
                 }
             );
 
-            // 🔹 Lisää testidata helper-funktioita varten
             context.PayrollRates.Add(new PayrollRates
             {
                 Year = DateTime.Now.Year,
@@ -326,7 +324,6 @@ namespace WageWizardTests.IntegrationTests
             var dtoList = Assert.IsAssignableFrom<IEnumerable<EmployeesSalaryDetailsDto>>(okResult.Value);
             Assert.Equal(2, dtoList.Count());
 
-            // Vapaaehtoinen lisätarkistus
             Assert.All(dtoList, dto =>
             {
                 Assert.InRange(dto.TyELPercent, 0, 0.1m);
@@ -430,7 +427,7 @@ namespace WageWizardTests.IntegrationTests
             // Arrange
             var mockRepo = new Mock<IEmployeeRepository>();
             mockRepo.Setup(r => r.GetPayrollDetailsByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((EmployeesSalaryDetailsDto?)null); // simuloi että työntekijää ei löytynyt
+                .ReturnsAsync((EmployeesSalaryDetailsDto?)null); 
 
             var controller = new EmployeesController(mockRepo.Object);
 
