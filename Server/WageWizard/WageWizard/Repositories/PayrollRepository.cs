@@ -41,19 +41,23 @@ namespace WageWizard.Repositories
             var unemploymentPercent = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
             var taxPercent = employee.TaxPercentage ?? 0m;
 
-            var result = PayrollServices.CollectSalaryStatementCalculations(
+            var calc = PayrollServices.CollectSalaryStatementCalculations(
                 employee.SalaryAmount ?? 0m,
                 taxPercent,
                 tyelPercent,
                 unemploymentPercent
-            )
-            with
-            {
-                EmployeeId = employee.Id,
-                EmployeeName = $"{employee.FirstName} {employee.LastName}",
-                GrossSalary = employee.SalaryAmount ?? 0m,
-                TaxPercent = employee.TaxPercentage ?? 0m
-            };
+            );
+
+            var result = new SalaryStatementCalculationDto(
+                EmployeeId: employee.Id,
+                EmployeeName: $"{employee.FirstName} {employee.LastName}",
+                GrossSalary: employee.SalaryAmount ?? 0m,
+                TaxPercent: employee.TaxPercentage ?? 0m,
+                WithholdingTax: calc.WithholdingTax,
+                TyELAmount: calc.TyELAmount,
+                UnemploymentInsuranceAmount: calc.UnemploymentInsuranceAmount,
+                NetSalary: calc.NetSalary
+            );
 
             return result;
         }

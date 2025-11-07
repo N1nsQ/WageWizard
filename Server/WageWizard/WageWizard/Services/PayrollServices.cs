@@ -42,20 +42,20 @@ namespace WageWizard.Services
 
         }
 
-        public static SalaryStatementCalculationDto CollectSalaryStatementCalculations(decimal grossSalary, decimal taxPercent, decimal tyelPercent, decimal unemploymentInsurancePercent)
+        public static SalaryCalculationResultsDto CollectSalaryStatementCalculations(decimal grossSalary, decimal taxPercent, decimal tyelPercent, decimal unemploymentInsurancePercent)
         {
             decimal tyelAmount = CalculateTyELAmount(grossSalary, tyelPercent);
             decimal unemploymentInsuranceAmount = CalculateUnemploymentInsuranceAmount(grossSalary, unemploymentInsurancePercent);
             decimal withholdingTax = CalculateWithholdingTaxAmount(grossSalary, taxPercent);
             decimal netSalary = CalculateNetSalaryAmount(grossSalary,taxPercent, tyelPercent, unemploymentInsurancePercent);
 
-            return new SalaryStatementCalculationDto
-            {
-                WithholdingTax = withholdingTax,
-                TyELAmount = tyelAmount,
-                UnemploymentInsuranceAmount = unemploymentInsuranceAmount,
-                NetSalary = netSalary
-            };
+            return new SalaryCalculationResultsDto
+            (
+                withholdingTax,
+                tyelAmount,
+                unemploymentInsuranceAmount,
+                netSalary
+            );
     
         }
     }

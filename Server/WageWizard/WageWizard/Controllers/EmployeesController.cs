@@ -11,7 +11,6 @@ namespace WageWizard.Controllers
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
-        //private readonly PayrollContext _context = context;
         private readonly IEmployeeRepository _employeeRepository;
 
         const string employeesNotFound = "backend_error_messages.employees_not_found";
