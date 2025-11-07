@@ -2,13 +2,13 @@
 
 namespace WageWizard.DTOs
 {
-    public class LoginResponseDto
+    public record LoginResponseDto
     {
-        public bool Success { get; set; }
-        public string? Token { get; set; }
-        public string? Message { get; set; }
-        public Guid UserId { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public UserRole Role { get; set; }
+        public bool Success { get; init; }
+        public string? Token { get; init; }
+        public string? Message { get; init; }
+        public Guid UserId { get; init; }
+        public string Username { get; init; } = string.Empty;
+        public UserRole Role { get; init; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace WageWizard.DTOs
 {
-    public class ErrorResponseDto
+    public record ErrorResponseDto
     {
-        public string Code { get; set; } = string.Empty;
-        public string? Message { get; set; }
+        public string Code { get; init; } = string.Empty;
+        public string? Message { get; init; }
     }
 }

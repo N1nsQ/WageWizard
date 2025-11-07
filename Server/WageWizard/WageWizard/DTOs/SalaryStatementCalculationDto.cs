@@ -1,18 +1,16 @@
 ﻿namespace WageWizard.DTOs
 {
-    public class SalaryStatementCalculationDto
-    {
+    public record SalaryStatementCalculationDto(
         // Employee information
-        public Guid EmployeeId { get; set; }
-        public string? EmployeeName { get; set; }
-        public decimal GrossSalary { get; set; }
-        public decimal TaxPercent { get; set; }
-       
-
+        Guid EmployeeId,
+        string? EmployeeName,
+        decimal GrossSalary,
+        decimal TaxPercent,
         // Calculation results
-        public decimal WithholdingTax {  get; set; }
-        public decimal TyELAmount { get; set; }
-        public decimal UnemploymentInsuranceAmount { get; set; }
-        public decimal NetSalary { get; set; }
-    }
+        decimal WithholdingTax,
+        decimal TyELAmount,
+        decimal UnemploymentInsuranceAmount,
+        decimal NetSalary
+
+        );
 }
