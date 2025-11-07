@@ -33,6 +33,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
 
 var app = builder.Build();
 
