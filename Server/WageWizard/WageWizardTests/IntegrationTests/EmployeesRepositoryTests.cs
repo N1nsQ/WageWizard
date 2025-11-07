@@ -165,21 +165,24 @@ namespace WageWizardTests.IntegrationTests
             var employees = new List<EmployeesSummaryDto>
         {
             new EmployeesSummaryDto
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Anna",
-                LastName = "Andersson",
-                Email = "anna@example.com",
-                JobTitle = "Developer"
-            },
+            (
+                Guid.NewGuid(),
+                "Anna",
+                "Andersson",
+                "Developer",
+                "",
+                "anna@example.com"
+                
+            ),
             new EmployeesSummaryDto
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Bertil",
-                LastName = "Berg",
-                Email = "bertil@example.com",
-                JobTitle = "Designer"
-            }
+            (
+                Guid.NewGuid(),
+                "Bertil",
+                "Berg",
+                "Designer",
+                "",
+                "bertil@example.com"
+            )
         };
 
                 var mockRepo = new Mock<IEmployeeRepository>();

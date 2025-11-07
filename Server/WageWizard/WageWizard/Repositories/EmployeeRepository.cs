@@ -24,14 +24,14 @@ namespace WageWizard.Repositories
             return await _payrollContext.Employees
                 .OrderBy(e => e.LastName)
                 .Select(e => new EmployeesSummaryDto
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    JobTitle = e.JobTitle,
-                    ImageUrl = e.ImageUrl,
-                    Email = e.Email
-                })
+                (
+                    e.Id,
+                    e.FirstName,
+                    e.LastName,
+                    e.JobTitle,
+                    e.ImageUrl,
+                    e.Email
+                ))
                 .ToListAsync();
         }
 
@@ -40,22 +40,22 @@ namespace WageWizard.Repositories
             return await _payrollContext.Employees
                 .Where(e => e.Id == id)
                 .Select(e => new EmployeeDetailsDto
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
-                    JobTitle = e.JobTitle,
-                    ImageUrl = e.ImageUrl,
-                    Email = e.Email,
-                    HomeAddress = e.HomeAddress,
-                    PostalCode = e.PostalCode,
-                    City = e.City,
-                    BankAccountNumber = e.BankAccountNumber,
-                    TaxPercentage = e.TaxPercentage,
-                    SalaryAmount = e.SalaryAmount,
-                    StartDate = e.StartDate,
-                })
+                (
+                    e.Id,
+                    e.FirstName,
+                    e.LastName,
+                    EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
+                    e.JobTitle,
+                    e.ImageUrl,
+                    e.Email,
+                    e.HomeAddress,
+                    e.PostalCode,
+                    e.City,
+                    e.BankAccountNumber,
+                    e.TaxPercentage,
+                    e.SalaryAmount,
+                    e.StartDate
+                ))
                 .FirstOrDefaultAsync();
         }
 
@@ -72,16 +72,16 @@ namespace WageWizard.Repositories
                 var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
 
                 return new EmployeesSalaryDetailsDto
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Age = age,
-                    TyELPercent = tyelPercent,
-                    UnemploymentInsurance = unemploymentInsurance,
-                    TaxPercentage = e.TaxPercentage,
-                    SalaryAmount = e.SalaryAmount
-                };
+                (
+                    e.Id,
+                    e.FirstName,
+                    e.LastName,
+                    age,
+                    tyelPercent,
+                    unemploymentInsurance,
+                    e.TaxPercentage,
+                    e.SalaryAmount
+                );
             }).ToList();
 
             return result;
@@ -100,16 +100,16 @@ namespace WageWizard.Repositories
             var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
 
             return new EmployeesSalaryDetailsDto
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Age = age,
-                TyELPercent = tyelPercent,
-                UnemploymentInsurance = unemploymentInsurance,
-                TaxPercentage = employee.TaxPercentage,
-                SalaryAmount = employee.SalaryAmount
-            };
+            (
+                employee.Id,
+                employee.FirstName,
+                employee.LastName,
+                age,
+                tyelPercent,
+                unemploymentInsurance,
+                employee.TaxPercentage,
+                employee.SalaryAmount
+            );
         }
 
     }
