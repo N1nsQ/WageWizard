@@ -6,7 +6,7 @@ namespace WageWizard.Repositories
     public interface IPayrollRepository
     {
         Task<IEnumerable<PayrollRatesDto>> GetPayrollRatesAsync();
-        Task<SalaryCalculationResultsDto?> CalculateSalaryStatementAsync(Guid employeeId);
+        Task<SalaryStatementCalculationDto?> CalculateSalaryStatementAsync(Guid employeeId);
 
     }
 }
