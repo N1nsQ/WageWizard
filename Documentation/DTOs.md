@@ -34,7 +34,7 @@ _Updated Nov 10, 2025_
 
 - Provides a concise summary of employee information.
 - All employees are listed in the application, showing only the most essential details.
-  - Includes a link to view full details.
+  - List offers a link to view full details (information from EmployeeDetailsDto).
 
 _Updated Nov 10, 2025_
 
@@ -59,7 +59,7 @@ _Updated Nov 10, 2025_
 - Represents the response returned from a login attempt.
 - Success: indicates whether the login was successful.
 - Message: an optional message, e.g., when login fails.
-- UserRole: specifies the user’s role.
+- UserRole: specifies the user’s role (if login was successful).
   - Examples: test user, admin, employee.
 
 _Updated Nov 10, 2025_
