@@ -34,7 +34,7 @@ _Updated Nov 10, 2025_
 
 - Provides a concise summary of employee information.
 - All employees are listed in the application, showing only the most essential details.
-  - List orrers a link to view full details (information from EmployeeDetailsDto).
+  - List offers a link to view full details (information from EmployeeDetailsDto).
 
 _Updated Nov 10, 2025_
 
