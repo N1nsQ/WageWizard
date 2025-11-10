@@ -31,7 +31,7 @@ const SalaryStatementFields = () => {
         (selectedEmployee.tyELPercent * 100).toFixed(2)
       );
       const unemploymentPercent = Number(
-        (selectedEmployee.unemploymentInsurance * 100).toFixed(2)
+        (selectedEmployee.unemploymentInsurancePercent * 100).toFixed(2)
       );
 
       console.log("Employee TVM: ", unemploymentPercent);

@@ -6,7 +6,7 @@
         string? LastName,
         int? Age,
         decimal TyELPercent,
-        decimal UnemploymentInsurance,
+        decimal UnemploymentInsurancePercent,
         decimal? TaxPercentage,
         decimal? SalaryAmount
         );

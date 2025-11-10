@@ -4,7 +4,7 @@ export interface EmployeesSalaryDetails {
   lastName: string;
   age: number;
   tyELPercent: number;
-  unemploymentInsurance: number;
+  unemploymentInsurancePercent: number;
   taxPercentage: number;
   salaryAmount: number;
 }

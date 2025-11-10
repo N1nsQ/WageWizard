@@ -327,7 +327,7 @@ namespace WageWizardTests.IntegrationTests
             Assert.All(dtoList, dto =>
             {
                 Assert.InRange(dto.TyELPercent, 0, 0.1m);
-                Assert.InRange(dto.UnemploymentInsurance, 0, 0.1m);
+                Assert.InRange(dto.UnemploymentInsurancePercent, 0, 0.1m);
             });
         }
 
@@ -418,7 +418,7 @@ namespace WageWizardTests.IntegrationTests
             Assert.Equal("Anna", dto.FirstName);
             Assert.Equal("Virtanen", dto.LastName);
             Assert.InRange(dto.TyELPercent, 0, 0.1m);
-            Assert.InRange(dto.UnemploymentInsurance, 0, 0.1m);
+            Assert.InRange(dto.UnemploymentInsurancePercent, 0, 0.1m);
         }
 
         [Fact]
