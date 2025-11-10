@@ -36,7 +36,7 @@ namespace WageWizardTests.Utils
         public void CalculateTyEL_WhenAgeOutOfRange_ReturnsZero(int age)
         {
             using var context = CreateContextWithRates(DateTime.Now.Year);
-            var result = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, context);
+            var result = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, context);
             Assert.Equal(0m, result);
         }
 
@@ -48,7 +48,7 @@ namespace WageWizardTests.Utils
         public void CalculateTyEL_WhenAgeBetween17And67_ReturnsBasicRate(int age)
         {
             using var context = CreateContextWithRates(DateTime.Now.Year);
-            var result = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, context);
+            var result = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, context);
             var expected = (age < 17 || age > 67) ? 0m : 0.0715m;
             Assert.Equal(expected, result);
         }
@@ -60,7 +60,7 @@ namespace WageWizardTests.Utils
         public void CalculateTyEL_WhenAgeBetween53And62_ReturnsSeniorRate(int age)
         {
             using var context = CreateContextWithRates(DateTime.Now.Year);
-            var result = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, context);
+            var result = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, context);
             Assert.Equal(0.0865m, result);
         }
 
@@ -74,7 +74,7 @@ namespace WageWizardTests.Utils
             using var context = new PayrollContext(options);
 
             var ex = Assert.Throws<KeyNotFoundException>(() =>
-                PayrollHelperFunctions.CalculateTyEL(30, 2024, context));
+                PayrollHelperFunctions.GetTyELPercent(30, 2024, context));
 
             Assert.Contains("TyEL rates not found for year", ex.Message);
         }
@@ -86,7 +86,7 @@ namespace WageWizardTests.Utils
         public void CalculateUnemploymentInsurance_WhenAgeOutOfRange_ReturnsZero(int age)
         {
             using var context = CreateContextWithRates(DateTime.Now.Year);
-            var result = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, context);
+            var result = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, context);
             Assert.Equal(0m, result);
         }
 
@@ -101,7 +101,7 @@ namespace WageWizardTests.Utils
             using var context = CreateContextWithRates(DateTime.Now.Year);
 
             // Act
-            var result = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, context);
+            var result = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, context);
 
             // Assert
             Assert.Equal(0.0059m, result);
@@ -119,7 +119,7 @@ namespace WageWizardTests.Utils
 
             // Act & Assert
             var ex = Assert.Throws<KeyNotFoundException>(() =>
-                PayrollHelperFunctions.CalculateUnemploymentInsurace(40, 2024, context));
+                PayrollHelperFunctions.GetUnemploymentInsurancePercent(40, 2024, context));
 
             Assert.Contains("TyEL rates not found for year", ex.Message);
         }

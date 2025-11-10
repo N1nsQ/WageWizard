@@ -37,8 +37,8 @@ namespace WageWizard.Repositories
 
             var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
 
-            var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _payrollContext);
-            var unemploymentPercent = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
+            var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
+            var unemploymentPercent = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
             var taxPercent = employee.TaxPercentage ?? 0m;
 
             var calc = PayrollServices.CollectSalaryStatementCalculations(

@@ -68,8 +68,8 @@ namespace WageWizard.Repositories
             var result = employees.Select(e =>
             {
                 var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
-                var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _payrollContext);
-                var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
+                var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
+                var unemploymentInsurance = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
 
                 return new EmployeesSalaryDetailsDto
                 (
@@ -96,8 +96,8 @@ namespace WageWizard.Repositories
                 return null;
 
             var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
-            var tyelPercent = PayrollHelperFunctions.CalculateTyEL(age, DateTime.Now.Year, _payrollContext);
-            var unemploymentInsurance = PayrollHelperFunctions.CalculateUnemploymentInsurace(age, DateTime.Now.Year, _payrollContext);
+            var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
+            var unemploymentInsurance = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
 
             return new EmployeesSalaryDetailsDto
             (
