@@ -52,6 +52,8 @@ Function behavior:
 | 55  | 2025 | 8.65 %                       | Senior rate    |
 | 68  | 2025 | 0 %                          | Over 67 years  |
 
+_Updated Nov 10, 2025_
+
 ## Calculate Unemployment Insurance Percentage
 
 The employee's salary is subject to an unemployment insurance contribution if the employee is 18 years old or older and under 65. The percentage may change annually, and the current rate is retrieved from the database (`PayrollRates` table). The database is maintained manually.
@@ -90,3 +92,5 @@ Function behavior:
 | 68  | 2025 | 0 %                        | 65 years or older |
 
 \*UI = Unemployment Insurance
+
+_Updated Nov 10, 2025_

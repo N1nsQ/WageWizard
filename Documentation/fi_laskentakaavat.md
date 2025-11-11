@@ -46,6 +46,8 @@ Työntekijän eläkemaksu (TyEL) määräytyy työntekijän iän ja kalenterivuo
 | 55  | 2025  | 8,65 %                      | Senior-prosentti |
 | 68  | 2025  | 0 %                         | Yli 67-vuotias   |
 
+_Päivitetty 10. Marraskuuta 2025_
+
 ## Laske työttömyysvakuutusprosentti
 
 Työntekijän palkasta pidätetään työttömyysvakuutusmaksu, kun työntekijä on täyttänyt 18 vuotta ja on alle 65-vuotias. Prosentti voi muuttua vuosittain, ja ajankohtainen prosentti haetaan tietokannasta (`PayrollRates`-taulu). Tietokantaa ylläpidetään manuaalisesti.
@@ -78,3 +80,5 @@ public static decimal GetUnemploymentInsurancePercent(int age, int year, Payroll
 | 68  | 2025  | 0 %                        | Yli 65-vuotias     |
 
 - \*TVM = Työttömyysvakuutusmaksu
+
+_Päivitetty 10. Marraskuuta 2025_
