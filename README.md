@@ -14,8 +14,9 @@
 (coming soon)
   
 ## Wage Wizard 1.0 now available!
+<img width="1363" height="855" alt="image" src="https://github.com/user-attachments/assets/4e5f8f16-d15c-449a-b505-ea92e8d1da81" />
+Layout updated _21 Nov 2025_
 
-<img width="1521" height="1289" alt="image" src="https://github.com/user-attachments/assets/63e67001-9e9b-44ea-a0a3-9695c8219ccf" />
   
 
 #### Features:
@@ -74,6 +75,7 @@ This view shows detailed information about the selected employee. Editing the in
 
 ### Payroll Page
 <img width="1528" height="1100" alt="image" src="https://github.com/user-attachments/assets/e7dbf223-8ba4-4789-a511-397dc32af368" />  
+<img width="1521" height="1289" alt="image" src="https://github.com/user-attachments/assets/63e67001-9e9b-44ea-a0a3-9695c8219ccf" />
   
 The user selects an employee from the list whose salary they want to calculate. The rest of the form updates automatically based on the selected employee, and the application calculates the salary, showing all applicable deductions (see the first image in this document). All data comes from the database and cannot be edited.
 
