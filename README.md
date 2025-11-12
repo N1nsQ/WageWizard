@@ -15,7 +15,7 @@
   
 ## Wage Wizard 1.0 now available!
 <img width="1363" height="855" alt="image" src="https://github.com/user-attachments/assets/4e5f8f16-d15c-449a-b505-ea92e8d1da81" />
-Layout updated 21 Nov 2025
+Layout updated 12 Nov 2025
 
   
 
