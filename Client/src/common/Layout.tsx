@@ -2,9 +2,9 @@ import { useLocation } from "react-router-dom";
 import NavBar from "./NavBar/NavBar";
 import type { ReactNode } from "react";
 import LanguageSelector from "./LanguageSelector/LanguageSelector";
-import { Box, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 import Logout from "./Logout";
+import WageWizard from "./WageWizard";
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,8 +12,6 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
-  const { t } = useTranslation();
-
   const hideNavBar = location.pathname === "/";
 
   return (
@@ -23,9 +21,7 @@ const Layout = ({ children }: LayoutProps) => {
         {!hideNavBar && <Logout />}
       </Box>
       <Box>
-        <Typography variant="h2" sx={{ marginBottom: 5 }}>
-          {t("common.wage_wizard")}
-        </Typography>
+        <WageWizard />
       </Box>
 
       {!hideNavBar && <NavBar />}
