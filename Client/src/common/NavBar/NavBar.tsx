@@ -11,7 +11,7 @@ const NavBar = () => {
       <Container>
         <Toolbar
           disableGutters
-          sx={{ display: "flex", justifyContent: "space-between" }}
+          sx={{ display: "flex", justifyContent: "center" }}
         >
           <Box>
             <Button color="inherit" component={Link} to="/home">
