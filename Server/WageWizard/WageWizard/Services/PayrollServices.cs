@@ -9,6 +9,7 @@ namespace WageWizard.Services
             decimal tyelAmount = Math.Round((grossSalary * tyelPercent), 2, MidpointRounding.AwayFromZero); 
 
             return tyelAmount;
+
         }
 
         public static decimal CalculateUnemploymentInsuranceAmount(decimal grossSalary, decimal unemploymentInsurancePercent)
@@ -16,13 +17,16 @@ namespace WageWizard.Services
             decimal unemploymentInsuranceAmount = Math.Round((grossSalary * unemploymentInsurancePercent), 2, MidpointRounding.AwayFromZero);
 
             return unemploymentInsuranceAmount;
+
         }
 
         public static decimal CalculateWithholdingTaxAmount(decimal grossSalary, decimal taxPercent)
         {
+
             decimal withholdingTaxAmount = Math.Round((grossSalary * (taxPercent / 100)), 2, MidpointRounding.AwayFromZero);
 
             return withholdingTaxAmount;
+            
         }
 
         public static decimal CalculateNetSalaryAmount(
@@ -38,7 +42,6 @@ namespace WageWizard.Services
             decimal netSalary = Math.Round((grossSalary - (withholdingTax + tyel + unemploymentInsurance)),2, MidpointRounding.AwayFromZero); 
 
             return netSalary;
-
 
         }
 

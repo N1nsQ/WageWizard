@@ -21,7 +21,6 @@ namespace WageWizard.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        // Get all information from all of the employees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
@@ -29,8 +28,6 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
-        // Get some basic information from all employees
-        // These details are shown in the summary-table in frontend
         [HttpGet("summary")]
         public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
         {
@@ -55,7 +52,6 @@ namespace WageWizard.Controllers
             }
         }
 
-        //// EmployeeDetails page
         [HttpGet("id")]
         public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Guid id)
         {
@@ -80,7 +76,6 @@ namespace WageWizard.Controllers
             }
         }
 
-        //// Haentaan kaikkien työntekijöiden tiedot palkanlaskentaa varten
         [HttpGet("paymentDetails")]
         public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
         {
@@ -99,6 +94,7 @@ namespace WageWizard.Controllers
 
                 return Ok(employees);
             }
+
             catch (Exception ex)
             {
                 var error = new ErrorResponseDto
@@ -111,7 +107,6 @@ namespace WageWizard.Controllers
             }
         }
 
-        //// Haetaan yksittäisen työntekijän tiedot palkanlaskentaa varten
         [HttpGet("PayrollDetailsById")]
         public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsByIdAsync(Guid id)
         {

@@ -19,8 +19,6 @@ namespace WageWizard.Controllers
         {
             _repository = repository;
         }
-        
-
 
         [HttpGet("PayrollRates")]
         public async Task<ActionResult<IEnumerable<PayrollRatesDto>>> GetPayrollRatesAsync()
