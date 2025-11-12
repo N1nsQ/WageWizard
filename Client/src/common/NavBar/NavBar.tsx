@@ -1,26 +1,35 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import LanguageSelector from "../LanguageSelector/LanguageSelector";
+import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
+import { Link } from "react-router-dom";
+import "../../App.css";
 
-const NavBar: React.FC = () => {
-  const { t } = useTranslation();
-
+const NavBar = () => {
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      position="relative"
-      p={2}
-    >
-      <Typography variant="h1" component="h1">
-        {t("common.wage_wizard")}
-      </Typography>
-      <Box position="absolute" right={16}>
-        <LanguageSelector />
-      </Box>
-    </Box>
+    <AppBar position="static" className="navbar">
+      <Container>
+        <Toolbar
+          disableGutters
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Box>
+            <Button color="inherit" component={Link} to="/home">
+              Etusivu
+            </Button>
+            <Button color="inherit">Dokumentit</Button>
+            <Button color="inherit" component={Link} to="/salarystatements">
+              Palkkalaskelmat
+            </Button>
+            <Button color="inherit" component={Link} to="/employees">
+              Työntekijät
+            </Button>
+          </Box>
+          <Box>
+            <Button color="inherit" component={Link} to="/">
+              Log Out
+            </Button>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 
