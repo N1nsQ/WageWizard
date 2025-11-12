@@ -35,18 +35,18 @@ COMMON
 
 .top-bar {
   display: flex;
-  justify-content: space-between; /* vasen ja oikea reuna */
+  justify-content: space-between;
   align-items: center;
-  position: sticky; /* näkyy yläreunassa, mutta scrollaa pois jos menee ohi */
+  position: sticky;
   padding: 8px 16px;
   z-index: 1300;
 }
 
 .language-selector {
   position: static;
-  top: 3px; /* sama arvo kuin Logoutilla */
+  top: 3px;
   left: 16px;
-  z-index: 1300; /* pidetään päällä muiden elementtien yläpuolella */
+  z-index: 1300;
 }
 
 .loading-overlay {
@@ -65,10 +65,10 @@ COMMON
 }
 
 .logout-container {
-  position: static; /* pysyy paikallaan scrollatessa */
-  top: 3px; /* etäisyys yläreunasta */
-  right: 16px; /* etäisyys oikeasta reunasta */
-  z-index: 1300; /* varmistaa että näkyy AppBarin tai muun yli */
+  position: static;
+  top: 3px;
+  right: 16px;
+  z-index: 1300;
 }
 
 .navbar {
