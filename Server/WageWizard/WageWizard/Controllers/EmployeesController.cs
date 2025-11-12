@@ -21,13 +21,6 @@ namespace WageWizard.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
-        {
-            var employees = await _employeeRepository.GetAllAsync();
-            return Ok(employees);
-        }
-
         [HttpGet("summary")]
         public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
         {
@@ -73,37 +66,6 @@ namespace WageWizard.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"{databaseConnectionError}{ex.Message}");
-            }
-        }
-
-        [HttpGet("paymentDetails")]
-        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
-        {
-            try
-            {
-                var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
-
-                if (!employees.Any())
-                {
-                    var error = new ErrorResponseDto
-                    {
-                        Code = employeesNotFound
-                    };
-                    return NotFound(error);
-                }
-
-                return Ok(employees);
-            }
-
-            catch (Exception ex)
-            {
-                var error = new ErrorResponseDto
-                {
-                    Code = databaseConnectionError,
-                    Message = ex.Message
-                };
-
-                return StatusCode(StatusCodes.Status500InternalServerError, error);
             }
         }
 
