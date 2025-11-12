@@ -107,11 +107,6 @@ Planned future updates will expand Wage Wizard into a more complete and versatil
 - Visual charts of total salary expenses
 - Tax and insurance cost analysis
 
-#### 🧭 UI & Usability
-- Navigation bar for improved navigation and accessibility
-- Logo and branding
-- Light mode / dark mode
-
 
 
 
