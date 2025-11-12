@@ -1,8 +1,7 @@
-import React from "react";
 import { Button, ButtonGroup } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const LanguageSelector: React.FC = () => {
+const LanguageSelector = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
@@ -10,10 +9,12 @@ const LanguageSelector: React.FC = () => {
   };
 
   return (
-    <ButtonGroup variant="outlined" size="small">
-      <Button onClick={() => changeLanguage("fi")}>FI</Button>
-      <Button onClick={() => changeLanguage("en")}>EN</Button>
-    </ButtonGroup>
+    <div className="language-selector">
+      <ButtonGroup variant="outlined" size="small">
+        <Button onClick={() => changeLanguage("fi")}>FI</Button>
+        <Button onClick={() => changeLanguage("en")}>EN</Button>
+      </ButtonGroup>
+    </div>
   );
 };
 

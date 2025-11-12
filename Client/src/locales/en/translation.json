@@ -6,8 +6,13 @@
     "server_unreachable": "Server unreachable"
   },
   "common": {
-    "wage_wizard": "Wage Wizard",
-    "loading": "Loading..."
+    "documents": "Documents",
+    "employees": "Employees",
+    "front_page": "Home",
+    "loading": "Loading...",
+    "logout": "Log Out",
+    "salary_statements": "Salary Statements",
+    "wage_wizard": "Wage Wizard"
   },
   "employees": {
     "age": "Age",

@@ -6,8 +6,13 @@
     "server_unreachable": "Palvelin ei vastaa"
   },
   "common": {
-    "wage_wizard": "Wage Wizard",
-    "loading": "Lataa..."
+    "documents": "Dokumentit",
+    "employees": "Työntekijät",
+    "front_page": "Etusivu",
+    "loading": "Lataa...",
+    "logout": "Kirjaudu ulos",
+    "salary_statements": "Palkkalaskelmat",
+    "wage_wizard": "Wage Wizard"
   },
   "employees": {
     "age": "Ikä",
