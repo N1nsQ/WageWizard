@@ -12,6 +12,11 @@ _Päivitetty 12. marraskuuta 2025_
 - Sisältää työntekijän palkanlaskentaan liittyvät tiedot.
 - Näitä tietoja käytetään bruttopalkan, TyEL-maksun, työttömyysvakuutusmaksun ja ennakonpidätyksen laskemiseen.
 
+**Käyttö**
+
+- Palkkalaskemat sivulla täytetään lomakkeen puuttuvat tiedot dropdown-valikosta valitun nimen perusteella
+- Palkkalaskelmat sivun palkkalaskelmaosio
+
 ```C#
 
  public record EmployeesSalaryDetailsDto(
@@ -27,7 +32,7 @@ _Päivitetty 12. marraskuuta 2025_
 
 ```
 
-_Päivitetty 12. marraskuuta 2025_
+_Päivitetty 13. marraskuuta 2025_
 
 ## EmployeesSummaryDto
 

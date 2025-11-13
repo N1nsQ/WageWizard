@@ -13,6 +13,11 @@ _Updated 10 Nov 2025_
 - Contains employee data relevant to payroll calculations.
   - For example: tax percentage and age.
 
+**Usage**
+
+- Salary Statements -page, Select one employee from the dropdown menu. Other form information is placed based on selected id (employee)
+- Salary Statement calculations below the form
+
 ```C#
 
  public record EmployeesSalaryDetailsDto(
