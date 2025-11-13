@@ -66,6 +66,45 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
 }
 ```
 
+## GetEmployeesSalaryPaymentDetailsAsync
+
+- Haetaan kaikilta työntekijöistä tiedot, jotka liittyvät palkanlaskentaan
+- Tätä käytetään palkkalaskelmat sivun pudotusvalikossa
+  - HUOM! Korvataan myöhemmin funktiolla joka palauttaa vain nimen ja id:n!
+
+```C#
+ [HttpGet("paymentDetails")]
+ public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
+ {
+     try
+     {
+         var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
+
+         if (!employees.Any())
+         {
+             var error = new ErrorResponseDto
+             {
+                 Code = employeesNotFound
+             };
+             return NotFound(error);
+         }
+
+         return Ok(employees);
+     }
+
+     catch (Exception ex)
+     {
+         var error = new ErrorResponseDto
+         {
+             Code = databaseConnectionError,
+             Message = ex.Message
+         };
+
+         return StatusCode(StatusCodes.Status500InternalServerError, error);
+     }
+ }
+```
+
 ## GetPayrollDetailsByIdAsync
 
 **Käyttö:**

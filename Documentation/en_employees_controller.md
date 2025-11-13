@@ -66,6 +66,45 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
 }
 ```
 
+## GetEmployeesSalaryPaymentDetailsAsync
+
+- Retrieves payroll-related information from all employees
+- This is used in Salary Statements page in dropdown menu, when selecting an employee
+  - HUOM! Should replace with a function that returns only name and ID
+
+```C#
+ [HttpGet("paymentDetails")]
+ public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
+ {
+     try
+     {
+         var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
+
+         if (!employees.Any())
+         {
+             var error = new ErrorResponseDto
+             {
+                 Code = employeesNotFound
+             };
+             return NotFound(error);
+         }
+
+         return Ok(employees);
+     }
+
+     catch (Exception ex)
+     {
+         var error = new ErrorResponseDto
+         {
+             Code = databaseConnectionError,
+             Message = ex.Message
+         };
+
+         return StatusCode(StatusCodes.Status500InternalServerError, error);
+     }
+ }
+```
+
 ## GetPayrollDetailsByIdAsync
 
 **Käyttö:**
