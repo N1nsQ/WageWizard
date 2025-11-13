@@ -245,6 +245,107 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
+        public async Task GetEmployeesSalaryPaymentDetails_WhenEmployeesExist_ReturnsList()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<PayrollContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            using var context = new PayrollContext(options);
+            context.Employees.AddRange(
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Anna",
+                    LastName = "Virtanen",
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    TaxPercentage = 20,
+                    SalaryAmount = 3500m
+                },
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Mikko",
+                    LastName = "Laine",
+                    DateOfBirth = new DateTime(1985, 1, 1),
+                    TaxPercentage = 25,
+                    SalaryAmount = 4000m
+                }
+            );
+
+            context.PayrollRates.Add(new PayrollRates
+            {
+                Year = DateTime.Now.Year,
+                TyEL_Basic = 0.0715m,
+                TyEL_Senior = 0.0865m,
+                UnemploymentInsurance = 0.0125m
+            });
+
+            await context.SaveChangesAsync();
+
+            var repository = new EmployeeRepository(context);
+            var controller = new EmployeesController(repository);
+
+            // Act
+            var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var dtoList = Assert.IsAssignableFrom<IEnumerable<EmployeesSalaryDetailsDto>>(okResult.Value);
+            Assert.Equal(2, dtoList.Count());
+
+            Assert.All(dtoList, dto =>
+            {
+                Assert.InRange(dto.TyELPercent, 0, 0.1m);
+                Assert.InRange(dto.UnemploymentInsurancePercent, 0, 0.1m);
+            });
+        }
+
+        [Fact]
+        public async Task GetEmployeesSalaryPaymentDetails_WhenNoEmployees_ReturnsNotFound()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<PayrollContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            using var context = new PayrollContext(options);
+            var repository = new EmployeeRepository(context);
+            var controller = new EmployeesController(repository);
+
+            // Act
+            var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
+
+            // Assert
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var error = Assert.IsType<ErrorResponseDto>(notFoundResult.Value);
+            Assert.Equal("backend_error_messages.employees_not_found", error.Code);
+        }
+
+        [Fact]
+        public async Task GetEmployeesSalaryPaymentDetails_WhenRepositoryThrows_ReturnsInternalServerError()
+        {
+            // Arrange
+            var mockRepo = new Mock<IEmployeeRepository>();
+            mockRepo.Setup(r => r.GetEmployeesSalaryPaymentDetailsAsync())
+                .ThrowsAsync(new Exception("Simulated database failure"));
+
+            var controller = new EmployeesController(mockRepo.Object);
+
+            // Act
+            var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
+
+            // Assert
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
+
+            var error = Assert.IsType<ErrorResponseDto>(objectResult.Value);
+            Assert.Equal("Database connection error: ", error.Code);
+            Assert.Contains("Simulated database failure", error.Message);
+        }
+
+        [Fact]
         public async Task GetPayrollDetailsById_WhenEmployeeExists_ReturnsDto()
         {
             var options = new DbContextOptionsBuilder<PayrollContext>()

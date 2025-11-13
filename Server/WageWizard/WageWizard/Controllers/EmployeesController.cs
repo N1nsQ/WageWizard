@@ -69,6 +69,37 @@ namespace WageWizard.Controllers
             }
         }
 
+        [HttpGet("paymentDetails")]
+        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
+        {
+            try
+            {
+                var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
+
+                if (!employees.Any())
+                {
+                    var error = new ErrorResponseDto
+                    {
+                        Code = employeesNotFound
+                    };
+                    return NotFound(error);
+                }
+
+                return Ok(employees);
+            }
+
+            catch (Exception ex)
+            {
+                var error = new ErrorResponseDto
+                {
+                    Code = databaseConnectionError,
+                    Message = ex.Message
+                };
+
+                return StatusCode(StatusCodes.Status500InternalServerError, error);
+            }
+        }
+
         [HttpGet("PayrollDetailsById")]
         public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsByIdAsync(Guid id)
         {
