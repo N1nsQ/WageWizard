@@ -15,9 +15,13 @@
     "wage_wizard": "Wage Wizard"
   },
   "employees": {
+    "add_new_employee": "Add new Employee",
     "age": "Age",
     "altTextNotAvailable": "Alt text not available",
     "bankAccountNumber": "Bank account number",
+    "cancel": "Cancel",
+    "city": "City",
+    "dateOfBirth": "Date of Birth",
     "email": "Email",
     "employeeImg": "Image of the employee",
     "firstname": "First name",
@@ -29,7 +33,9 @@
     "link": "Employee details link",
     "name": "Name",
     "open_details": "Details",
+    "postal_code": "Postal Code",
     "salaryAmount": "Montly salary",
+    "save": "Save",
     "startDate": "Start date",
     "taxPercentage": "Tax percentage",
     "thumbImage": "Thumbnail image",

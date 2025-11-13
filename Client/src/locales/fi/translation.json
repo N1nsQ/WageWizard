@@ -15,9 +15,13 @@
     "wage_wizard": "Wage Wizard"
   },
   "employees": {
+    "add_new_employee": "Uusi työntekijä",
     "age": "Ikä",
     "altTextNotAvailable": "Kuvatekstiä ei saatavilla",
     "bankAccountNumber": "Tilinumero",
+    "cancel": "Peruuta",
+    "city": "Kaupunki",
+    "dateOfBirth": "Syntymäpäivä",
     "email": "Sähköposti",
     "employeeImg": "Kuva työntekijästä",
     "firstname": "Etunimi",
@@ -29,7 +33,9 @@
     "link": "Linkki työntekijän tietoihin",
     "name": "Nimi",
     "open_details": "Tiedot",
+    "postal_code": "Postinumero",
     "salaryAmount": "Kuukausipalkka",
+    "save": "Tallenna",
     "startDate": "Aloituspäivä",
     "taxPercentage": "Veroprosentti",
     "thumbImage": "Esikatselukuva",
