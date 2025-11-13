@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import wizard from "../../public/wizard.png";
 
 const WageWizard = () => {
   const { t } = useTranslation();
@@ -14,7 +13,7 @@ const WageWizard = () => {
       <Typography variant="h1">{t("common.wage_wizard")}</Typography>
       <Box
         component="img"
-        src={wizard}
+        src="wizard.png"
         alt="Wizard"
         sx={{
           width: "50%",
