@@ -33,6 +33,8 @@ public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSu
 }
 ```
 
+_Päivitetty 13. marraskuuta 2025_
+
 ## GetByIdAsync
 
 **Käyttö:**
@@ -66,11 +68,14 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
 }
 ```
 
+_Päivitetty 13. marraskuuta 2025_
+
 ## GetEmployeesSalaryPaymentDetailsAsync
 
 - Haetaan kaikilta työntekijöistä tiedot, jotka liittyvät palkanlaskentaan
-- Tätä käytetään palkkalaskelmat sivun pudotusvalikossa
-  - HUOM! Korvataan myöhemmin funktiolla joka palauttaa vain nimen ja id:n!
+- Palkkalaskelmat sivun pudotusvalikosta valitaan työntekijä (nimi)
+- Valitun nimen perusteella lomakkeen muut kentät täyttyvät automaattisesti EmployeesSalaryDetailsDto tiedoilla.
+- Tietoja käytetään valitun työntekijän palkan laskemiseen
 
 ```C#
  [HttpGet("paymentDetails")]
@@ -105,41 +110,4 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
  }
 ```
 
-## GetPayrollDetailsByIdAsync
-
-**Käyttö:**
-
-- Haetaan yksittäiseltä työntekijältä yksilöivän id:n perusteella sellaiset tiedot, jotka vaikuttavat palkanlaskentaan.
-- Tietoja käytetään yksittäisen henkilön palkan laskennassa (esim. veroprosentti, TyEL-prosentti)
-
-```C#
-[HttpGet("PayrollDetailsById")]
-public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsByIdAsync(Guid id)
-{
-    try
-    {
-        var employeeDto = await _employeeRepository.GetPayrollDetailsByIdAsync(id);
-
-        if (employeeDto == null)
-        {
-            return NotFound(new ErrorResponseDto
-            {
-                Code = employeesNotFound
-            });
-        }
-
-        return Ok(employeeDto);
-    }
-    catch (Exception ex)
-    {
-        var error = new ErrorResponseDto
-        {
-            Code = databaseConnectionError,
-            Message = ex.Message
-        };
-
-        return StatusCode(StatusCodes.Status500InternalServerError, error);
-    }
-
-}
-```
+_Päivitetty 13. marraskuuta 2025_

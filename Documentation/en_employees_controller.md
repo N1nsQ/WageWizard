@@ -33,6 +33,8 @@ public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSu
 }
 ```
 
+_Updated Nov 13, 2025_
+
 ## GetByIdAsync
 
 **Usage:**
@@ -66,11 +68,14 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
 }
 ```
 
+_Updated Nov 13, 2025_
+
 ## GetEmployeesSalaryPaymentDetailsAsync
 
 - Retrieves payroll-related information from all employees
 - This is used in Salary Statements page in dropdown menu, when selecting an employee
-  - HUOM! Should replace with a function that returns only name and ID
+- Other information on the form is updated based on EmployeesSalaryDetailsDto data
+- The data is also used for calculating the employee’s individual salary
 
 ```C#
  [HttpGet("paymentDetails")]
@@ -105,41 +110,4 @@ public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Gu
  }
 ```
 
-## GetPayrollDetailsByIdAsync
-
-**Käyttö:**
-
-- Retrieves payroll-related information for a single employee based on their unique ID.
-- The data is used for calculating the employee’s individual salary (e.g., tax rate, TyEL percentage).
-
-```C#
-[HttpGet("PayrollDetailsById")]
-public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetPayrollDetailsByIdAsync(Guid id)
-{
-    try
-    {
-        var employeeDto = await _employeeRepository.GetPayrollDetailsByIdAsync(id);
-
-        if (employeeDto == null)
-        {
-            return NotFound(new ErrorResponseDto
-            {
-                Code = employeesNotFound
-            });
-        }
-
-        return Ok(employeeDto);
-    }
-    catch (Exception ex)
-    {
-        var error = new ErrorResponseDto
-        {
-            Code = databaseConnectionError,
-            Message = ex.Message
-        };
-
-        return StatusCode(StatusCodes.Status500InternalServerError, error);
-    }
-
-}
-```
+_Updated Nov 13, 2025_
