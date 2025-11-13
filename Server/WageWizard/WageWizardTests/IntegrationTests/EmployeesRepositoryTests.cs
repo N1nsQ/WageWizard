@@ -41,30 +41,6 @@ namespace WageWizardTests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetAllAsync_ReturnsAllEmployees()
-        {
-            // Arrange
-            using var context = CreateInMemoryContext();
-
-            context.Employees.AddRange(
-                new Employee { Id = Guid.NewGuid(), FirstName = "Matti", LastName = "Meikäläinen", JobTitle = "Developer" },
-                new Employee { Id = Guid.NewGuid(), FirstName = "Maija", LastName = "Mallikas", JobTitle = "Designer" }
-            );
-            await context.SaveChangesAsync();
-
-            var repository = new EmployeeRepository(context);
-
-            // Act
-            var result = await repository.GetAllAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
-            Assert.Contains(result, e => e.FirstName == "Matti");
-            Assert.Contains(result, e => e.FirstName == "Maija");
-        }
-
-        [Fact]
         public async Task GetEmployeesSummaryAsync_ReturnsSummaryList()
         {
             // Arrange

@@ -14,11 +14,6 @@ namespace WageWizard.Repositories
             _payrollContext = payrollContext;
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync()
-        {
-            return await _payrollContext.Employees.ToListAsync();
-        }
-
         public async Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
         {
             return await _payrollContext.Employees
@@ -85,31 +80,6 @@ namespace WageWizard.Repositories
             }).ToList();
 
             return result;
-        }
-
-        public async Task<EmployeesSalaryDetailsDto?> GetPayrollDetailsByIdAsync(Guid id)
-        {
-            var employee = await _payrollContext.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-
-            if (employee == null)
-                return null;
-
-            var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
-            var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
-            var unemploymentInsurance = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
-
-            return new EmployeesSalaryDetailsDto
-            (
-                employee.Id,
-                employee.FirstName,
-                employee.LastName,
-                age,
-                tyelPercent,
-                unemploymentInsurance,
-                employee.TaxPercentage,
-                employee.SalaryAmount
-            );
         }
 
     }
