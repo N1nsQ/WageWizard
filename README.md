@@ -27,6 +27,7 @@ Layout updated 12 Nov 2025
 - Login with test user
 - List of employees
 - Employee details page
+- Add new Employee
 - Calculate salary for selected employee and view payroll calculation results
 - Finnish / English translations
 
