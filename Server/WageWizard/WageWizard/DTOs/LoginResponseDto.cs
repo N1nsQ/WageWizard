@@ -1,4 +1,4 @@
-﻿using WageWizard.Models;
+﻿using WageWizard.Domain.Entities;
 
 namespace WageWizard.DTOs
 {

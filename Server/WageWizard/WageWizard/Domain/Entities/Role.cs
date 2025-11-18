@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WageWizard.Models
+namespace WageWizard.Domain.Entities
 {
     public sealed class Role
     {

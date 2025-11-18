@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WageWizard.Controllers;
-using WageWizard.Models;
 using WageWizard.DTOs;
 using WageWizard.Services;
-using WageWizard.Utils;
+using WageWizard.Data;
+using WageWizard.Repositories.Interfaces;
+using WageWizard.Domain.Logic;
 
-namespace WageWizard.Repositories
+namespace WageWizard.Repositories.Implementations
 {
     public class PayrollRepository : IPayrollRepository
     {
@@ -35,10 +35,10 @@ namespace WageWizard.Repositories
             if (employee == null)
                 return null;
 
-            var age = EmployeeHelperFunctions.CalculateAge(employee.DateOfBirth);
+            var age = AgeCalculator.CalculateAge(employee.DateOfBirth);
 
-            var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
-            var unemploymentPercent = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
+            var tyelPercent = InsuranceRateCalculator.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
+            var unemploymentPercent = InsuranceRateCalculator.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
             var taxPercent = employee.TaxPercentage ?? 0m;
 
             var calc = PayrollServices.CollectSalaryStatementCalculations(

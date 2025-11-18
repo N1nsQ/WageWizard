@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WageWizard.Domain.Entities;
 
-namespace WageWizard.Models
+namespace WageWizard.Data
 {
     public class PayrollContext : DbContext
-    { 
+    {
         public PayrollContext(DbContextOptions<PayrollContext> options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }

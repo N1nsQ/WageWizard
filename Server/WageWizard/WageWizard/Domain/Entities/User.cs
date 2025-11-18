@@ -1,4 +1,4 @@
-﻿namespace WageWizard.Models
+﻿namespace WageWizard.Domain.Entities
 {
     public class User
     {

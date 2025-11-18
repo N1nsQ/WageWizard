@@ -1,7 +1,6 @@
-﻿using WageWizard.Models;
-using WageWizard.DTOs;
+﻿using WageWizard.DTOs;
 
-namespace WageWizard.Repositories
+namespace WageWizard.Repositories.Interfaces
 {
     public interface IPayrollRepository
     {

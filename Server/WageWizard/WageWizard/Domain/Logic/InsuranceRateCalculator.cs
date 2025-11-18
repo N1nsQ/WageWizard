@@ -1,8 +1,8 @@
-﻿using WageWizard.Models;
+﻿using WageWizard.Data;
 
-namespace WageWizard.Utils
+namespace WageWizard.Domain.Logic
 {
-    public static class PayrollHelperFunctions
+    public static class InsuranceRateCalculator
     {
         public static decimal GetTyELPercent(int age, int year, PayrollContext context)
         {
@@ -10,7 +10,7 @@ namespace WageWizard.Utils
                 return 0m;
 
             var rates = context.PayrollRates.FirstOrDefault(r => r.Year == year) ?? throw new KeyNotFoundException($"TyEL rates not found for year {year}");
-           
+
             if (age >= 53 && age <= 62)
                 return rates.TyEL_Senior;
 

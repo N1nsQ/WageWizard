@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Models;
-using WageWizard.Repositories;
-using WageWizard.Utils;
+using WageWizard.Repositories.Interfaces;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizard.Controllers
 {
@@ -12,13 +11,16 @@ namespace WageWizard.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeService _employeeService;
 
         const string employeesNotFound = "backend_error_messages.employees_not_found";
         const string databaseConnectionError = "Database connection error: ";
 
-        public EmployeesController(IEmployeeRepository employeeRepository)
+        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService)
         {
             _employeeRepository = employeeRepository;
+            _employeeService = employeeService;
+
         }
 
         [HttpGet("summary")]
@@ -45,8 +47,8 @@ namespace WageWizard.Controllers
             }
         }
 
-        [HttpGet("id")]
-        public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetByIdAsync(Guid id)
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<IEnumerable<EmployeeDetailsDto>>> GetEmpyeeByIdAsync(Guid id)
         {
             try
             {
@@ -98,6 +100,33 @@ namespace WageWizard.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, error);
             }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Employee>> GetByIdAsync(Guid id)
+        {
+            try
+            {
+                var employee = await _employeeRepository.GetByIdAsync(id);
+
+                if (employee == null)
+                {
+                    return NotFound(new ErrorResponseDto { Code = employeesNotFound });
+                }
+
+                return Ok(employee);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"{databaseConnectionError}{ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployee([FromBody] NewEmployeeRequestDto dto)
+        {
+            var employee = await _employeeService.CreateEmployeeAsync(dto);
+            return Ok();
         }
     }
 }

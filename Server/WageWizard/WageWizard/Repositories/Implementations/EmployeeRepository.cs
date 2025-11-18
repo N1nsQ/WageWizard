@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WageWizard.Data;
+using WageWizard.Domain.Entities;
+using WageWizard.Domain.Logic;
 using WageWizard.DTOs;
-using WageWizard.Models;
-using WageWizard.Utils;
+using WageWizard.Repositories.Interfaces;
 
-namespace WageWizard.Repositories
+namespace WageWizard.Repositories.Implementations
 {
-    public class EmployeeRepository: IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private readonly PayrollContext _payrollContext;
 
@@ -39,7 +41,7 @@ namespace WageWizard.Repositories
                     e.Id,
                     e.FirstName,
                     e.LastName,
-                    EmployeeHelperFunctions.CalculateAge(e.DateOfBirth),
+                    AgeCalculator.CalculateAge(e.DateOfBirth),
                     e.JobTitle,
                     e.ImageUrl,
                     e.Email,
@@ -62,9 +64,9 @@ namespace WageWizard.Repositories
 
             var result = employees.Select(e =>
             {
-                var age = EmployeeHelperFunctions.CalculateAge(e.DateOfBirth);
-                var tyelPercent = PayrollHelperFunctions.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
-                var unemploymentInsurance = PayrollHelperFunctions.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
+                var age = AgeCalculator.CalculateAge(e.DateOfBirth);
+                var tyelPercent = InsuranceRateCalculator.GetTyELPercent(age, DateTime.Now.Year, _payrollContext);
+                var unemploymentInsurance = InsuranceRateCalculator.GetUnemploymentInsurancePercent(age, DateTime.Now.Year, _payrollContext);
 
                 return new EmployeesSalaryDetailsDto
                 (
@@ -80,6 +82,16 @@ namespace WageWizard.Repositories
             }).ToList();
 
             return result;
+        }
+
+        public async Task AddAsync(Employee employee)
+        {
+            await _payrollContext.Employees.AddAsync(employee);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _payrollContext.SaveChangesAsync();
         }
 
     }

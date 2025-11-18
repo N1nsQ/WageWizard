@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace WageWizard.Models
+namespace WageWizard.Domain.Entities
 {
     public class Payroll
     {
@@ -22,6 +22,6 @@ namespace WageWizard.Models
         public decimal? EmployeePensionContribution { get; set; }
         public decimal? UnemploymentInsuranceContribution { get; set; }
         public decimal? UnionMembershipFee { get; set; }
-        
+
     }
 }

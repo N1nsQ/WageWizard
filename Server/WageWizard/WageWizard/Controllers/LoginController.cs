@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WageWizard.Data;
+using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Models;
 
 namespace WageWizard.Controllers
 {

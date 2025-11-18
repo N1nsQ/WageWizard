@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace WageWizard.Models
+﻿namespace WageWizard.Domain.Entities
 {
     public class Employee
     {
@@ -18,7 +16,7 @@ namespace WageWizard.Models
         public string? BankAccountNumber { get; set; }
         public decimal? TaxPercentage { get; set; }
         public decimal? SalaryAmount { get; set; }
-        public DateTime? StartDate { get; set; } // The employee's official start date at the company
+        public DateTime? StartDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

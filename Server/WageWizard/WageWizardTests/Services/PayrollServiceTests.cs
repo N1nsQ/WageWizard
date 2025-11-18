@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WageWizard.Models;
-using WageWizard.Services;
+﻿using WageWizard.Services;
 
 namespace WageWizardTests.Services
 {

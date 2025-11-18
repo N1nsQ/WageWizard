@@ -2,15 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WageWizard.Controllers;
+using WageWizard.Data;
+using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Models;
-using WageWizard.Repositories;
+using WageWizard.Repositories.Implementations;
+using WageWizard.Repositories.Interfaces;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizardTests.IntegrationTests
 {
@@ -29,7 +27,8 @@ namespace WageWizardTests.IntegrationTests
         public void EmployeesController_CanBeConstructed_SetsRepository()
         {
             var mockRepo = new Mock<IEmployeeRepository>();
-            var controller = new EmployeesController(mockRepo.Object);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(mockRepo.Object, mockService.Object);
 
             Assert.NotNull(controller);
             var field = typeof(EmployeesController)
@@ -77,7 +76,8 @@ namespace WageWizardTests.IntegrationTests
 
             using var context = new PayrollContext(options);
             var repository = new EmployeeRepository(context);
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             var result = await controller.GetEmployeesSummaryAsync();
 
@@ -91,7 +91,8 @@ namespace WageWizardTests.IntegrationTests
         {
             // Arrange
             var repository = new FailingEmployeeRepository();
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             // Act
             var result = await controller.GetEmployeesSummaryAsync();
@@ -132,9 +133,10 @@ namespace WageWizardTests.IntegrationTests
         };
 
                 var mockRepo = new Mock<IEmployeeRepository>();
+                var mockService = new Mock<IEmployeeService>();
                 mockRepo.Setup(r => r.GetEmployeesSummaryAsync()).ReturnsAsync(employees);
 
-                var controller = new EmployeesController(mockRepo.Object);
+                var controller = new EmployeesController(mockRepo.Object, mockService.Object);
 
                 // Act
                 var result = await controller.GetEmployeesSummaryAsync();
@@ -171,7 +173,8 @@ namespace WageWizardTests.IntegrationTests
             await context.SaveChangesAsync();
 
             var repository = new EmployeeRepository(context);
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             // Act
             var result = await controller.GetByIdAsync(employee.Id);
@@ -194,7 +197,8 @@ namespace WageWizardTests.IntegrationTests
 
             using var context = new PayrollContext(options);
             var repository = new EmployeeRepository(context);
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             var result = await controller.GetByIdAsync(Guid.NewGuid());
 
@@ -210,7 +214,9 @@ namespace WageWizardTests.IntegrationTests
             mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                     .ThrowsAsync(new Exception("Simulated failure"));
 
-            var controller = new EmployeesController(mockRepo.Object);
+            var mockService = new Mock<IEmployeeService>();
+
+            var controller = new EmployeesController(mockRepo.Object, mockService.Object);
 
             var result = await controller.GetByIdAsync(Guid.NewGuid());
 
@@ -261,7 +267,8 @@ namespace WageWizardTests.IntegrationTests
             await context.SaveChangesAsync();
 
             var repository = new EmployeeRepository(context);
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             // Act
             var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
@@ -288,7 +295,8 @@ namespace WageWizardTests.IntegrationTests
 
             using var context = new PayrollContext(options);
             var repository = new EmployeeRepository(context);
-            var controller = new EmployeesController(repository);
+            var mockService = new Mock<IEmployeeService>();
+            var controller = new EmployeesController(repository, mockService.Object);
 
             // Act
             var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();
@@ -307,7 +315,9 @@ namespace WageWizardTests.IntegrationTests
             mockRepo.Setup(r => r.GetEmployeesSalaryPaymentDetailsAsync())
                 .ThrowsAsync(new Exception("Simulated database failure"));
 
-            var controller = new EmployeesController(mockRepo.Object);
+            var mockService = new Mock<IEmployeeService>();
+
+            var controller = new EmployeesController(mockRepo.Object, mockService.Object);
 
             // Act
             var result = await controller.GetEmployeesSalaryPaymentDetailsAsync();

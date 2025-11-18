@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WageWizard;
 using WageWizard.Controllers;
+using WageWizard.Data;
+using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Models;
 
 namespace WageWizardTests.Controllers
 {

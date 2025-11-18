@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WageWizard.Models
+namespace WageWizard.Domain.Entities
 {
     public class PayrollRates
     {
@@ -8,6 +8,6 @@ namespace WageWizard.Models
         public int Year { get; set; }
         public decimal TyEL_Basic { get; set; }
         public decimal TyEL_Senior { get; set; }
-        public decimal UnemploymentInsurance {  get; set; }
+        public decimal UnemploymentInsurance { get; set; }
     }
 }
