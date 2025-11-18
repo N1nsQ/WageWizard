@@ -48,6 +48,7 @@ Layout updated 12 Nov 2025
 - **LINQ** – Querying database entities
 - **xUnit** – Unit testing
 - **BFF pattern (Backend for frontend)** – [An Introdiction to BFF Pattern](https://blog.bitsrc.io/bff-pattern-backend-for-frontend-an-introduction-e4fa965128bf)
+- **Layered (N-Tier) Architecture** - [Dev.to](https://dev.to/dotnetfullstackdev/layered-n-tier-architecture-in-net-core-51ic)**
 
 #### Databasse
 
@@ -70,6 +71,9 @@ Users log in with the provided credentials. Creating a personal account is curre
 ### Employees Page
 <img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />  
 Displays a list of all employees showing minimal information: first name, last name, job title, and email. If an employee has an image, it is shown; otherwise, a default image is used. Each employee entry includes a link to their detailed profile page.
+
+<img width="2131" height="1653" alt="image" src="https://github.com/user-attachments/assets/c8a0d3c1-5cc4-494d-b544-1b75625da3d7" />
+Add new Employee
 
 ### Employee Details
 <img width="737" height="1545" alt="image" src="https://github.com/user-attachments/assets/b27b72c1-2c51-435b-b251-f2af5116744d" />  
