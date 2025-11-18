@@ -72,7 +72,7 @@ Users log in with the provided credentials. Creating a personal account is curre
 <img width="1466" height="713" alt="image" src="https://github.com/user-attachments/assets/2e628437-5a8d-4ca7-a47b-bb6bf1b305ea" />  
 Displays a list of all employees showing minimal information: first name, last name, job title, and email. If an employee has an image, it is shown; otherwise, a default image is used. Each employee entry includes a link to their detailed profile page.
 
-<img width="2131" height="1653" alt="image" src="https://github.com/user-attachments/assets/c8a0d3c1-5cc4-494d-b544-1b75625da3d7" />
+<img width="1984" height="1650" alt="image" src="https://github.com/user-attachments/assets/fe9d0b7c-adbc-4fd4-a837-175549705a49" />
 Add new Employee
 
 ### Employee Details
