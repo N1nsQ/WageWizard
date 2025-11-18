@@ -3,9 +3,9 @@ using WageWizard.Data;
 using WageWizard.Domain.Entities;
 using WageWizard.Domain.Logic;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 
-namespace WageWizard.Repositories.Implementations
+namespace WageWizard.Data.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {

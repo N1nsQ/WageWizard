@@ -3,8 +3,8 @@ using SixLabors.ImageSharp.Web.DependencyInjection;
 using WageWizard.Services;
 using WageWizard.Services.Interfaces;
 using WageWizard.Data;
-using WageWizard.Repositories.Interfaces;
-using WageWizard.Repositories.Implementations;
+using WageWizard.Data.Repositories;
+using WageWizard.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

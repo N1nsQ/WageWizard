@@ -1,6 +1,6 @@
 ﻿using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 using WageWizard.Services.Interfaces;
 
 namespace WageWizard.Services

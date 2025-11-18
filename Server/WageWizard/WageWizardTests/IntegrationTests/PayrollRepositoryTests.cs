@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WageWizard.Data;
+using WageWizard.Data.Repositories;
 using WageWizard.Domain.Entities;
-using WageWizard.Repositories.Implementations;
 
 namespace WageWizardTests.IntegrationTests
 {

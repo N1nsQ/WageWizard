@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 
 namespace WageWizard.Controllers
 {

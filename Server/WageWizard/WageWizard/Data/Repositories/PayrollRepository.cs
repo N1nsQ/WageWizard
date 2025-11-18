@@ -2,10 +2,10 @@
 using WageWizard.DTOs;
 using WageWizard.Services;
 using WageWizard.Data;
-using WageWizard.Repositories.Interfaces;
 using WageWizard.Domain.Logic;
+using WageWizard.Repositories;
 
-namespace WageWizard.Repositories.Implementations
+namespace WageWizard.Data.Repositories
 {
     public class PayrollRepository : IPayrollRepository
     {

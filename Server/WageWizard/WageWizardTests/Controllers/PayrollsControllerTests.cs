@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WageWizard.Controllers;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 
 namespace WageWizardTests.Controllers
 {

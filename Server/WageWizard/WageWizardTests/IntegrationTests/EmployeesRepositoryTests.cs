@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using WageWizard.Controllers;
 using WageWizard.Data;
+using WageWizard.Data.Repositories;
 using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Implementations;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 using WageWizard.Services.Interfaces;
 
 namespace WageWizardTests.IntegrationTests

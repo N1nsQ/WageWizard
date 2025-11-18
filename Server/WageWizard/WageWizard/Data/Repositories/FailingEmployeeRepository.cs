@@ -1,8 +1,8 @@
 ﻿using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
-using WageWizard.Repositories.Interfaces;
+using WageWizard.Repositories;
 
-namespace WageWizard.Repositories.Implementations
+namespace WageWizard.Data.Repositories
 {
     public class FailingEmployeeRepository : IEmployeeRepository
     {
