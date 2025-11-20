@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using WageWizard.Domain.Exceptions;
 
 namespace WageWizard.Middleware
 {
@@ -33,14 +34,43 @@ namespace WageWizard.Middleware
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var response = new
+            int statusCode;
+            object response;
+
+            switch (exception)
             {
-                message = "An unexpected error occured.",
-                detail = exception.Message
-            };
+                case DomainException domainEx:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    response = new
+                    {
+                        message = domainEx.Message,
+                        type = domainEx.GetType().Name
+                    };
+                    break;
 
+                case KeyNotFoundException keyNotFoundEx:
+                    statusCode = (int)HttpStatusCode.NotFound;
+                    response = new
+                    {
+                        message = keyNotFoundEx.Message,
+                        type = keyNotFoundEx.GetType().Name
+                    };
+                    break;
+
+                default:
+                    statusCode = (int)HttpStatusCode.InternalServerError;
+                    response = new
+                    {
+                        message = "An unexpected error occured",
+                        detail = exception.Message,
+                        type = exception.GetType().Name
+                    };
+                    break;
+
+            }
+
+            context.Response.StatusCode = statusCode;
             var json = JsonSerializer.Serialize(response, _jsonOptions);
             await context.Response.WriteAsync(json);
         }
