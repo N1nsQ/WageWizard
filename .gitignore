@@ -161,3 +161,7 @@ coverage-report/
 coveragereport/
 coverage.cobertura.xml
 TestResults/
+
+# Logs
+Logs/
+*.log
