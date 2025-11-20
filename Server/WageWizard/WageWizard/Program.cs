@@ -5,6 +5,7 @@ using WageWizard.Services.Interfaces;
 using WageWizard.Data;
 using WageWizard.Data.Repositories;
 using WageWizard.Repositories;
+using WageWizard.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
