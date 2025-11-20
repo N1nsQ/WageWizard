@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WageWizard.DTOs;
 using WageWizard.Services;
-using WageWizard.Data;
 using WageWizard.Domain.Logic;
 using WageWizard.Repositories;
 

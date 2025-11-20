@@ -1,40 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WageWizard.Data;
-using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizard.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginController(PayrollContext context) : ControllerBase
+    public class LoginController : ControllerBase
     {
-        private readonly PayrollContext _context = context;
+        private readonly ILoginService _loginService;
+
+        public LoginController(ILoginService loginService)
+        {
+            _loginService = loginService;
+        }
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Login([FromBody] LoginRequestDto loginDto)
+        public async Task<ActionResult<LoginRequestDto>> Login([FromBody] LoginRequestDto loginDto)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == loginDto.Username && u.PasswordHash == loginDto.Password);
-
-            if (user == null)
-            {
-                return Unauthorized(new ErrorResponseDto 
-                { 
-                    Code = "backend_error_messages.invalid_username" 
-                });
-            }
-
-            return Ok(new LoginResponseDto
-            {
-                Success = true,
-                Message = "Login successful",
-                UserId = user.Id,
-                Username = loginDto.Username,
-                Role = user.RoleId ?? UserRole.TestUser
-            });
+            var response = await _loginService.LoginAsync(loginDto);
+            return Ok(response);
         }
     }
 }

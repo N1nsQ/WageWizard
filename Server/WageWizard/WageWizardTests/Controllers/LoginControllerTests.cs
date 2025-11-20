@@ -31,7 +31,7 @@ namespace WageWizardTests.Controllers
             {
                 Id = Guid.NewGuid(),
                 Username = "TestUser",
-                PasswordHash = "password123",
+                Password = "password123",
                 RoleId = UserRole.TestUser
             });
             _payrollContext.SaveChanges();
