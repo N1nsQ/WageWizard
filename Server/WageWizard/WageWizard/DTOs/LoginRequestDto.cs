@@ -1,9 +1,10 @@
-﻿namespace WageWizard.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WageWizard.DTOs
 {
-    // Testattu ja tarkistettu
     public record LoginRequestDto
     {
-        public string Username { get; init; } = string.Empty;
-        public string Password { get; init; } = string.Empty;
+        [Required(ErrorMessage = "Username is required")] public string Username { get; init; } = string.Empty;
+        [Required(ErrorMessage = "Password is required")] public string Password { get; init; } = string.Empty;
     }
 }
