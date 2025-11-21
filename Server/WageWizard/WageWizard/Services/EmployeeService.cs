@@ -44,7 +44,7 @@ namespace WageWizard.Services
                 Id = Guid.NewGuid(),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                DateOfBirth = dto.DateOfBirth,
+                DateOfBirth = dto.DateOfBirth!.Value,
                 JobTitle = dto.JobTitle,
                 ImageUrl = null,
                 Email = dto.Email,
@@ -54,7 +54,7 @@ namespace WageWizard.Services
                 BankAccountNumber = dto.BankAccountNumber,
                 TaxRate = dto.TaxRate,
                 GrossSalary = dto.MonthlySalary,
-                StartDate = dto.StartDate,
+                StartDate = dto.StartDate!.Value,
                 CreatedAt = DateTime.Today,
                 UpdatedAt = DateTime.Today
                 
