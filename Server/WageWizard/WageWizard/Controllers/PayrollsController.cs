@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WageWizard.DTOs;
-using WageWizard.Repositories;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizard.Controllers
 {
@@ -9,32 +9,17 @@ namespace WageWizard.Controllers
     public class PayrollsController : ControllerBase
     {
 
-        private readonly IPayrollRepository _repository;
+        private readonly IPayrollsService _payrollsService;
 
-        public PayrollsController(IPayrollRepository repository)
+        public PayrollsController(IPayrollsService payrollsService)
         {
-            _repository = repository;
+            _payrollsService = payrollsService;
         }
 
-        [HttpGet("PayrollRates")]
-        public async Task<ActionResult<IEnumerable<PayrollRatesDto>>> GetPayrollRatesAsync()
-        {
-            var rates = await _repository.GetPayrollRatesAsync();
-            return Ok(rates);
-        }
-
-        [HttpGet("SalaryStatement")]
+        [HttpGet("salaryStatement/{employeeId}")]
         public async Task<ActionResult<SalaryStatementCalculationDto>> CalculateSalaryStatementAsync(Guid employeeId)
         {
-            var result = await _repository.CalculateSalaryStatementAsync(employeeId);
-
-            if (result == null)
-            {
-                return NotFound(new ErrorResponseDto
-                {
-                    Code = "backend_error_messages.employee_not_found"
-                });
-            }
+            var result = await _payrollsService.CalculateSalaryStatementAsync(employeeId);
 
             return Ok(result);
         }

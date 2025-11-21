@@ -1,15 +1,14 @@
 ﻿using WageWizard.Data;
+using WageWizard.Domain.Entities;
 
 namespace WageWizard.Domain.Logic
 {
     public static class InsuranceRateCalculator
     {
-        public static decimal GetTyELPercent(int age, int year, PayrollContext context)
+        public static decimal GetTyELPercent(int age, PayrollRates rates)
         {
             if (age < 17 || age > 67)
                 return 0m;
-
-            var rates = context.PayrollRates.FirstOrDefault(r => r.Year == year) ?? throw new KeyNotFoundException($"TyEL rates not found for year {year}");
 
             if (age >= 53 && age <= 62)
                 return rates.TyEL_Senior;
@@ -18,12 +17,10 @@ namespace WageWizard.Domain.Logic
 
         }
 
-        public static decimal GetUnemploymentInsurancePercent(int age, int year, PayrollContext context)
+        public static decimal GetUnemploymentInsurancePercent(int age, PayrollRates rates)
         {
             if (age < 18 || age >= 65)
                 return 0m;
-
-            var rates = context.PayrollRates.FirstOrDefault(r => r.Year == year) ?? throw new KeyNotFoundException($"TyEL rates not found for year {year}");
 
             return rates.UnemploymentInsurance;
 

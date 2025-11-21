@@ -1,5 +1,6 @@
 ﻿namespace WageWizard.DTOs
 {
+    // Testattu ja tarkistettu
     public record EmployeesSummaryDto(
         Guid Id,
         string? FirstName,

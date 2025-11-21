@@ -11,6 +11,5 @@
         decimal TyELAmount,
         decimal UnemploymentInsuranceAmount,
         decimal NetSalary
-
         );
 }

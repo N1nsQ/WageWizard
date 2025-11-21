@@ -8,7 +8,6 @@ namespace WageWizard.Data
         public PayrollContext(DbContextOptions<PayrollContext> options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Payroll> Payrolls { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PayrollRates> PayrollRates { get; set; }
 

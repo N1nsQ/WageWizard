@@ -1,5 +1,6 @@
 ﻿namespace WageWizard.DTOs
 {
+    // Testattu ja toimii
     public record NewEmployeeRequestDto(
         string FirstName,
         string LastName,

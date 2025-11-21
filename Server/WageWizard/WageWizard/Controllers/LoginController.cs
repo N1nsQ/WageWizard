@@ -15,7 +15,7 @@ namespace WageWizard.Controllers
             _loginService = loginService;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

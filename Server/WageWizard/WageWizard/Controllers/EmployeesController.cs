@@ -33,14 +33,6 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
-        [HttpGet("paymentDetails")]
-        public async Task<ActionResult<IEnumerable<EmployeesSalaryDetailsDto>>> GetEmployeesSalaryPaymentDetailsAsync()
-        {
-            var employees = await _employeeService.GetEmployeesSalaryPaymentDetailsAsync();
-
-            return Ok(employees);
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateEmployee([FromBody] NewEmployeeRequestDto dto)
         {

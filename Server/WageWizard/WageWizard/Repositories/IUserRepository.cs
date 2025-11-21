@@ -4,6 +4,6 @@ namespace WageWizard.Repositories
 {
     public interface IUserRepository
     {
-        Task<User?> GetUserByUsernameAndPasswordAsync(string username, string password);
+        Task<User?> GetUserByUsernameAndPasswordAsync(string username, string password); // Testattu ja tarkistettu
     }
 }

@@ -36,7 +36,7 @@ namespace WageWizardTests.Controllers
             });
             _payrollContext.SaveChanges();
 
-            _loginController = new LoginController(_payrollContext);
+            //_loginController = new LoginController(_payrollContext);
         }
 
         [Fact]

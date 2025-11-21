@@ -5,10 +5,9 @@ namespace WageWizard.Repositories
 {
     public interface IEmployeeRepository
     {
-        Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync();
-        Task<EmployeeDetailsDto?> GetByIdAsync(Guid id);
-        Task<IEnumerable<EmployeesSalaryDetailsDto>> GetEmployeesSalaryPaymentDetailsAsync();
-        Task AddAsync(Employee employee);
+        Task<EmployeeDto?> GetByIdAsync(Guid id); 
+        Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync(); 
+        Task AddAsync(Employee employee); 
         Task SaveChangesAsync();
-    }
+    } 
 }

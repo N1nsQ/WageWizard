@@ -1,19 +1,20 @@
 ﻿namespace WageWizard.DTOs
 {
-    public record EmployeeDetailsDto(
-        Guid Id,
+    public record EmployeeDto
+    (
+        Guid id,
         string? FirstName,
         string? LastName,
-        int? Age,
-        string? JobTitle,
+        DateTime DateOfBirth,
+        string? JobTItle,
         string? ImageUrl,
         string? Email,
         string? HomeAddress,
         string? PostalCode,
         string? City,
         string? BankAccountNumber,
-        decimal? TaxPercentage,
-        decimal? SalaryAmount,
-        DateTime? StartDate
-        );
+        decimal TaxRate,
+        decimal GrossSalary,
+        DateTime StartDate
+    );
 }

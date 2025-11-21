@@ -1,5 +1,7 @@
-﻿using WageWizard.Domain.Entities;
+﻿using WageWizard.Data.Repositories;
+using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
+using WageWizard.Domain.Logic;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
 using WageWizard.Services.Interfaces;
@@ -14,7 +16,8 @@ namespace WageWizard.Services
         {
             _employeeRepository = employeeRepository;
         }
-        public async Task<EmployeeDetailsDto?> GetByIdAsync(Guid id)
+
+        public async Task<EmployeeDto?> GetByIdAsync(Guid id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
 
@@ -34,16 +37,6 @@ namespace WageWizard.Services
             return employees;
         }
 
-        public async Task<IEnumerable<EmployeesSalaryDetailsDto>> GetEmployeesSalaryPaymentDetailsAsync()
-        {
-            var employees = await _employeeRepository.GetEmployeesSalaryPaymentDetailsAsync();
-
-            if (!employees.Any())
-                throw new NotFoundException("No salary payment details found.");
-
-            return employees;
-        }
-
         public async Task<Employee> CreateEmployeeAsync(NewEmployeeRequestDto dto)
         {
             var employee = new Employee
@@ -59,8 +52,8 @@ namespace WageWizard.Services
                 PostalCode = dto.PostalCode,
                 City = dto.City,
                 BankAccountNumber = dto.BankAccountNumber,
-                TaxPercentage = dto.TaxRate,
-                SalaryAmount = dto.MonthlySalary,
+                TaxRate = dto.TaxRate,
+                GrossSalary = dto.MonthlySalary,
                 StartDate = dto.StartDate,
                 CreatedAt = DateTime.Today,
                 UpdatedAt = DateTime.Today

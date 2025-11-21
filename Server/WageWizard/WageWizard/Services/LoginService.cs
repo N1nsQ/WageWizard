@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WageWizard.Data;
-using WageWizard.Domain.Entities;
+﻿using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
