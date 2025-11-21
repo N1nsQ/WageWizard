@@ -36,9 +36,9 @@ namespace WageWizard.DTOs
         public decimal MonthlySalary { get; init; }
 
         [Required][DataType(DataType.Date)] 
-        public DateTime StartDate { get; init; }
+        public DateTime? StartDate { get; init; }
 
         [Required][DataType(DataType.Date)] 
-        public DateTime DateOfBirth { get; init; }
+        public DateTime? DateOfBirth { get; init; }
     };
 }
