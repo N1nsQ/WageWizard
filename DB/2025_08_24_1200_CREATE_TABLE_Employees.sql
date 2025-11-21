@@ -9,8 +9,8 @@ CREATE TABLE Employees
     PostalCode NVARCHAR(5) NULL,
     City NVARCHAR(40) NULL,
     BankAccountNumber NVARCHAR(18) NULL,
-    TaxPercentage DECIMAL(18,2) NULL,
-    SalaryAmount DECIMAL(18,2) NULL,
+    TaxRate DECIMAL(18,2) NULL,
+    GrossSalary DECIMAL(18,2) NULL,
     StartDate DATETIME2 NULL,
     CreatedAt DATETIME2 NOT NULL,
     UpdatedAt DATETIME2 NULL
