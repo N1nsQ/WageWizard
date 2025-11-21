@@ -53,16 +53,16 @@ jobs:
 
           $scanner = "${{ runner.temp }}\scanner\dotnet-sonarscanner.exe"
 
-          & $scanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="WageWizardTests/WageWizardTests/coverage.xml"
+          & $scanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="WageWizardTests/WageWizardTests/coverage.cobertura.xml"
           dotnet build --no-incremental
-          dotnet test WageWizardTests /p:CollectCoverage=true /p:CoverletOutput=.\WageWizardTests\coverage.xml /p:CoverletOutputFormat=opencover --no-build
+          dotnet test WageWizardTests /p:CollectCoverage=true /p:CoverletOutput=.\WageWizardTests\coverage.cobertura.xml /p:CoverletOutputFormat=opencover --no-build
           & $scanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Generate HTML coverage report
         shell: powershell
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator -reports:Server/WageWizard/WageWizardTests/WageWizardTests/coverage.xml -targetdir:Server/WageWizard/coveragereport
+          reportgenerator -reports:Server/WageWizard/WageWizardTests/WageWizardTests/coverage.cobertura.xml -targetdir:Server/WageWizard/coveragereport
 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
@@ -73,6 +73,6 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: Server/WageWizard/WageWizardTests/WageWizardTests/coverage.xml
+          files: Server/WageWizard/WageWizardTests/WageWizardTests/coverage.cobertura.xml
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
