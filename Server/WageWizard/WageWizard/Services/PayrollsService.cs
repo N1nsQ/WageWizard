@@ -1,6 +1,4 @@
-﻿using WageWizard.Data.Repositories;
-using WageWizard.Domain.Exceptions;
-using WageWizard.Domain.Logic;
+﻿using WageWizard.Domain.Logic;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
 using WageWizard.Services.Interfaces;
@@ -16,7 +14,7 @@ namespace WageWizard.Services
             _payrollsRepository = payrollsRepository;
         }
 
-        // Testattu ja tarkistettu
+
         public async Task<SalaryStatementCalculationDto> CalculateSalaryStatementAsync(Guid employeeId)
         {
             var employee = await _payrollsRepository.GetEmployeeByIdAsync(employeeId);
