@@ -1,19 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WageWizard.DTOs
 {
-    public record NewEmployeeRequestDto(
-        [Required][StringLength(50, MinimumLength = 2)] string FirstName,
-        [Required][StringLength(50, MinimumLength = 2)] string LastName,
-        [Required][StringLength(100)] string JobTitle,
-        [Required][EmailAddress][StringLength(100)] string Email,
-        [Required][StringLength(200)] string HomeAddress,       
-        [Required][RegularExpression(@"^\d{5}$", ErrorMessage = "Postal code must be 5 digits.")] string PostalCode,
-        [Required][StringLength(50)] string City,
-        [Required] string BankAccountNumber,
-        [Required][Range(0, 100, ErrorMessage = "Tax rate must be between 0 and 100.")] decimal TaxRate,
-        [Required][Range(1, double.MaxValue, ErrorMessage = "Monthly salary must be greater than 0.")] decimal MonthlySalary,
-        [Required][DataType(DataType.Date)] DateTime StartDate,
-        [Required][DataType(DataType.Date)] DateTime DateOfBirth
-        );
+    public record NewEmployeeRequestDto 
+    {
+        [Required][StringLength(50, MinimumLength = 2)] 
+        public string FirstName { get; init; } = string.Empty;
+        [Required][StringLength(50, MinimumLength = 2)] 
+        public string LastName { get; init; } = string.Empty;
+        [Required][StringLength(100)] 
+        public string JobTitle { get; init; } = string.Empty;
+        [Required][EmailAddress][StringLength(100)] 
+        public string Email { get; init; } = string.Empty;
+        [Required][StringLength(200)] 
+        public string HomeAddress { get; init; } = string.Empty;
+        [Required][RegularExpression(@"^\d{5}$", ErrorMessage = "Postal code must be 5 digits.")] 
+        public string PostalCode { get; init; } = string.Empty;
+        [Required][StringLength(50)] 
+        public string City { get; init; } = string.Empty;
+        [Required] 
+        public string BankAccountNumber { get; init; } = string.Empty;
+        [JsonRequired][Range(0, 100)] 
+        public decimal TaxRate;
+        [Required][Range(1, double.MaxValue, ErrorMessage = "Monthly salary must be greater than 0.")] 
+        public decimal MonthlySalary;
+        [Required][DataType(DataType.Date)] 
+        public DateTime StartDate;
+        [Required][DataType(DataType.Date)] 
+        public DateTime DateOfBirth;
+    };
 }
