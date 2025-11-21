@@ -12,7 +12,12 @@ WageWizard/
  │    └─ PayrollsController.cs
  │
  ├─ Data/
- │    ├─ PayrollDbContext.cs
+ │    ├─ Repositories/
+ │    │     ├─ EmployeeRepository.cs
+ │    │     ├─ PayrollsRepository.cs
+ │    │     └─ UserRepository.cs
+ │    │
+ │    └─ PayrollDbContext.cs
  │
  ├─ Domain/
  │    ├─ Entities/
@@ -25,12 +30,18 @@ WageWizard/
  │    │     ├─ InsuranceRateCalculator.cs
  │    │     └─ SalaryCalculator.cs
  │    │
- │    └─ ValueObjects/ (valinnainen)
+ │    └─ Exceptions/
+ │          ├─ DomainExceptions.cs
+ │          ├─ EntityNotFoundException.cs
+ │          └─ UnauthorizedException.cs
  │
  ├─ DTOs/
  │    ├─ EmployeeDetailsDto.cs
  │    ├─ EmployeesSummaryDto.cs
  │    └─ ...
+ │
+ ├─ Middleware/
+ │    └─ ExceptionHandlingMiddleware.cs
  │
  ├─ Repositories/
  |    ├─ IEmployeeRepository.cs
@@ -38,13 +49,14 @@ WageWizard/
  |    └─ IPayrollRepository.cs
  │
  ├─ Services/
- │    ├─ IEmployeeService.cs
+ │    ├─ Interfaces/
+ │    │     ├─ IEmployeeService.cs
+ │    │     └─ IPayrollService.cs
+ |    |
  │    ├─ EmployeeService.cs
- |    ├─ IPayrollService.cs
  │    └─ PayrollService.cs
  │
  └─ Program.cs
-
 ```
 
 ## Controllers (Presentation Layer / API Layer)
