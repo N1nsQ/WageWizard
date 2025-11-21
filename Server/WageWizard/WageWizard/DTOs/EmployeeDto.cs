@@ -2,7 +2,7 @@
 {
     public record EmployeeDto
     (
-        Guid id,
+        Guid Id,
         string? FirstName,
         string? LastName,
         DateTime DateOfBirth,
