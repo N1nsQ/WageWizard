@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk<
   { rejectValue: ErrorMessage }
 >("auth/loginUser", async (loginData: LoginDto, thunkAPI) => {
   try {
-    const response = await fetch(`${API_BASE}/api/Login/login`, {
+    const response = await fetch(`${API_BASE}/api/Login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
