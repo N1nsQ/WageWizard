@@ -1,5 +1,4 @@
-﻿using WageWizard.Data;
-using WageWizard.Domain.Entities;
+﻿using WageWizard.Domain.Entities;
 
 namespace WageWizard.Domain.Logic
 {

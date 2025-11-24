@@ -1,81 +1,108 @@
-﻿using WageWizard.Services;
+﻿using FluentAssertions;
+using Moq;
+using WageWizard.Domain.Entities;
+using WageWizard.Domain.Exceptions;
+using WageWizard.Repositories;
+using WageWizard.Services;
 
 namespace WageWizardTests.Services
 {
     public class PayrollServiceTests
     {
-        private const decimal TyelBasic = 0.0715m;
-        private const decimal TyelSenior = 0.0865m;
-        internal const decimal UnemploymentInsurancePercent = 0.0059m;
+        private readonly Mock<IPayrollsRepository> _payrollsRepositoryMock;
+        private readonly PayrollsService _payrollsService;
 
-        //[Theory]
-        //[InlineData(2500.00, "Basic", 178.75)]   
-        //[InlineData(3000.00, "Senior", 259.50)] 
-        //[InlineData(4000.00, "Basic", 286.00)]   
-        //[InlineData(5000.00, "Senior", 432.50)]
-        //public void CalculateTyELAmount_Calculates_Correctly(decimal grossSalary, string level, decimal expected)
-        //{
-        //    // Arrange
-        //    decimal tyelPercent = level switch
-        //    {
-        //        "Basic" => TyelBasic,
-        //        "Senior" => TyelSenior,
-        //        _ => throw new ArgumentException("Unknown level")
-        //    };
+        public PayrollServiceTests()
+        {
+            _payrollsRepositoryMock = new Mock<IPayrollsRepository>();
+            _payrollsService = new PayrollsService(_payrollsRepositoryMock.Object);
+        }
 
-        //    // Act
-        //    var result = PayrollsService.CalculateTyELAmount(grossSalary, tyelPercent);
+        [Fact]
+        public async Task CalculateSalaryStatementAsync_ShouldReturnCorrectDto_WhenDataIsValid()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+            var employee = new Employee
+            {
+                Id = employeeId,
+                FirstName = "Maija",
+                LastName = "Virtanen",
+                GrossSalary = 3500m,
+                TaxRate = 20m,
+                DateOfBirth = DateTime.Today.AddYears(-30)
+            };
 
-        //    // Assert
-        //    Assert.Equal(expected, result);
-        //}
+            var rates = new PayrollRates
+            {
+                Year = 2025,
+                TyEL_Basic = 0.0715m,
+                TyEL_Senior = 0.0865m,
+                UnemploymentInsurance = 0.0059m
+            };
 
-        //[Theory]
-        //[InlineData(2500.00, 14.75)]
-        //[InlineData(3000.00, 17.70)]
-        //public void CalculateUnemploymentInsuranceAmount_Calculates_Correctly(decimal grossSalary, decimal expected)
-        //{
-        //    // Act
-        //    var result = PayrollsService.CalculateUnemploymentInsuranceAmount(grossSalary, UnemploymentInsurancePercent);
+            _payrollsRepositoryMock.Setup(r => r.GetEmployeeByIdAsync(employeeId))
+                .ReturnsAsync(employee);
 
-        //    // Assert
-        //    Assert.Equal(expected, result);
-        //}
+            _payrollsRepositoryMock.Setup(r => r.GetRatesForYearAsync(It.IsAny<int>()))
+                .ReturnsAsync(rates);
 
-        //[Theory]
-        //[InlineData(2500.00, 10.0, 250.00)] 
-        //[InlineData(3000.00, 15.0, 450.00)] 
-        //[InlineData(4000.00, 0.0, 0.00)]
-        //[InlineData(5500.55, 11.0, 605.06)]
-        //[InlineData(3500.00, 9.5, 332.50)]
-        //public void CalculateWithholdingTaxAmount_Calculates_Correctly(decimal grossSalary, decimal taxPercent, decimal expected)
-        //{
-        //    // Act
-        //    var result = PayrollsService.CalculateWithholdingTaxAmount(grossSalary, taxPercent);
+            // Act
+            var result = await _payrollsService.CalculateSalaryStatementAsync(employeeId);
 
-        //    // Assert
-        //    Assert.Equal(expected, result);
-        //}
+            // Assert
+            result.Should().NotBeNull();
+            result.EmployeeId.Should().Be(employeeId);
+            result.EmployeeName.Should().Be("Maija Virtanen");
+            result.GrossSalary.Should().Be(employee.GrossSalary);
+            result.TaxPercent.Should().Be(employee.TaxRate);
+            result.NetSalary.Should().BeGreaterThan(0);
+        }
 
-        //[Theory]
-        //[InlineData(3500.55, 9.5, 0.0715, 0.0059, 2897.06)]
-        //[InlineData(1234.00, 10, 0.0715, 0.0059, 1015.09)]
-        //[InlineData(5555.55, 25.5, 0.0715, 0.0059, 3708.88)]
-        //public void CalculateNetSalaryAmount_Calculates_Correctly(
-        //decimal grossSalary,
-        //decimal taxPercent,
-        //decimal tyelPercent,
-        //decimal unemploymentInsurancePercent,
-        //decimal expected)
-        //{
-        //    // Act
-        //    var result = PayrollsService.CalculateNetSalaryAmount(
-        //    grossSalary, taxPercent, tyelPercent, unemploymentInsurancePercent);
+        [Fact]
+        public async Task CalculateSalaryStatementAsync_ShouldThrowEntityNotFoundException_WhenEmployeeNotFound()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+            _payrollsRepositoryMock.Setup(r => r.GetEmployeeByIdAsync(employeeId))
+                .ReturnsAsync((Employee?)null);
 
-        //    // Assert
-        //    Assert.Equal(expected, result);
-        //}
-    
+            // Act
+            Func<Task> act = async () => await _payrollsService.CalculateSalaryStatementAsync(employeeId);
+
+            // Assert
+            await act.Should().ThrowAsync<EntityNotFoundException>()
+                .WithMessage($"Employee with id {employeeId} not found.");
+        }
+
+        [Fact]
+        public async Task CalculateSalaryStatementAsync_ShouldThrowEntityNotFoundException_WhenRatesNotFound()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+            var employee = new Employee
+            {
+                Id = employeeId,
+                FirstName = "Maija",
+                LastName = "Virtanen",
+                GrossSalary = 3500m,
+                TaxRate = 20m,
+                DateOfBirth = DateTime.Today.AddYears(-30)
+            };
+
+            _payrollsRepositoryMock.Setup(r => r.GetEmployeeByIdAsync(employeeId))
+                .ReturnsAsync(employee);
+
+            _payrollsRepositoryMock.Setup(r => r.GetRatesForYearAsync(It.IsAny<int>()))
+                .ReturnsAsync((PayrollRates?)null);
+
+            // Act
+            Func<Task> act = async () => await _payrollsService.CalculateSalaryStatementAsync(employeeId);
+
+            // Assert
+            await act.Should().ThrowAsync<EntityNotFoundException>()
+                .WithMessage($"No payroll rates found for year {DateTime.Now.Year}.");
+        }
     }
     
 }

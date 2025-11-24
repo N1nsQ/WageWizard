@@ -26,7 +26,7 @@ namespace WageWizard.Services
             return new LoginResponseDto
             {
                 Success = true,
-                Message = "Login successful",
+                Message = "Login Successful",
                 UserId = user.Id,
                 Username = user.Username,
                 Role = user.RoleId ?? UserRole.TestUser

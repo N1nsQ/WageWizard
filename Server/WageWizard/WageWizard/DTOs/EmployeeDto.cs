@@ -6,7 +6,7 @@
         string? FirstName,
         string? LastName,
         DateTime DateOfBirth,
-        string? JobTItle,
+        string? JobTitle,
         string? ImageUrl,
         string? Email,
         string? HomeAddress,

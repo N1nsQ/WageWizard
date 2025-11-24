@@ -45,9 +45,8 @@ namespace WageWizardTests.Controllers
             var result = await _loginController.Login(request);
 
             // Assert
-            var okResult = result.Result as OkObjectResult;
-            okResult.Should().NotBeNull();
-            okResult!.Value.Should().BeEquivalentTo(response);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            okResult.Value.Should().BeEquivalentTo(response);
         }
 
 

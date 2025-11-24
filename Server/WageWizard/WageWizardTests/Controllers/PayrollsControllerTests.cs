@@ -1,92 +1,68 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WageWizard.Controllers;
 using WageWizard.DTOs;
-using WageWizard.Repositories;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizardTests.Controllers
 {
     public class PayrollsControllerTests
     {
-        //[Fact]
-        //public async Task GetPayrollRatesAsync_WhenRepositoryReturnsData_ReturnsOkResult()
-        //{
-        //    // Arrange
-        //    var rates = new List<PayrollRatesDto>
-        //{
-        //    new(2023, 0.0715m, 0.0865m, 0.0125m),
-        //    new(2024, 0.072m, 0.087m, 0.013m)
-        //};
+        private readonly Mock<IPayrollsService> _payrollsServiceMock;
+        private readonly PayrollsController _controller;
 
-        //    var mockRepo = new Mock<IPayrollsRepository>();
-        //    mockRepo.Setup(r => r.GetPayrollRatesAsync()).ReturnsAsync(rates);
+        public PayrollsControllerTests()
+        {
+            _payrollsServiceMock = new Mock<IPayrollsService>();
+            _controller = new PayrollsController(_payrollsServiceMock.Object);
+        }
 
-        //    var controller = new PayrollsController(mockRepo.Object);
+        [Fact]
+        public async Task CalculateSalaryStatementAsync_ShouldReturnOk_WithSalaryStatement()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+            var expectedDto = new SalaryStatementCalculationDto(
+                EmployeeId: employeeId,
+                EmployeeName: "Maija Virtanen",
+                GrossSalary: 3500,
+                TaxPercent: 20,
+                WithholdingTax: 700,
+                TyELAmount: 245,
+                UnemploymentInsuranceAmount: 52.5m,
+                NetSalary: 2502.5m
+            );
 
-        //    // Act
-        //    var result = await controller.GetPayrollRatesAsync();
+            _payrollsServiceMock
+                .Setup(s => s.CalculateSalaryStatementAsync(employeeId))
+                .ReturnsAsync(expectedDto);
 
-        //    // Assert
-        //    var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        //    var returnedRates = Assert.IsAssignableFrom<IEnumerable<PayrollRatesDto>>(okResult.Value);
-        //    Assert.Equal(2, returnedRates.Count());
-        //    mockRepo.Verify(r => r.GetPayrollRatesAsync(), Times.Once);
-        //}
+            // Act
+            var result = await _controller.CalculateSalaryStatementAsync(employeeId);
 
-        //[Fact]
-        //public async Task CalculateSalaryStatementAsync_WhenEmployeeExists_ReturnsOkResult()
-        //{
-        //    // Arrange
-        //    var employeeId = Guid.NewGuid();
-        //    var dto = new SalaryStatementCalculationDto(
-        //        EmployeeId: employeeId,
-        //        EmployeeName: "Anna Andersson",
-        //        GrossSalary: 4000m,
-        //        TaxPercent: 20m,
-        //        WithholdingTax: 800m,
-        //        TyELAmount: 286m,
-        //        UnemploymentInsuranceAmount: 50m,
-        //        NetSalary: 2864m
-        //    );
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+            okResult.Should().NotBeNull();
+            okResult!.Value.Should().BeEquivalentTo(expectedDto);
+        }
 
-        //    var mockRepo = new Mock<IPayrollsRepository>();
-        //    mockRepo.Setup(r => r.CalculateSalaryStatementAsync(employeeId))
-        //            .ReturnsAsync(dto);
+        [Fact]
+        public async Task CalculateSalaryStatementAsync_ShouldThrow_WhenServiceThrows()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
 
-        //    var controller = new PayrollsController(mockRepo.Object);
+            _payrollsServiceMock
+                .Setup(s => s.CalculateSalaryStatementAsync(employeeId))
+                .ThrowsAsync(new Exception("Something went wrong"));
 
-        //    // Act
-        //    var result = await controller.CalculateSalaryStatementAsync(employeeId);
+            // Act
+            Func<Task> act = async () => await _controller.CalculateSalaryStatementAsync(employeeId);
 
-        //    // Assert
-        //    var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        //    var returnedDto = Assert.IsType<SalaryStatementCalculationDto>(okResult.Value);
-        //    Assert.Equal(employeeId, returnedDto.EmployeeId);
-        //    mockRepo.Verify(r => r.CalculateSalaryStatementAsync(employeeId), Times.Once);
-        //}
-
-        //[Fact]
-        //public async Task CalculateSalaryStatementAsync_WhenEmployeeNotFound_ReturnsNotFound()
-        //{
-        //    // Arrange
-        //    var mockRepo = new Mock<IPayrollsRepository>();
-        //    mockRepo.Setup(r => r.CalculateSalaryStatementAsync(It.IsAny<Guid>()))
-        //            .ReturnsAsync((SalaryStatementCalculationDto?)null);
-
-        //    var controller = new PayrollsController(mockRepo.Object);
-
-        //    // Act
-        //    var result = await controller.CalculateSalaryStatementAsync(Guid.NewGuid());
-
-        //    // Assert
-        //    var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-        //    var error = Assert.IsType<ErrorResponseDto>(notFoundResult.Value);
-        //    Assert.Equal("backend_error_messages.employee_not_found", error.Code);
-        //}
+            // Assert
+            await act.Should().ThrowAsync<Exception>()
+                .WithMessage("Something went wrong");
+        }
     }
 }
