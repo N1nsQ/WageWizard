@@ -1,16 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WageWizard;
 using WageWizard.Controllers;
-using WageWizard.Data;
 using WageWizard.Domain.Entities;
+using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
 using WageWizard.Services.Interfaces;
 
@@ -57,53 +50,56 @@ namespace WageWizardTests.Controllers
             okResult!.Value.Should().BeEquivalentTo(response);
         }
 
-        //[Fact]
-        //public void Login_CorrectCredentialsReturnsOk()
-        //{
-        //    // arrange
-        //    var loginDto = new LoginRequestDto
-        //    {
-        //        Username = "TestUser",
-        //        Password = "password123"
-        //    };
 
-        //    // act
-        //    var result = _loginController.Login(loginDto);
+        [Theory]
+        [InlineData("Hacker", "password123")]
+        [InlineData("TestUser", "password")]
+        [InlineData("", "password123")]
+        [InlineData("TestUser", "")]
+        [InlineData("", "")]
+        public async Task Login_ShouldThrowUnauthorizedException_WhenCredentialsAreInvalid(string username, string password)
+        {
+            // Arrange
+            var request = new LoginRequestDto
+            {
+                Username = username,
+                Password = password
+            };
 
-        //    // assert
-        //    var okResult = Assert.IsType<OkObjectResult>(result);
-        //    var data = Assert.IsType<LoginResponseDto>(okResult.Value); 
+            _loginServiceMock
+                .Setup(s => s.LoginAsync(It.Is<LoginRequestDto>(
+                    x => x.Username == username && x.Password == password)))
+                .ThrowsAsync(new UnauthorizedException("Invalid username or password."));
 
-        //    Assert.Equal("Login successful", data.Message); 
-        //    Assert.Equal("TestUser", data.Username);
-        //    Assert.Equal(UserRole.TestUser, data.Role);
+            // Act
+            Func<Task> act = () => _loginController.Login(request);
 
-        //}
+            // Assert
+            await act.Should().ThrowAsync<UnauthorizedException>()
+                 .WithMessage("Invalid username or password.");
 
-        //[Theory]
-        //[InlineData("Hacker", "password123")]
-        //[InlineData("TestUser", "password")]
-        //[InlineData("", "password123")]
-        //[InlineData("TestUser", "")]
-        //[InlineData("", "")]
-        //public void Login_IncorrectCredentialsReturnsUnauthorized(string username, string password)
-        //{
-        //    // Arrange
-        //    var loginDto = new LoginRequestDto
-        //    {
-        //        Username = username,
-        //        Password = password
-        //    };
+        }
 
-        //    // Act
-        //    var result = _loginController.Login(loginDto);
+        [Fact]
+        public async Task Login_ShouldThrowException_WhenUnexpectedErrorOccurs()
+        {
+            // Arrange
+            var request = new LoginRequestDto
+            {
+                Username = "user",
+                Password = "pass"
+            };
 
-        //    // Assert
-        //    var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result);
-        //    var error = Assert.IsType<ErrorResponseDto>(unauthorizedResult.Value);
+            _loginServiceMock
+                .Setup(s => s.LoginAsync(It.IsAny<LoginRequestDto>()))
+                .ThrowsAsync(new Exception("Something went wrong"));
 
-        //    Assert.Equal("backend_error_messages.invalid_username", error.Code);
+            // Act
+            Func<Task> act = async () => await _loginController.Login(request);
 
-        //}
+            // Assert
+            await act.Should().ThrowAsync<Exception>()
+                .WithMessage("Something went wrong");
+        }
     }
 }
