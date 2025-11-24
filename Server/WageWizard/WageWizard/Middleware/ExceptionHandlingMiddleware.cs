@@ -40,12 +40,12 @@ namespace WageWizard.Middleware
 
             switch (exception)
             {
-                case DomainException domainEx:
-                    statusCode = (int)HttpStatusCode.BadRequest;
+                case UnauthorizedException unauthorizedEx:
+                    statusCode = (int)HttpStatusCode.Unauthorized;
                     response = new
                     {
-                        message = domainEx.Message,
-                        type = domainEx.GetType().Name
+                        message = unauthorizedEx.Message,
+                        type = unauthorizedEx.GetType().Name
                     };
                     break;
 
@@ -55,6 +55,15 @@ namespace WageWizard.Middleware
                     {
                         message = keyNotFoundEx.Message,
                         type = keyNotFoundEx.GetType().Name
+                    };
+                    break;
+
+                case DomainException domainEx:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    response = new
+                    {
+                        message = domainEx.Message,
+                        type = domainEx.GetType().Name
                     };
                     break;
 

@@ -1,6 +1,6 @@
 ﻿namespace WageWizard.Domain.Exceptions
 {
-    public class UnauthorizedException : DomainException
+    public class UnauthorizedException : Exception
     {
         public UnauthorizedException(string message) : base(message) { }
     }
