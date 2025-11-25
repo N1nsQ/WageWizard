@@ -72,7 +72,7 @@ jobs:
           # Run tests with MSBuild-based Coverlet
           dotnet test WageWizardTests `
               /p:CollectCoverage=true `
-              /p:CoverletOutput=../coveragereport/coverage `
+              /p:CoverletOutput=./coveragereport/coverage `
               /p:CoverletOutputFormat=cobertura `
               --no-build
 
