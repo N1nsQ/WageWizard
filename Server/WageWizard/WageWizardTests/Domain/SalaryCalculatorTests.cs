@@ -69,6 +69,7 @@ namespace WageWizardTests.Domain
         [InlineData(6000, 30, 0.0865, 0.0059, 3645.60)]
         [InlineData(8000, 22, 0, 0.0, 6240.00)]
         [InlineData(6000, 10, 0, 0.0, 5400.00)]
+        [InlineData(4000, 12, 0.0715, 0.0, 3234.00)]
         public void CalculateNetSalaryAmount_ShouldReturnCorrectValues(
         decimal gross,
         decimal taxPercent,
