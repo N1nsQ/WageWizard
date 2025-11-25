@@ -70,11 +70,7 @@ jobs:
           dotnet build --no-incremental
 
           # Run tests with MSBuild-based Coverlet
-          dotnet test WageWizardTests `
-              /p:CollectCoverage=true `
-              /p:CoverletOutput=./coveragereport/coverage `
-              /p:CoverletOutputFormat=cobertura `
-              --no-build
+          dotnet test WageWizardTests /p:CollectCoverage=true /p:CoverletOutput=.\WageWizardTests\coverage.xml /p:CoverletOutputFormat=opencover --no-build
 
           # End Sonar analysis
           & $scanner end /d:sonar.token="$env:SONAR_TOKEN"
