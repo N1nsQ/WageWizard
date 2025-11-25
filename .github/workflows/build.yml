@@ -53,7 +53,7 @@ jobs:
         run: |
           cd Server/WageWizard
 
-          # Ensure clean coverage folder
+          # Fresh coverage folder
           if (Test-Path "coveragereport") { Remove-Item -Recurse -Force "coveragereport" }
           New-Item -ItemType Directory -Path "coveragereport" | Out-Null
 
@@ -66,12 +66,15 @@ jobs:
               /d:sonar.token="$env:SONAR_TOKEN" `
               /d:sonar.cs.opencover.reportsPaths="Server/WageWizard/coveragereport/coverage.cobertura.xml"
 
-          # Build the solution
+          # Build
           dotnet build --no-incremental
 
-          # Run tests with coverage output to a fixed folder
+          # Run tests with MSBuild-based Coverlet
           dotnet test WageWizardTests `
-            /p:CollectCoverage=true /p:CoverletOutput=../coveragereport/coverage /p:CoverletOutputFormat=cobertura --no-build
+              /p:CollectCoverage=true `
+              /p:CoverletOutput=../coveragereport/coverage `
+              /p:CoverletOutputFormat=cobertura `
+              --no-build
 
           # End Sonar analysis
           & $scanner end /d:sonar.token="$env:SONAR_TOKEN"
