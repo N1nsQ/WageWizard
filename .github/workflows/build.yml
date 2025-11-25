@@ -71,10 +71,7 @@ jobs:
 
           # Run tests with coverage output to a fixed folder
           dotnet test WageWizardTests `
-              /p:CollectCoverage=true `
-              /p:CoverletOutput=../coveragereport/coverage `
-              /p:CoverletOutputFormat=cobertura `
-              --no-build
+            /p:CollectCoverage=true /p:CoverletOutput=../coveragereport/coverage /p:CoverletOutputFormat=cobertura --no-build
 
           # End Sonar analysis
           & $scanner end /d:sonar.token="$env:SONAR_TOKEN"
