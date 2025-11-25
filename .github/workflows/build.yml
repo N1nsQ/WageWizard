@@ -1,4 +1,5 @@
 name: SonarQube
+
 on:
   push:
     branches:
@@ -10,6 +11,7 @@ jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
+
     steps:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -51,41 +53,49 @@ jobs:
         run: |
           cd Server/WageWizard
 
+          # Ensure clean coverage folder
+          if (Test-Path "coveragereport") { Remove-Item -Recurse -Force "coveragereport" }
+          New-Item -ItemType Directory -Path "coveragereport" | Out-Null
+
           $scanner = "${{ runner.temp }}\scanner\dotnet-sonarscanner.exe"
 
+          # Begin Sonar analysis
           & $scanner begin `
               /k:"N1nsQ_WageWizard" `
               /o:"n1nsq" `
-              /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-              /d:sonar.cs.opencover.reportsPaths="Server/WageWizard/WageWizardTests/coverage.cobertura.xml"
+              /d:sonar.token="$env:SONAR_TOKEN" `
+              /d:sonar.cs.opencover.reportsPaths="Server/WageWizard/coveragereport/coverage.cobertura.xml"
 
+          # Build the solution
           dotnet build --no-incremental
 
+          # Run tests with coverage output to a fixed folder
           dotnet test WageWizardTests `
               /p:CollectCoverage=true `
-              /p:CoverletOutput=../coverage/
+              /p:CoverletOutput=../coveragereport/coverage `
               /p:CoverletOutputFormat=cobertura `
               --no-build
 
-          & $scanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          # End Sonar analysis
+          & $scanner end /d:sonar.token="$env:SONAR_TOKEN"
 
       - name: Generate HTML coverage report
         shell: powershell
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
           reportgenerator `
-            -reports:Server/WageWizard/WageWizardTests/coverage.cobertura.xml `
-            -targetdir:Server/WageWizard/coveragereport
+            -reports:Server/WageWizard/coveragereport/coverage.cobertura.xml `
+            -targetdir:Server/WageWizard/coveragereport/html
 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: Server/WageWizard/coveragereport
+          path: Server/WageWizard/coveragereport/html
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: Server/WageWizard/WageWizardTests/coverage.cobertura.xml
+          files: Server/WageWizard/coveragereport/coverage.cobertura.xml
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
