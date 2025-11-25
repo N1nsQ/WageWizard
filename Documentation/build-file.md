@@ -1,0 +1,63 @@
+# Toimiva build.yml-tiedosto
+
+```
+name: SonarQube
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: zulu
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache SonarQube Cloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache SonarScanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+
+      - name: Install SonarScanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
+          dotnet tool install dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
+
+      - name: Build and analyze backend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          cd Server/WageWizard
+
+          $scanner = "${{ runner.temp }}\scanner\dotnet-sonarscanner.exe"
+
+          & $scanner begin /k:"N1nsQ_WageWizard" /o:"n1nsq" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="WageWizardTests/WageWizardTests/coverage.xml"
+          dotnet build --no-incremental
+          dotnet test WageWizardTests /p:CollectCoverage=true /p:CoverletOutput=.\WageWizardTests\coverage.xml /p:CoverletOutputFormat=opencover --no-build
+          & $scanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+```
