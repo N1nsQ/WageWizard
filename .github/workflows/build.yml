@@ -63,7 +63,7 @@ jobs:
 
           dotnet test WageWizardTests `
               /p:CollectCoverage=true `
-              /p:CoverletOutput=./WageWizardTests/coverage.cobertura.xml `
+              /p:CoverletOutput=../coverage/
               /p:CoverletOutputFormat=cobertura `
               --no-build
 
