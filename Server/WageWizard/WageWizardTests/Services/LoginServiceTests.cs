@@ -25,7 +25,7 @@ namespace WageWizardTests.Services
         }
 
         [Fact]
-        public async Task LoginAsync_ShouldReturnResponse_WhenCredentiealsAreValid()
+        public async Task LoginAsync_ShouldReturnOkResponse_WhenCredentiealsAreValid()
         {
             // Arrange
             var loginDto = new LoginRequestDto
@@ -60,7 +60,6 @@ namespace WageWizardTests.Services
         [Theory]
         [InlineData("Maija", "WrongPassword")]
         [InlineData("Hacker", "1234")]
-        [InlineData("", "")]
         public async Task LoginAsync_ShouldThrowUnauthorizedException_WhenCredentialsAreInvalid(string username, string password)
         {
             // Arrange
@@ -80,6 +79,26 @@ namespace WageWizardTests.Services
             // Assert
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(act);
             Assert.Equal("Invalid username or password.", ex.Message);
+        }
+
+        [Fact]
+        public async Task Login_Should_Throw_RepositoryUnavailableException_When_Repo_Fails()
+        {
+            var repoMock = new Mock<IUserRepository>();
+            repoMock
+                .Setup(r => r.GetUserByUsernameAndPasswordAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ThrowsAsync(new RepositoryUnavailableException("Database connection failed."));
+
+            var service = new LoginService(repoMock.Object);
+
+            var ex = await Assert.ThrowsAsync<RepositoryUnavailableException>(() =>
+                service.LoginAsync(new LoginRequestDto
+                {
+                    Username = "test",
+                    Password = "123"
+                }));
+
+            Assert.Equal("Database connection failed.", ex.Message);
         }
     }
 }

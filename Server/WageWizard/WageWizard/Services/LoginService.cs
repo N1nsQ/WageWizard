@@ -31,6 +31,7 @@ namespace WageWizard.Services
                 Username = user.Username,
                 Role = user.RoleId ?? UserRole.TestUser
             };
+
         }
     }
 }

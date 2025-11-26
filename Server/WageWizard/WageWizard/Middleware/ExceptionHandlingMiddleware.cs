@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.Data.SqlClient;
+using System.Net;
 using System.Text.Json;
 using WageWizard.Domain.Exceptions;
 
@@ -64,6 +65,15 @@ namespace WageWizard.Middleware
                     {
                         message = domainEx.Message,
                         type = domainEx.GetType().Name
+                    };
+                    break;
+                case SqlException sqlEx:
+                    statusCode = (int)HttpStatusCode.InternalServerError;
+                    response = new
+                    {
+                        message = "Database unreachable",
+                        detail = sqlEx.Message,
+                        Type = sqlEx.GetType().Name
                     };
                     break;
 
