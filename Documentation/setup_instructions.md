@@ -47,3 +47,13 @@ git clone https://github.com/N1nsQ/WageWizard.git
   - **Username:** Tessa Testaaja
   - **Password:** SalainenSalasana987!
 - Alternatively, you can manually add a new user to the Users table in the database.
+
+## Get the test coverage report
+
+* Command line:  
+  * ```dotnet test ` /p:CollectCoverage=true ` /p:CoverletOutput=./coveragereport/coverage `  /p:CoverletOutputFormat=cobertura ` --no-build```
+
+* Generate visual HTML document:  
+  * ```reportgenerator ` -reports:coveragereport/coverage.cobertura.xml ` -targetdir:coveragereport/html```  
+<img width="1983" height="1776" alt="image" src="https://github.com/user-attachments/assets/439a8be0-2f19-44c5-92b4-904b9922c347" />
+
