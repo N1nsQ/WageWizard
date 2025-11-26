@@ -97,6 +97,9 @@ namespace WageWizardTests.Services
             Assert.NotNull(result);
             Assert.Equal(3, result.Count());
             Assert.Contains(result, e => e.FirstName == "Jack");
+            Assert.Contains(result, e => e.LastName == "Sparrow");
+            Assert.Contains(result, e => e.JobTitle == "Captain");
+            Assert.Contains(result, e => e.Email == "jack.sparrow@test.com");
         }
 
         [Fact]

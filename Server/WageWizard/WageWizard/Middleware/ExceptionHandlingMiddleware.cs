@@ -84,7 +84,4 @@ namespace WageWizard.Middleware
             await context.Response.WriteAsync(json);
         }
     }
-    
-
-    
 }
