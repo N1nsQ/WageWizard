@@ -22,19 +22,38 @@ namespace WageWizard.Services
             var employee = await _employeeRepository.GetByIdAsync(id);
 
             if (employee == null)
-                throw new NotFoundException($"Employee with ID {id} not found.");
+                return null;
 
-            return employee;
+            return new EmployeeDto(
+                employee.Id,
+                employee.FirstName,
+                employee.LastName,
+                employee.DateOfBirth,
+                employee.JobTitle,
+                employee.ImageUrl,
+                employee.Email,
+                employee.HomeAddress,
+                employee.PostalCode,
+                employee.City,
+                employee.BankAccountNumber,
+                employee.TaxRate,
+                employee.GrossSalary,
+                employee.StartDate
+            );
         }
 
         public async Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
         {
-            var employees = await _employeeRepository.GetEmployeesSummaryAsync();
+            var employees = await _employeeRepository.GetAllAsync();
 
-            if (!employees.Any())
-                throw new NotFoundException("No employees found.");
-
-            return employees;
+            return employees.Select(e => new EmployeesSummaryDto(
+                e.Id,
+                e.FirstName,
+                e.LastName,
+                e.JobTitle,
+                e.ImageUrl,
+                e.Email
+            ));
         }
 
         public async Task<Employee> CreateEmployeeAsync(NewEmployeeRequestDto dto)

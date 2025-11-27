@@ -14,43 +14,15 @@ namespace WageWizard.Data.Repositories
             _payrollContext = payrollContext;
         }
 
-        public async Task<EmployeeDto?> GetByIdAsync(Guid id)
+        public async Task<Employee?> GetByIdAsync(Guid id)
         {
             return await _payrollContext.Employees
-                .Where(e => e.Id == id)
-                .Select(e => new EmployeeDto
-                (
-                    e.Id,
-                    e.FirstName,
-                    e.LastName,
-                    e.DateOfBirth,
-                    e.JobTitle,
-                    e.ImageUrl,
-                    e.Email,
-                    e.HomeAddress,
-                    e.PostalCode,
-                    e.City,
-                    e.BankAccountNumber,
-                    e.TaxRate,
-                    e.GrossSalary,
-                    e.StartDate
-                ))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
-
-        public async Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
+        public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await _payrollContext.Employees
                 .OrderBy(e => e.LastName)
-                .Select(e => new EmployeesSummaryDto
-                (
-                    e.Id,
-                    e.FirstName,
-                    e.LastName,
-                    e.JobTitle,
-                    e.ImageUrl,
-                    e.Email
-                ))
                 .ToListAsync();
         }
 
@@ -59,6 +31,15 @@ namespace WageWizard.Data.Repositories
             _payrollContext.Employees.Add(employee);
             await _payrollContext.SaveChangesAsync();
             return employee;
+        }
+
+        public async Task<Employee?> FindDuplicateAsync(string FirstName, string LastName, string Email)
+        {
+            return await _payrollContext.Employees
+                .FirstOrDefaultAsync(e =>
+                e.FirstName == FirstName &&
+                e.LastName == LastName &&
+                e.Email == Email);
         }
 
     }

@@ -1,12 +1,12 @@
 ﻿using WageWizard.Domain.Entities;
-using WageWizard.DTOs;
 
 namespace WageWizard.Repositories
 {
     public interface IEmployeeRepository
     {
-        Task<EmployeeDto?> GetByIdAsync(Guid id); 
-        Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync(); 
-        Task<Employee> AddAsync(Employee employee); 
+        Task<Employee?> GetByIdAsync(Guid id);
+        Task<IEnumerable<Employee>> GetAllAsync();
+        Task<Employee> AddAsync(Employee employee);
+        Task<Employee?> FindDuplicateAsync(string FirstName, string LastName, string Email);
     } 
 }

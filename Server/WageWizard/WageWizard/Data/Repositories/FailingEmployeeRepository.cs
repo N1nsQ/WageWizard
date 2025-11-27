@@ -9,15 +9,18 @@ namespace WageWizard.Data.Repositories
     {
         private static readonly string ErrorMessage = "Database not reachable";
 
-        public Task<EmployeeDto?> GetByIdAsync(Guid id)
+        public Task<Employee?> GetByIdAsync(Guid id)
             => throw new RepositoryUnavailableException(ErrorMessage);
 
-        public Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
+        public Task<IEnumerable<Employee>> GetAllAsync()
             => throw new RepositoryUnavailableException(ErrorMessage);
 
         public Task<Employee> AddAsync(Employee employee)
             => throw new RepositoryUnavailableException(ErrorMessage);
         public Task SaveChangesAsync()
+            => throw new RepositoryUnavailableException(ErrorMessage);
+
+        public Task<Employee?> FindDuplicateAsync(string FirstName, string LastName, string Email)
             => throw new RepositoryUnavailableException(ErrorMessage);
     }
 }
