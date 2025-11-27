@@ -1,4 +1,4 @@
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import { Field, useForm, useFormState } from "react-final-form";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
@@ -15,16 +15,10 @@ const SalaryStatementFields = () => {
     (state: RootState) => state.employeesSalaryDetails
   );
 
-  const handleChange = () => {
-    console.log("HandleChange");
-  };
-
   useEffect(() => {
     const selectedEmployee = employees?.find(
       (emp) => emp.id === values?.employeeId
     );
-
-    console.log("Selected Employee:", selectedEmployee);
 
     if (selectedEmployee) {
       const tyelPercent = Number(
@@ -33,8 +27,6 @@ const SalaryStatementFields = () => {
       const unemploymentPercent = Number(
         (selectedEmployee.unemploymentInsurancePercent * 100).toFixed(2)
       );
-
-      console.log("Employee TVM: ", unemploymentPercent);
 
       form.change("veroprosentti", selectedEmployee.taxPercentage);
       form.change("peruspalkka", selectedEmployee.salaryAmount.toFixed(2));
@@ -81,7 +73,6 @@ const SalaryStatementFields = () => {
                 type="number"
                 label={t("salary.tax_percentage")}
                 variant="outlined"
-                onChange={handleChange}
               />
             )}
           </Field>
@@ -96,7 +87,6 @@ const SalaryStatementFields = () => {
                 type="number"
                 label={t("salary.gross_salary")}
                 variant="outlined"
-                onChange={handleChange}
               />
             )}
           </Field>
@@ -111,7 +101,6 @@ const SalaryStatementFields = () => {
                 type="number"
                 label={t("salary.age")}
                 variant="outlined"
-                onChange={handleChange}
               />
             )}
           </Field>
@@ -126,7 +115,6 @@ const SalaryStatementFields = () => {
                 type="number"
                 label={t("salary.employee_pension_contribution")}
                 variant="outlined"
-                onChange={handleChange}
               />
             )}
           </Field>
@@ -141,15 +129,11 @@ const SalaryStatementFields = () => {
                 type="number"
                 label={t("salary.unemployment_contribution")}
                 variant="outlined"
-                onChange={handleChange}
               />
             )}
           </Field>
         </Grid>
       </Grid>
-      <div>
-        <Button>{t("salary.calculate")}</Button>
-      </div>
       <div>
         <Result employeeId={values?.employeeId} />
       </div>

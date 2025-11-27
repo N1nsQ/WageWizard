@@ -47,8 +47,6 @@ const Result = ({ employeeId }: ResultProps) => {
     );
   }
 
-  console.log("Data: ", data);
-
   return (
     <Paper sx={{ padding: 2, marginTop: 2 }}>
       <Typography variant="h6" gutterBottom>

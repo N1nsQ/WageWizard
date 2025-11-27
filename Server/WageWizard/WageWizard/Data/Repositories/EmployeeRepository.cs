@@ -54,14 +54,11 @@ namespace WageWizard.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddAsync(Employee employee)
+        public async Task<Employee> AddAsync(Employee employee)
         {
-            await _payrollContext.Employees.AddAsync(employee);
-        }
-
-        public async Task SaveChangesAsync()
-        {
+            _payrollContext.Employees.Add(employee);
             await _payrollContext.SaveChangesAsync();
+            return employee;
         }
 
     }

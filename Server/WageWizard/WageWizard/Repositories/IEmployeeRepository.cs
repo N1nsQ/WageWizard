@@ -7,7 +7,6 @@ namespace WageWizard.Repositories
     {
         Task<EmployeeDto?> GetByIdAsync(Guid id); 
         Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync(); 
-        Task AddAsync(Employee employee); 
-        Task SaveChangesAsync();
+        Task<Employee> AddAsync(Employee employee); 
     } 
 }

@@ -21,7 +21,7 @@ const fetchEmployeeDetails = createAsyncThunk<
   { rejectValue: ErrorMessage }
 >("employees/fetchDetails", async (id, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_BASE}/api/Employees/id?id=${id}`);
+    const response = await fetch(`${API_BASE}/api/Employees/${id}`);
     if (!response.ok) {
       const data: ErrorMessage = await response.json();
       return rejectWithValue(data);

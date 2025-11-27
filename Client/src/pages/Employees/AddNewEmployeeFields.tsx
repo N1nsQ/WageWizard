@@ -18,7 +18,7 @@ const AddNewEmployeeFields = () => {
       </div>
       <div style={{ display: "flex", gap: "16px" }}>
         <div style={{ flex: 1 }}>
-          <Field name="firstname">
+          <Field name="firstName">
             {({ input, meta }) => (
               <TextField
                 {...input}
@@ -31,7 +31,7 @@ const AddNewEmployeeFields = () => {
           </Field>
         </div>
         <div style={{ flex: 1 }}>
-          <Field name="lastname">
+          <Field name="lastName">
             {({ input, meta }) => (
               <TextField
                 {...input}
@@ -71,7 +71,7 @@ const AddNewEmployeeFields = () => {
         </Field>
       </div>
       <div>
-        <Field name="address">
+        <Field name="homeAddress">
           {({ input, meta }) => (
             <TextField
               {...input}
@@ -85,7 +85,7 @@ const AddNewEmployeeFields = () => {
       </div>
       <div style={{ display: "flex", gap: "16px" }}>
         <div style={{ flex: 1 }}>
-          <Field name="postalcode">
+          <Field name="postalCode">
             {({ input, meta }) => (
               <TextField
                 {...input}
@@ -112,7 +112,7 @@ const AddNewEmployeeFields = () => {
         </div>
       </div>
       <div>
-        <Field name="bankAccount">
+        <Field name="bankAccountNumber">
           {({ input, meta }) => (
             <TextField
               {...input}
@@ -126,12 +126,13 @@ const AddNewEmployeeFields = () => {
       </div>
       <div style={{ display: "flex", gap: "16px" }}>
         <div style={{ flex: 1 }}>
-          <Field name="taxPercent">
+          <Field name="taxRate">
             {({ input, meta }) => (
               <TextField
                 {...input}
                 label={t("employees.taxPercentage")}
                 margin="normal"
+                type="number"
                 error={meta.touched && meta.error ? true : false}
                 fullWidth
               />
@@ -139,12 +140,19 @@ const AddNewEmployeeFields = () => {
           </Field>
         </div>
         <div style={{ flex: 1 }}>
-          <Field name="grossSalary">
+          <Field name="monthlySalary">
             {({ input, meta }) => (
               <TextField
                 {...input}
                 label={t("employees.salaryAmount")}
                 margin="normal"
+                type="number"
+                value={input.value ?? ""}
+                onChange={(e) =>
+                  input.onChange(
+                    e.target.value !== "" ? Number(e.target.value) : 0
+                  )
+                }
                 error={meta.touched && meta.error ? true : false}
                 fullWidth
               />
@@ -172,7 +180,7 @@ const AddNewEmployeeFields = () => {
           </Field>
         </div>
         <div style={{ flex: 1 }}>
-          <Field name="birthDate">
+          <Field name="dateOfBirth">
             {({ input, meta }) => (
               <DatePicker
                 label={t("employees.dateOfBirth")}

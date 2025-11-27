@@ -61,7 +61,6 @@ namespace WageWizard.Services
             };
 
             await _employeeRepository.AddAsync(employee);
-            await _employeeRepository.SaveChangesAsync();
 
             return employee;
 

@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
 import { useEffect } from "react";
 import { fetchEmployeesSalaryDetails } from "../../redux/slices/employeesSalaryDetailsSlice";
 import { Form } from "react-final-form";
@@ -7,12 +7,6 @@ import SalaryStatementFields from "./SalaryStatementFields";
 
 const SalaryForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-
-  const { data: employees } = useSelector(
-    (state: RootState) => state.employeesSalaryDetails
-  );
-
-  console.log("Työntekijät: ", employees);
 
   useEffect(() => {
     dispatch(fetchEmployeesSalaryDetails());

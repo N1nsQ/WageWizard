@@ -15,7 +15,7 @@ namespace WageWizard.Data.Repositories
         public Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
             => throw new RepositoryUnavailableException(ErrorMessage);
 
-        public Task AddAsync(Employee employee)
+        public Task<Employee> AddAsync(Employee employee)
             => throw new RepositoryUnavailableException(ErrorMessage);
         public Task SaveChangesAsync()
             => throw new RepositoryUnavailableException(ErrorMessage);
