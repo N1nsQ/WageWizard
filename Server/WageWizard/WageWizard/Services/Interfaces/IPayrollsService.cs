@@ -1,5 +1,4 @@
-﻿using WageWizard.Domain.Entities;
-using WageWizard.DTOs;
+﻿using WageWizard.DTOs;
 
 namespace WageWizard.Services.Interfaces
 {

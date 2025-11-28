@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WageWizard.Domain.Entities;
 using WageWizard.DTOs;
 using WageWizard.Services.Interfaces;
 

@@ -1,6 +1,4 @@
-﻿using WageWizard.DTOs;
-
-namespace WageWizard.Domain.Logic
+﻿namespace WageWizard.Domain.Logic
 {
     public static class SalaryCalculator
     {

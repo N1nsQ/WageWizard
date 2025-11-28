@@ -1,6 +1,5 @@
 ﻿using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
-using WageWizard.DTOs;
 using WageWizard.Repositories;
 
 namespace WageWizard.Data.Repositories

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WageWizard.Domain.Entities;
-using WageWizard.DTOs;
 using WageWizard.Repositories;
 
 namespace WageWizard.Data.Repositories
