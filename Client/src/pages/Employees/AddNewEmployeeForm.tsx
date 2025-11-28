@@ -1,7 +1,7 @@
 import { Form } from "react-final-form";
 import AddNewEmployeeFields from "./AddNewEmployeeFields";
 import DatePickerLocalizationProvider from "../../common/DatePickerLocalizationProvider";
-import { createEmployee } from "../../redux/slices/EmployeeAddNewSlice";
+import { createEmployee } from "../../redux/slices/EmployeesSlice";
 import type { NewEmployeeRequest } from "../../models/NewEmployeeRequest";
 import { useAppDispatch } from "../../hooks/hooks";
 import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
@@ -30,30 +30,33 @@ const AddNewEmployeeForm = ({ onClose, onSubmitRef }: Props) => {
       dateOfBirth: values.dateOfBirth,
     };
 
-    try {
-      await dispatch(createEmployee(payload)).unwrap();
+    const resultAction = await dispatch(createEmployee(payload));
+
+    if (createEmployee.fulfilled.match(resultAction)) {
       dispatch(fetchEmployeesSummary());
       onClose();
-    } catch (error) {
-      console.error("Error adding employee:", error);
+    } else if (createEmployee.rejected.match(resultAction)) {
+      console.error("Error adding employee:", resultAction.payload);
     }
   };
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      render={({ handleSubmit }) => {
-        onSubmitRef?.(handleSubmit);
+    <div>
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit }) => {
+          onSubmitRef?.(handleSubmit);
 
-        return (
-          <form onSubmit={handleSubmit}>
-            <DatePickerLocalizationProvider>
-              <AddNewEmployeeFields />
-            </DatePickerLocalizationProvider>
-          </form>
-        );
-      }}
-    />
+          return (
+            <form onSubmit={handleSubmit}>
+              <DatePickerLocalizationProvider>
+                <AddNewEmployeeFields />
+              </DatePickerLocalizationProvider>
+            </form>
+          );
+        }}
+      />
+    </div>
   );
 };
 

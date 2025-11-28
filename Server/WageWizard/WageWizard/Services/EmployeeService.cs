@@ -1,7 +1,5 @@
-﻿using WageWizard.Data.Repositories;
-using WageWizard.Domain.Entities;
+﻿using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
-using WageWizard.Domain.Logic;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
 using WageWizard.Services.Interfaces;
@@ -58,6 +56,17 @@ namespace WageWizard.Services
 
         public async Task<Employee> CreateEmployeeAsync(NewEmployeeRequestDto dto)
         {
+            var duplicate = await _employeeRepository.FindDuplicateAsync(
+               dto.FirstName,
+               dto.LastName,
+               dto.Email
+            );
+
+            if (duplicate != null)
+            {
+                throw new DuplicateEmployeeException("Employee with identical details already exists.");
+            }
+
             var employee = new Employee
             {
                 Id = Guid.NewGuid(),
@@ -76,7 +85,7 @@ namespace WageWizard.Services
                 StartDate = dto.StartDate!.Value,
                 CreatedAt = DateTime.Today,
                 UpdatedAt = DateTime.Today
-                
+
             };
 
             await _employeeRepository.AddAsync(employee);

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import type { AppDispatch, RootState } from "../../redux/store";
-import { fetchEmployeeDetails } from "../../redux/slices/EmployeeDetailsSlice";
+import { fetchEmployeeById } from "../../redux/slices/EmployeesSlice";
 
 import InfoField from "../../common/InfoField";
 import Img300px from "../../common/Img300px";
@@ -28,13 +28,13 @@ const EmployeeDetailsPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { data: employee } = useSelector(
-    (state: RootState) => state.employeeDetails
+  const employee = useSelector(
+    (state: RootState) => state.employees.selectedEmployee
   );
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchEmployeeDetails(id));
+      dispatch(fetchEmployeeById(id));
     }
   }, [dispatch, id]);
 
@@ -53,8 +53,8 @@ const EmployeeDetailsPage = () => {
               value={`${employee?.firstName} ${employee?.lastName}`}
             />
             <Divider />
-            <InfoField label={t("employees.age")} value={`${employee?.age}`} />
-            <Divider />
+            {/* <InfoField label={t("employees.age")} value={`${employee?.age}`} />
+            <Divider /> */}
             <InfoField
               label={t("employees.jobtitle")}
               value={employee?.jobTitle}
@@ -81,12 +81,12 @@ const EmployeeDetailsPage = () => {
             <Divider />
             <InfoField
               label={t("employees.taxPercentage")}
-              value={`${employee?.taxPercentage}%`}
+              value={`${employee?.taxRate}%`}
             />
             <Divider />
             <InfoField
               label={t("employees.salaryAmount")}
-              value={formatCurrency(employee?.salaryAmount)}
+              value={formatCurrency(employee?.grossSalary)}
             />
             <Divider />
             <InfoField

@@ -1,31 +1,36 @@
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { useTranslation } from "react-i18next";
-import type { EmployeesSummary } from "../../models/EmployeesSummary";
+import type { EmployeesSummaryDto } from "../../models/EmployeesSummaryDto";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchEmployeesSummary } from "../../redux/slices/EmployeesSlice";
-import { type AppDispatch, type RootState } from "../../redux/store";
+import { type AppDispatch } from "../../redux/store";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconLinkCell from "../../common/IconLinkCell";
 import LoadingOverlay from "../../common/LoadingOverlay";
 import "../../App.css";
 import Thumb from "../../common/Thumb";
 
+import {
+  fetchEmployeesSummary,
+  selectEmployeesSummary,
+  selectLoadingEmployees,
+  selectEmployeesError,
+} from "../../redux/slices/EmployeesSlice";
+
 const EmployeesSummaryTable = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    data: employees,
-    isLoading,
-    error,
-  } = useSelector((state: RootState) => state.employeesSummary);
+
+  const employees = useSelector(selectEmployeesSummary);
+  const loading = useSelector(selectLoadingEmployees);
+  const error = useSelector(selectEmployeesError);
 
   useEffect(() => {
     dispatch(fetchEmployeesSummary());
-  }, [dispatch, employees.length]);
+  }, [dispatch]);
 
-  const columns: GridColDef<EmployeesSummary>[] = [
+  const columns: GridColDef<EmployeesSummaryDto>[] = [
     {
       field: "imageUrl",
       headerName: t("employees.image"),
@@ -81,13 +86,18 @@ const EmployeesSummaryTable = () => {
 
   return (
     <div>
-      <div>{isLoading && <LoadingOverlay isLoading={isLoading} />}</div>
-      <div className="error-message">{error && <p>{t(error)}</p>}</div>
+      {loading && <LoadingOverlay isLoading={loading} />}
+
+      {error && (
+        <div className="error-message">
+          <p style={{ color: "red" }}>{t(error)}</p>
+        </div>
+      )}
 
       <Box className="employees-table-container">
         <DataGrid
           rows={employees}
-          getRowId={(row) => row.email}
+          getRowId={(row) => row.id}
           columns={columns}
           initialState={{
             pagination: {

@@ -1,10 +1,4 @@
 {
-  "backend_error_messages": {
-    "employee_not_found": "Employee not found",
-    "employees_not_found": "No employees found",
-    "invalid_username": "Invalid username or password",
-    "server_unreachable": "Server unreachable"
-  },
   "common": {
     "documents": "Documents",
     "employees": "Employees",
@@ -40,6 +34,13 @@
     "taxPercentage": "Tax percentage",
     "thumbImage": "Thumbnail image",
     "title": "Employees"
+  },
+  "error_messages": {
+    "employee_not_found": "Employee not found",
+    "employees_not_found": "No employees found",
+    "invalid_username": "Invalid username or password",
+    "server_unreachable": "Server unreachable",
+    "unknown_server_error": "Unknown server error"
   },
   "home": {
     "contracts": "Documents",

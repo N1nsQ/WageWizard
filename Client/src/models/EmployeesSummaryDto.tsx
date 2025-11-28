@@ -1,4 +1,4 @@
-export interface EmployeesSummary {
+export interface EmployeesSummaryDto {
   id: string;
   firstName: string;
   lastName: string;
@@ -6,3 +6,5 @@ export interface EmployeesSummary {
   email: string;
   imageUrl: string;
 }
+
+// käytössä

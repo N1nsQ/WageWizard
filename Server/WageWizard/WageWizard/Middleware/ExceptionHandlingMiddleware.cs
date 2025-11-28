@@ -73,10 +73,18 @@ namespace WageWizard.Middleware
                     {
                         message = "Database unreachable",
                         detail = sqlEx.Message,
-                        Type = sqlEx.GetType().Name
+                        type = sqlEx.GetType().Name
                     };
                     break;
-
+                case DuplicateEmployeeException duplicateEmployeeEx:
+                    statusCode = (int)HttpStatusCode.Conflict;
+                    response = new
+                    {
+                        message = "Duplicate Employee",
+                        detail = duplicateEmployeeEx.Message,
+                        type = duplicateEmployeeEx.GetType().Name
+                    };
+                    break;
                 default:
                     statusCode = (int)HttpStatusCode.InternalServerError;
                     response = new
