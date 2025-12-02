@@ -90,11 +90,6 @@ export const createEmployee = createAsyncThunk<
       body: JSON.stringify(employee),
     });
 
-    console.log("Response OK:", response.ok);
-    console.log("HTTP status:", response.status);
-    console.log("Response URL:", response.url);
-    console.log("Received response", response.status, response.statusText);
-
     if (!response.ok) {
       let errorBody: BackendError = {
         message: "backend_error_messages.unknown_error",

@@ -1,9 +1,24 @@
 import { Box, Card, CardContent, CardHeader, Divider } from "@mui/material";
-import SalaryForm from "./SalaryForm";
 import { useTranslation } from "react-i18next";
+import { Form } from "react-final-form";
+import SalaryStatementFields from "./SalaryStatementFields";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+import { useEffect } from "react";
+import { fetchEmployeesLookup } from "../../redux/slices/SalaryStatementSlice";
 
 const SalaryStatements = () => {
   const { t } = useTranslation();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchEmployeesLookup());
+  }, [dispatch]);
+
+  const onSubmit = () => {
+    console.log("Lomaketta klikattu");
+  };
 
   return (
     <div>
@@ -14,7 +29,14 @@ const SalaryStatements = () => {
 
           <CardContent>
             <Box>
-              <SalaryForm />
+              <Form
+                onSubmit={onSubmit}
+                render={({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <SalaryStatementFields />
+                  </form>
+                )}
+              />
             </Box>
           </CardContent>
         </Card>

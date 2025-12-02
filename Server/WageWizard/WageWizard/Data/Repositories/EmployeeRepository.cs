@@ -18,6 +18,7 @@ namespace WageWizard.Data.Repositories
             return await _payrollContext.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await _payrollContext.Employees

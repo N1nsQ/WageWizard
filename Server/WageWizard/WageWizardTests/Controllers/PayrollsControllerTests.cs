@@ -27,6 +27,7 @@ namespace WageWizardTests.Controllers
                 EmployeeId: employeeId,
                 EmployeeName: "Maija Virtanen",
                 GrossSalary: 3500,
+                Age: 35,
                 TaxPercent: 20,
                 WithholdingTax: 700,
                 TyELAmount: 245,

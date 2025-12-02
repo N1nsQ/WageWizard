@@ -104,7 +104,6 @@ namespace WageWizardTests.IntegrationTests
             };
 
             await _employeeRepository.AddAsync(newEmployee);
-            await _employeeRepository.SaveChangesAsync();
 
             var fetched = await _context.Employees.FindAsync(newEmployee.Id);
             Assert.NotNull(fetched);

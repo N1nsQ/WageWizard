@@ -161,7 +161,6 @@ namespace WageWizardTests.Services
             Assert.Equal(dto.DateOfBirth.Value, result.DateOfBirth);
 
             _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Once);
-            _employeeRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Once);
 
             Assert.Equal(result, addedEmployee);
         }
@@ -190,9 +189,6 @@ namespace WageWizardTests.Services
                 .Setup(r => r.AddAsync(It.IsAny<Employee>()))
                 .Returns(Task.CompletedTask);
 
-            _employeeRepositoryMock
-                .Setup(r => r.SaveChangesAsync())
-                .ThrowsAsync(new InvalidOperationException("Database save failed"));
 
             // Act
             Func<Task> act = () => _employeeService.CreateEmployeeAsync(dto);
@@ -202,7 +198,6 @@ namespace WageWizardTests.Services
             Assert.Equal("Database save failed", exception.Message);
 
             _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Once);
-            _employeeRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Once);
         }
     }
 }

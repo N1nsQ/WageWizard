@@ -13,8 +13,8 @@ const Result = ({ employeeId }: ResultProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
 
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.salaryStatementCalculation
+  const salaryDetails = useSelector(
+    (state: RootState) => state.salaryStatement.selectedEmployeeSalaryDetails
   );
 
   useEffect(() => {
@@ -23,29 +23,29 @@ const Result = ({ employeeId }: ResultProps) => {
     }
   }, [employeeId, dispatch]);
 
-  if (isLoading) {
-    return (
-      <Paper sx={{ padding: 2, marginTop: 2, textAlign: "center" }}>
-        <CircularProgress />
-      </Paper>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <Paper sx={{ padding: 2, marginTop: 2, textAlign: "center" }}>
+  //       <CircularProgress />
+  //     </Paper>
+  //   );
+  // }
 
-  if (error) {
-    return (
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography color="error">Virhe: {error}</Typography>
-      </Paper>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <Paper sx={{ padding: 2, marginTop: 2 }}>
+  //       <Typography color="error">Virhe: {error}</Typography>
+  //     </Paper>
+  //   );
+  // }
 
-  if (!data) {
-    return (
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography>{t("salary.select_employee_tooltip")}</Typography>
-      </Paper>
-    );
-  }
+  // if (!data) {
+  //   return (
+  //     <Paper sx={{ padding: 2, marginTop: 2 }}>
+  //       <Typography>{t("salary.select_employee_tooltip")}</Typography>
+  //     </Paper>
+  //   );
+  // }
 
   return (
     <Paper sx={{ padding: 2, marginTop: 2 }}>
@@ -58,7 +58,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">
-            {data.withholdingTax.toFixed(2)} €
+            {salaryDetails?.withholdingTax.toFixed(2)} €
           </Typography>
         </Grid>
 
@@ -66,7 +66,9 @@ const Result = ({ employeeId }: ResultProps) => {
           <Typography>{t("salary.tyel_contribution")}</Typography>
         </Grid>
         <Grid size={{ xs: 6 }}>
-          <Typography align="right">{data.tyELAmount.toFixed(2)} €</Typography>
+          <Typography align="right">
+            {salaryDetails?.tyELAmount.toFixed(2)} €
+          </Typography>
         </Grid>
 
         <Grid size={{ xs: 6 }}>
@@ -76,7 +78,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right">
-            {data.unemploymentInsuranceAmount.toFixed(2)} €
+            {salaryDetails?.unemploymentInsuranceAmount.toFixed(2)} €
           </Typography>
         </Grid>
 
@@ -85,7 +87,7 @@ const Result = ({ employeeId }: ResultProps) => {
         </Grid>
         <Grid size={{ xs: 6 }}>
           <Typography align="right" fontWeight="bold">
-            {data.netSalary.toFixed(2)} €
+            {salaryDetails?.netSalary.toFixed(2)} €
           </Typography>
         </Grid>
       </Grid>

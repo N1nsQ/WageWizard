@@ -31,23 +31,28 @@ namespace WageWizard.Services
             if (rates == null)
                 throw new EntityNotFoundException($"No payroll rates found for year {currentYear}.");
 
-            decimal tyelPercent = InsuranceRateCalculator.GetTyELPercent(age, rates);
+            decimal tyelDecimal = InsuranceRateCalculator.GetTyELPercent(age, rates);
+            decimal tyelPercent = tyelDecimal * 100;
 
-            decimal unempPercent = InsuranceRateCalculator.GetUnemploymentInsurancePercent(age, rates);
+            decimal unempDecimal = InsuranceRateCalculator.GetUnemploymentInsurancePercent(age, rates);
+            decimal unempPercent = unempDecimal * 100;
 
             decimal gross = employee.GrossSalary;
             decimal taxPercent = employee.TaxRate;
 
             decimal withholding = SalaryCalculator.CalculateWithholdingTaxAmount(gross, taxPercent);
-            decimal tyel = SalaryCalculator.CalculateTyELAmount(gross, tyelPercent);
-            decimal unemployment = SalaryCalculator.CalculateUnemploymentInsuranceAmount(gross, unempPercent);
-            decimal net = SalaryCalculator.CalculateNetSalaryAmount(gross, taxPercent, tyelPercent, unempPercent);
+            decimal tyel = SalaryCalculator.CalculateTyELAmount(gross, tyelDecimal);
+            decimal unemployment = SalaryCalculator.CalculateUnemploymentInsuranceAmount(gross, unempDecimal);
+            decimal net = SalaryCalculator.CalculateNetSalaryAmount(gross, taxPercent, tyelDecimal, unempDecimal);
 
             return new SalaryStatementCalculationDto(
                 EmployeeId: employee.Id,
                 EmployeeName: $"{employee.FirstName} {employee.LastName}",
                 GrossSalary: gross,
+                Age: age,
                 TaxPercent: taxPercent,
+                TyELPercent: tyelPercent,
+                UnemploymentInsurancePercent: unempPercent,
                 WithholdingTax: withholding,
                 TyELAmount: tyel,
                 UnemploymentInsuranceAmount: unemployment,

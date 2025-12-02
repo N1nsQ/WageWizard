@@ -40,6 +40,16 @@ namespace WageWizard.Services
             );
         }
 
+        public async Task<IEnumerable<EmployeeLookupDto>> GetLookupAsync()
+        {
+            var employees = await _employeeRepository.GetAllAsync();
+
+            return employees.Select(e => new EmployeeLookupDto(
+                e.Id,
+                e.FirstName + " " + e.LastName
+                ));
+        }
+
         public async Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync()
         {
             var employees = await _employeeRepository.GetAllAsync();

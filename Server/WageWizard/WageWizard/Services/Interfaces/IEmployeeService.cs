@@ -6,6 +6,7 @@ namespace WageWizard.Services.Interfaces
     public interface IEmployeeService
     {
         Task<EmployeeDto?> GetByIdAsync(Guid id);
+        Task<IEnumerable<EmployeeLookupDto>> GetLookupAsync();
         Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync();
         Task<Employee> CreateEmployeeAsync(NewEmployeeRequestDto dto);
     }

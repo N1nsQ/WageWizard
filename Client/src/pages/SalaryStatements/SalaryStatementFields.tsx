@@ -1,43 +1,49 @@
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { Field, useForm, useFormState } from "react-final-form";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../redux/store";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import Result from "./Result";
+import { fetchSalaryStatementCalculations } from "../../redux/slices/SalaryStatementSlice";
 
 const SalaryStatementFields = () => {
   const form = useForm();
   const { values } = useFormState();
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { data: employees } = useSelector(
-    (state: RootState) => state.employeesSalaryDetails
+  const employees = useSelector(
+    (state: RootState) => state.salaryStatement.lookupEmployees
   );
 
+  const salaryDetails = useSelector(
+    (state: RootState) => state.salaryStatement.selectedEmployeeSalaryDetails
+  );
+
+  console.log("Salary Details: ", salaryDetails);
+
   useEffect(() => {
-    const selectedEmployee = employees?.find(
-      (emp) => emp.id === values?.employeeId
-    );
+    if (values?.employeeId) {
+      dispatch(fetchSalaryStatementCalculations(values.employeeId));
+    }
+  }, [values?.employeeId, dispatch]);
 
-    if (selectedEmployee) {
-      const tyelPercent = Number(
-        (selectedEmployee.tyELPercent * 100).toFixed(2)
+  useEffect(() => {
+    if (values?.employeeId) {
+      form.change("taxRate", salaryDetails?.taxPercent);
+      form.change("grossSalary", salaryDetails?.grossSalary.toFixed(2));
+      form.change("age", salaryDetails?.age);
+      form.change("tyELPercent", salaryDetails?.tyELPercent);
+      form.change(
+        "unemploymentInsurancePercent",
+        salaryDetails?.unemploymentInsurancePercent
       );
-      const unemploymentPercent = Number(
-        (selectedEmployee.unemploymentInsurancePercent * 100).toFixed(2)
-      );
-
-      form.change("veroprosentti", selectedEmployee.taxPercentage);
-      form.change("peruspalkka", selectedEmployee.salaryAmount.toFixed(2));
-      form.change("age", selectedEmployee.age);
-      form.change("tyELPercent", tyelPercent.toFixed(2));
-      form.change("unemploymentInsurance", unemploymentPercent.toFixed(2));
     } else {
       form.change("veroprosentti", "");
       form.change("peruspalkka", "");
     }
-  }, [values?.employeeId, employees, form]);
+  }, [salaryDetails, values?.employeeId]);
 
   return (
     <div>
@@ -57,7 +63,7 @@ const SalaryStatementFields = () => {
                 </MenuItem>
                 {employees?.map((emp) => (
                   <MenuItem key={emp.id} value={emp.id}>
-                    {emp.firstName} {emp.lastName}
+                    {emp.fullName}
                   </MenuItem>
                 ))}
               </TextField>
@@ -65,7 +71,7 @@ const SalaryStatementFields = () => {
           </Field>
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
-          <Field name="veroprosentti">
+          <Field name="taxRate">
             {({ input }) => (
               <TextField
                 {...input}
@@ -79,7 +85,7 @@ const SalaryStatementFields = () => {
         </Grid>
 
         <Grid size={{ xs: 12, sm: 4 }}>
-          <Field name="peruspalkka">
+          <Field name="grossSalary">
             {({ input }) => (
               <TextField
                 {...input}
@@ -121,7 +127,7 @@ const SalaryStatementFields = () => {
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          <Field name="unemploymentInsurance">
+          <Field name="unemploymentInsurancePercent">
             {({ input }) => (
               <TextField
                 {...input}

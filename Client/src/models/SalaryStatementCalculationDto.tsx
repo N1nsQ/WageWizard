@@ -3,6 +3,9 @@ export interface SalaryStatementCalculationDto {
   employeeName: string;
   grossSalary: number;
   taxPercent: number;
+  tyELPercent: number;
+  unemploymentInsurancePercent: number;
+  age: number;
   withholdingTax: number;
   tyELAmount: number;
   unemploymentInsuranceAmount: number;

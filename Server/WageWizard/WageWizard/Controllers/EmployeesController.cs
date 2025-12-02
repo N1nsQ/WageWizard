@@ -16,20 +16,28 @@ namespace WageWizard.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpGet("summary")]
-        public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
-        {
-            var employees = await _employeeService.GetEmployeesSummaryAsync();
-
-            return Ok(employees);
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeDto>> GetByIdAsync(Guid id)
         {
             var employee = await _employeeService.GetByIdAsync(id);
 
             return Ok(employee);
+        }
+
+        [HttpGet("lookup")]
+        public async Task<ActionResult<IEnumerable<EmployeeLookupDto>>> GetLookupAsync()
+        {
+            var employees = await _employeeService.GetLookupAsync();
+
+            return Ok(employees);
+        }
+
+        [HttpGet("summary")]
+        public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
+        {
+            var employees = await _employeeService.GetEmployeesSummaryAsync();
+
+            return Ok(employees);
         }
 
         [HttpPost]
