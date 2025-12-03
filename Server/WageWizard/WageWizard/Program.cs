@@ -6,6 +6,7 @@ using WageWizard.Data;
 using WageWizard.Data.Repositories;
 using WageWizard.Repositories;
 using WageWizard.Middleware;
+using WageWizard.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
+
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IPayrollsRepository, PayrollsRepository>();
@@ -55,6 +59,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseImageSharp();
 app.UseStaticFiles();
