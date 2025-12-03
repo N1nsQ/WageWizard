@@ -4,7 +4,7 @@
     {
         TestUser = 1,
         Admin = 2,
-        Payroll = 3
-
+        Payroll = 3,
+        Employee = 4
     }
 }
