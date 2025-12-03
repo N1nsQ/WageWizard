@@ -1,8 +1,6 @@
 import { CircularProgress, Grid, Paper, Typography } from "@mui/material";
-import { fetchSalaryStatementCalculations } from "../../redux/slices/SalaryStatementSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 import { useTranslation } from "react-i18next";
 
 interface ResultProps {
@@ -10,42 +8,49 @@ interface ResultProps {
 }
 
 const Result = ({ employeeId }: ResultProps) => {
-  const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
 
   const salaryDetails = useSelector(
     (state: RootState) => state.salaryStatement.selectedEmployeeSalaryDetails
   );
 
-  useEffect(() => {
-    if (employeeId) {
-      dispatch(fetchSalaryStatementCalculations(employeeId));
-    }
-  }, [employeeId, dispatch]);
+  const loading = useSelector(
+    (state: RootState) => state.salaryStatement.loadingDetails
+  );
 
-  // if (isLoading) {
-  //   return (
-  //     <Paper sx={{ padding: 2, marginTop: 2, textAlign: "center" }}>
-  //       <CircularProgress />
-  //     </Paper>
-  //   );
-  // }
+  const error = useSelector((state: RootState) => state.salaryStatement.error);
 
-  // if (error) {
-  //   return (
-  //     <Paper sx={{ padding: 2, marginTop: 2 }}>
-  //       <Typography color="error">Virhe: {error}</Typography>
-  //     </Paper>
-  //   );
-  // }
+  if (!employeeId) {
+    return (
+      <Paper sx={{ padding: 2, marginTop: 2 }}>
+        <Typography>{t("salary.select_employee_tooltip")}</Typography>
+      </Paper>
+    );
+  }
 
-  // if (!data) {
-  //   return (
-  //     <Paper sx={{ padding: 2, marginTop: 2 }}>
-  //       <Typography>{t("salary.select_employee_tooltip")}</Typography>
-  //     </Paper>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <Paper sx={{ padding: 2, marginTop: 2, textAlign: "center" }}>
+        <CircularProgress />
+      </Paper>
+    );
+  }
+
+  if (error) {
+    return (
+      <Paper sx={{ padding: 2, marginTop: 2 }}>
+        <Typography color="error">Virhe: {error}</Typography>
+      </Paper>
+    );
+  }
+
+  if (!salaryDetails) {
+    return (
+      <Paper sx={{ padding: 2, marginTop: 2 }}>
+        <Typography>{t("salary.select_employee_tooltip")}</Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper sx={{ padding: 2, marginTop: 2 }}>

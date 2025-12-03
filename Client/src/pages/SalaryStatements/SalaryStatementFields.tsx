@@ -40,10 +40,13 @@ const SalaryStatementFields = () => {
         salaryDetails?.unemploymentInsurancePercent
       );
     } else {
-      form.change("veroprosentti", "");
-      form.change("peruspalkka", "");
+      form.change("taxRate", "");
+      form.change("grossSalary", "");
+      form.change("age", "");
+      form.change("tyELPercent", "");
+      form.change("unemploymentInsurancePercent", "");
     }
-  }, [salaryDetails, values?.employeeId]);
+  }, [salaryDetails, values?.employeeId, form]);
 
   return (
     <div>
