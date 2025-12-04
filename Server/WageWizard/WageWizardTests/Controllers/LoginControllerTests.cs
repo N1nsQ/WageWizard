@@ -36,7 +36,7 @@ namespace WageWizardTests.Controllers
                 Message = "Login successful",
                 UserId = Guid.NewGuid(),
                 Username = "Maija",
-                Role = UserRole.TestUser
+                Role = "TestUser"
             };
 
             _loginServiceMock.Setup(s => s.LoginAsync(request)).ReturnsAsync(response);

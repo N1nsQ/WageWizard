@@ -26,9 +26,11 @@ namespace WageWizardTests.Controllers
             var expectedDto = new SalaryStatementCalculationDto(
                 EmployeeId: employeeId,
                 EmployeeName: "Maija Virtanen",
-                GrossSalary: 3500,
                 Age: 35,
+                GrossSalary: 3500,
                 TaxPercent: 20,
+                TyELPercent: 0.0715m,
+                UnemploymentInsurancePercent: 0.0059m,
                 WithholdingTax: 700,
                 TyELAmount: 245,
                 UnemploymentInsuranceAmount: 52.5m,

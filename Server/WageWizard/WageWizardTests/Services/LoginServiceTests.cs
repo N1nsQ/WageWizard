@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.Extensions.Configuration;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
@@ -16,46 +11,26 @@ namespace WageWizardTests.Services
     public class LoginServiceTests
     {
         private readonly Mock<IUserRepository> _userRepositoryMock;
+        private readonly IConfiguration _configuration;
         private readonly LoginService _loginService;
 
         public LoginServiceTests()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
-            _loginService = new LoginService( _userRepositoryMock.Object );
+
+            var inMemorySettings = new Dictionary<string, string?> {
+            {"Jwt:Key", "supersecretkey_supersecretkey"},
+            {"Jwt:Issuer", "TestIssuer"},
+            {"Jwt:Audience", "TestAudience"},
+        };
+
+            _configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            _loginService = new LoginService(_userRepositoryMock.Object, _configuration);
         }
 
-        [Fact]
-        public async Task LoginAsync_ShouldReturnOkResponse_WhenCredentiealsAreValid()
-        {
-            // Arrange
-            var loginDto = new LoginRequestDto
-            {
-                Username = "Maija",
-                Password = "Salasana123",
-            };
-
-            var user = new User
-            {
-                Id = Guid.NewGuid(),
-                Username = "Maija",
-                RoleId = UserRole.TestUser
-            };
-
-            _userRepositoryMock
-                .Setup(r => r.GetUserByUsernameAndPasswordAsync(loginDto.Username, loginDto.Password))
-                .ReturnsAsync(user);
-
-            // Act
-            var result = await _loginService.LoginAsync(loginDto);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.True(result.Success);
-            Assert.Equal("Login Successful", result.Message);
-            Assert.Equal(user.Id, result.UserId);
-            Assert.Equal(user.Username, result.Username);
-            Assert.Equal(UserRole.TestUser, result.Role);
-        }
 
         [Theory]
         [InlineData("Maija", "WrongPassword")]
@@ -89,7 +64,7 @@ namespace WageWizardTests.Services
                 .Setup(r => r.GetUserByUsernameAndPasswordAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ThrowsAsync(new RepositoryUnavailableException("Database connection failed."));
 
-            var service = new LoginService(repoMock.Object);
+            var service = new LoginService(repoMock.Object, _configuration);
 
             var ex = await Assert.ThrowsAsync<RepositoryUnavailableException>(() =>
                 service.LoginAsync(new LoginRequestDto

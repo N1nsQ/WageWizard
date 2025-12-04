@@ -6,6 +6,7 @@ using WageWizard.Controllers;
 using WageWizard.Data;
 using WageWizard.Data.Repositories;
 using WageWizard.Domain.Entities;
+using WageWizard.Services;
 
 namespace WageWizardTests.IntegrationTests
 {
@@ -13,6 +14,7 @@ namespace WageWizardTests.IntegrationTests
     {
         private readonly PayrollContext _context;
         private readonly EmployeeRepository _employeeRepository;
+        private readonly EmployeeService _employeeService;
 
         public EmployeesRepositoryTests()
         {
@@ -22,6 +24,7 @@ namespace WageWizardTests.IntegrationTests
 
             _context = new PayrollContext(options);
             _employeeRepository = new EmployeeRepository(_context);
+            _employeeService = new EmployeeService(_employeeRepository);
 
             _context.Employees.AddRange(
             new Employee
@@ -76,7 +79,7 @@ namespace WageWizardTests.IntegrationTests
         [Fact]
         public async Task GetEmployeesSummaryAsync_ReturnsAllEmployees()
         {
-            var result = await _employeeRepository.GetEmployeesSummaryAsync();
+            var result = await _employeeService.GetEmployeesSummaryAsync();
 
             Assert.Equal(2, result.Count());
             Assert.Contains(result, e => e.FirstName == "Maija");

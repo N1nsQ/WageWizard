@@ -1,9 +1,4 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
@@ -15,12 +10,12 @@ namespace WageWizardTests.Services
     public class EmployeeServiceTests
     {
         private readonly Mock<IEmployeeRepository> _employeeRepositoryMock;
-        private readonly EmployeeService _employeeService;
+        private readonly EmployeeService _employeeServiceMock;
 
         public EmployeeServiceTests()
         {
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
-            _employeeService = new EmployeeService(_employeeRepositoryMock.Object);
+            _employeeServiceMock = new EmployeeService(_employeeRepositoryMock.Object);
         }
 
         [Fact]
@@ -28,29 +23,32 @@ namespace WageWizardTests.Services
         {
             // Arrange
             var employeeId = Guid.NewGuid();
-            var employee = new EmployeeDto(
-                Id: employeeId,
-                FirstName: "Maija",
-                LastName: "Virtanen",
-                DateOfBirth: DateTime.Today.AddYears(-30),
-                JobTitle: "Test",
-                ImageUrl: null,
-                Email: "test@test.fi",
-                HomeAddress: "Katu 1",
-                PostalCode: "00000",
-                City: "Test",
-                BankAccountNumber: "FI1234567890123456",
-                TaxRate: 12.6m,
-                GrossSalary: 3500.0m,
-                StartDate: DateTime.Today
-            );
+
+            var employee = new Employee
+            {
+                Id = employeeId,
+                FirstName = "Maija",
+                LastName = "Mehiläinen",
+                DateOfBirth = DateTime.Today.AddYears(-30),
+                JobTitle = "testaaja",
+                ImageUrl = null,
+                Email = "maija.mehilainen@testi.fi",
+                HomeAddress = "Pörrökuja 666",
+                PostalCode = "12345",
+                City = "Mehiläispesä",
+                BankAccountNumber = "FI1234567890123456",
+                TaxRate = 12.6m,
+                GrossSalary = 3500.50m,
+                StartDate = DateTime.Today,
+            };
+
 
             _employeeRepositoryMock
                 .Setup(r => r.GetByIdAsync(employeeId))
                 .ReturnsAsync(employee);
 
             // Act
-            var result = await _employeeService.GetByIdAsync(employeeId);
+            var result = await _employeeServiceMock.GetByIdAsync(employeeId);
 
             // Assert
             Assert.NotNull(result);
@@ -59,63 +57,112 @@ namespace WageWizardTests.Services
         }
 
         [Fact]
-        public async Task GetByIdAsync_WhenEmployeeDoesNotExist_ThrowsNotFoundException()
+        public async Task GetByIdAsync_WhenEmployeeDoesNotExist_ReturnsNull()
         {
             // Arrange
             var employeeId = Guid.NewGuid();
+
             _employeeRepositoryMock
                 .Setup(r => r.GetByIdAsync(employeeId))
-                .ReturnsAsync((EmployeeDto?)null);
+                .ReturnsAsync((Employee?)null);
 
             // Act
-            Func<Task> act = () => _employeeService.GetByIdAsync(employeeId);
+            var result = await _employeeServiceMock.GetByIdAsync(employeeId);
 
             // Assert
-            var exception = await Assert.ThrowsAsync<NotFoundException>(act);
-            Assert.Equal($"Employee with ID {employeeId} not found.", exception.Message);
+            Assert.Null(result);
         }
 
         [Fact]
-        public async Task GetEmployeesSummaryAsync_WhenEmployeesExist_ReturnsList()
+        public async Task GetLookupAsync_WhenEmployeesExist_ReturnsMappedList()
         {
             // Arrange
-            var employees = new List<EmployeesSummaryDto>
+            var employees = new List<Employee>
             {
-                new EmployeesSummaryDto(Guid.NewGuid(), "Jack", "Sparrow", "Captain", null, "jack.sparrow@test.com"),
-                new EmployeesSummaryDto(Guid.NewGuid(), "Jones", "Sparrow", "Villain", null, "jones.sparrow@test.com"),
-                new EmployeesSummaryDto(Guid.NewGuid(), "James", "Bond", "private detective", null, "james.bond@test.com"),
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Alice",
+                    LastName = "Wonderland"
+                },
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Bob",
+                    LastName = "Builder"
+                }
             };
 
+
+
             _employeeRepositoryMock
-                .Setup(r => r.GetEmployeesSummaryAsync())
+                .Setup(r => r.GetAllAsync())
                 .ReturnsAsync(employees);
 
             // Act
-            var result = await _employeeService.GetEmployeesSummaryAsync();
+            var result = await _employeeServiceMock.GetLookupAsync();
+            var list = result.ToList();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(3, result.Count());
-            Assert.Contains(result, e => e.FirstName == "Jack");
-            Assert.Contains(result, e => e.LastName == "Sparrow");
-            Assert.Contains(result, e => e.JobTitle == "Captain");
-            Assert.Contains(result, e => e.Email == "jack.sparrow@test.com");
+            Assert.Equal(2, list.Count);
+
+            Assert.Equal($"{employees[0].FirstName} {employees[0].LastName}", list[0].FullName);
+            Assert.Equal(employees[0].Id, list[0].Id);
+
+            Assert.Equal($"{employees[1].FirstName} {employees[1].LastName}", list[1].FullName);
+            Assert.Equal(employees[1].Id, list[1].Id);
+
+            _employeeRepositoryMock.Verify(r => r.GetAllAsync(), Times.Once);
         }
 
         [Fact]
-        public async Task GetEmployeesSummaryAsync_WhenNoEmployeesExist_ThrowsNotFoundException()
+        public async Task GetEmployeesSummaryAsync_WhenEmployeesExist_ReturnsMappedList()
         {
             // Arrange
+            var employees = new List<Employee>
+            {
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Jack",
+                    LastName = "Sparrow",
+                    JobTitle = "Captain",
+                    Email = "jack.sparrow@test.com",
+                    ImageUrl = null
+                },
+                new Employee
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Jones",
+                    LastName = "Sparrow",
+                    JobTitle = "Villain",
+                    Email = "jones.sparrow@test.com",
+                    ImageUrl = null
+                }
+            };
+
             _employeeRepositoryMock
-                .Setup(r => r.GetEmployeesSummaryAsync())
-                .ReturnsAsync(Enumerable.Empty<EmployeesSummaryDto>());
+                .Setup(r => r.GetAllAsync())
+                .ReturnsAsync(employees);
 
             // Act
-            Func<Task> act = () => _employeeService.GetEmployeesSummaryAsync();
+            var result = await _employeeServiceMock.GetEmployeesSummaryAsync();
+            var list = result.ToList();
 
             // Assert
-            var exception = await Assert.ThrowsAsync<NotFoundException>(act);
-            Assert.Equal("No employees found.", exception.Message);
+            Assert.Equal(2, list.Count);
+
+            Assert.Equal("Jack", list[0].FirstName);
+            Assert.Equal("Sparrow", list[0].LastName);
+            Assert.Equal("Captain", list[0].JobTitle);
+            Assert.Equal("jack.sparrow@test.com", list[0].Email);
+
+            Assert.Equal("Jones", list[1].FirstName);
+            Assert.Equal("Sparrow", list[1].LastName);
+            Assert.Equal("Villain", list[1].JobTitle);
+            Assert.Equal("jones.sparrow@test.com", list[1].Email);
+
+            _employeeRepositoryMock.Verify(r => r.GetAllAsync(), Times.Once);
         }
 
         [Fact]
@@ -138,18 +185,18 @@ namespace WageWizardTests.Services
                 DateOfBirth = DateTime.Today.AddYears(-30)
             };
 
+            _employeeRepositoryMock
+                .Setup(r => r.FindDuplicateAsync(dto.FirstName, dto.LastName, dto.Email))
+                .ReturnsAsync((Employee?)null);
+
             Employee? addedEmployee = null;
             _employeeRepositoryMock
                 .Setup(r => r.AddAsync(It.IsAny<Employee>()))
                 .Callback<Employee>(e => addedEmployee = e)
-                .Returns(Task.CompletedTask);
-
-            _employeeRepositoryMock
-                .Setup(r => r.SaveChangesAsync())
-                .Returns(Task.CompletedTask);
+                .Returns<Employee>(e => Task.FromResult(e));
 
             // Act
-            var result = await _employeeService.CreateEmployeeAsync(dto);
+            var result = await _employeeServiceMock.CreateEmployeeAsync(dto);
 
             // Assert
             Assert.NotNull(result);
@@ -166,38 +213,32 @@ namespace WageWizardTests.Services
         }
 
         [Fact]
-        public async Task CreateEmployeeAsync_SaveChangesFails_ThrowsException()
+        public async Task CreateEmployeeAsync_DuplicateEmployee_ThrowsDuplicateEmployeeException()
         {
             // Arrange
             var dto = new NewEmployeeRequestDto
             {
                 FirstName = "Maija",
                 LastName = "Virtanen",
-                JobTitle = "Developer",
                 Email = "maija.virtanen@example.com",
-                HomeAddress = "Katu 1",
-                PostalCode = "00100",
-                City = "Helsinki",
-                BankAccountNumber = "FI1234567890123456",
-                TaxRate = 20,
-                MonthlySalary = 3000,
-                StartDate = DateTime.Today,
-                DateOfBirth = DateTime.Today.AddYears(-30)
+                DateOfBirth = DateTime.Today.AddYears(-30),
+                StartDate = DateTime.Today
             };
 
+            var existingEmployee = new Employee { Id = Guid.NewGuid() };
             _employeeRepositoryMock
-                .Setup(r => r.AddAsync(It.IsAny<Employee>()))
-                .Returns(Task.CompletedTask);
-
+                .Setup(r => r.FindDuplicateAsync(dto.FirstName, dto.LastName, dto.Email))
+                .ReturnsAsync(existingEmployee);
 
             // Act
-            Func<Task> act = () => _employeeService.CreateEmployeeAsync(dto);
+            Func<Task> act = () => _employeeServiceMock.CreateEmployeeAsync(dto);
 
             // Assert
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(act);
-            Assert.Equal("Database save failed", exception.Message);
+            var exception = await Assert.ThrowsAsync<DuplicateEmployeeException>(act);
+            Assert.Equal("Employee with identical details already exists.", exception.Message);
 
-            _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Once);
+            _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Never);
         }
+
     }
 }

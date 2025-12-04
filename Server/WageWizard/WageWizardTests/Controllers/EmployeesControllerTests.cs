@@ -1,11 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WageWizard.Controllers;
 using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
@@ -139,15 +134,19 @@ namespace WageWizardTests.Controllers
                 DateOfBirth = new DateTime(1990, 1, 1)
             };
 
+            var createdEmployee = new Employee { Id = Guid.NewGuid(), FirstName = newEmployeeDto.FirstName };
+
             _employeeServiceMock
                 .Setup(s => s.CreateEmployeeAsync(It.IsAny<NewEmployeeRequestDto>()))
-                .ReturnsAsync(new Employee { Id = Guid.NewGuid(), FirstName = newEmployeeDto.FirstName });
+                .ReturnsAsync(createdEmployee);
 
             // Act
             var result = await _employeeController.CreateEmployee(newEmployeeDto);
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedEmployee = Assert.IsType<Employee>(okResult.Value);
+            Assert.Equal(newEmployeeDto.FirstName, returnedEmployee.FirstName);
         }
 
     }
