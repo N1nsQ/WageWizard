@@ -22,14 +22,17 @@ Layout updated 12 Nov 2025
 
   
 
-#### Features:
+#### Current Features:
 
-- Login with test user
-- List of employees
-- Employee details page
+- Login & Logout
+- Authentication & Authorization
+- Finnish / English translations
+- Greetings for logged in user (show user name)
+- Role based views and data access
+- List of all employees
+- Employee details page (for every employee)
 - Add new Employee
 - Calculate salary for selected employee and view payroll calculation results
-- Finnish / English translations
 
 #### Frontend
 - **React** – Component-based UI
