@@ -3,9 +3,13 @@
     "documents": "Dokumentit",
     "employees": "Työntekijät",
     "front_page": "Etusivu",
+    "greetings": "Kiva nähdä, ",
     "loading": "Lataa...",
     "logout": "Kirjaudu ulos",
+    "profile": "Profiili",
+    "salary": "Palkat",
     "salary_statements": "Palkkalaskelmat",
+    "timesheet": "Tuntikirjaus",
     "wage_wizard": "Wage Wizard"
   },
   "employees": {

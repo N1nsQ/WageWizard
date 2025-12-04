@@ -3,9 +3,13 @@
     "documents": "Documents",
     "employees": "Employees",
     "front_page": "Home",
+    "greetings": "Nice to see you here, ",
     "loading": "Loading...",
     "logout": "Log Out",
+    "profile": "Profile",
+    "salary": "Salary",
     "salary_statements": "Salary Statements",
+    "timesheet": "Timesheet",
     "wage_wizard": "Wage Wizard"
   },
   "employees": {
