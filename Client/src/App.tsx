@@ -12,10 +12,13 @@ import Employees from "./pages/Employees/Employees";
 import EmployeeDetailsPage from "./pages/Employees/EmployeeDetails";
 import SalaryStatements from "./pages/SalaryStatements/SalaryStatements";
 import Layout from "./common/Layout";
+import Timesheet from "./pages/Timesheet/Timesheet";
+
+import { AuthProvider } from "./common/AuthProvider";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Router>
         <Layout>
           <Routes>
@@ -24,6 +27,7 @@ function App() {
             <Route path="/employees" element={<Employees />} />
             <Route path="/employees/:id" element={<EmployeeDetailsPage />} />
             <Route path="/salarystatements" element={<SalaryStatements />} />
+            <Route path="/timesheet" element={<Timesheet />} />
             <Route
               path="*"
               element={<Typography variant="h3">PAGE NOT FOUND</Typography>}
@@ -31,7 +35,7 @@ function App() {
           </Routes>
         </Layout>
       </Router>
-    </>
+    </AuthProvider>
   );
 }
 

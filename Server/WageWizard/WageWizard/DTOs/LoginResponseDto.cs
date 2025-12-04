@@ -9,6 +9,6 @@ namespace WageWizard.DTOs
         public string? Message { get; init; }
         public Guid UserId { get; init; }
         public string Username { get; init; } = string.Empty;
-        public UserRole Role { get; init; }
+        public string Role { get; init; }
     }
 }

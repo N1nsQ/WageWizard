@@ -7,7 +7,7 @@ namespace WageWizard.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Payroll,Admin,TestUser")]
+    [Authorize(Roles = "TestUser")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;

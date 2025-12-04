@@ -1,6 +1,9 @@
 export interface AuthState {
-  isAuthenticated: boolean;
-  user: string | null;
+  token: string | null;
+  userId: string | null;
+  userName: string | null;
+  role: string | null;
   error: string | null;
   isLoading: boolean;
+  isAuthenticated: boolean;
 }

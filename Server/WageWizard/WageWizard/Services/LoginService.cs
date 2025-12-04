@@ -39,7 +39,7 @@ namespace WageWizard.Services
                 Token = token,
                 UserId = user.Id,
                 Username = user.Username,
-                Role = user.RoleId ?? UserRole.TestUser
+                Role = Enum.GetName(typeof(UserRole), user.RoleId) ?? "TestUser"
             };
 
         }
@@ -52,7 +52,7 @@ namespace WageWizard.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim("username", user.Username),
-                new Claim(ClaimTypes.Role, user.RoleId.ToString())
+                new Claim(ClaimTypes.Role, Enum.GetName(typeof(UserRole), user.RoleId)!),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SecretKey));

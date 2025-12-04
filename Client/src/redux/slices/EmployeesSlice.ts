@@ -62,16 +62,27 @@ export const fetchEmployeesSummary = createAsyncThunk<
   EmployeesSummaryDto[],
   void,
   ThunkConfig
->("employees/fetchSummary", async (_, { rejectWithValue }) => {
+>("employees/fetchSummary", async (_, thunkAPI) => {
   try {
-    const response = await fetch(`${API_BASE}/api/Employees/summary`);
+    const state = thunkAPI.getState() as RootState;
+    const token = state.auth.token;
+
+    const response = await fetch(`${API_BASE}/api/Employees/summary`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
-      return rejectWithValue(await response.json());
+      return thunkAPI.rejectWithValue(await response.json());
     }
 
     return await response.json();
   } catch {
-    return rejectWithValue({ message: "error_messages.server_unreachable" });
+    return thunkAPI.rejectWithValue({
+      message: "error_messages.server_unreachable",
+    });
   }
 });
 
