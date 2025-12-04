@@ -6,5 +6,3 @@ export interface EmployeesSummaryDto {
   email: string;
   imageUrl: string;
 }
-
-// käytössä
