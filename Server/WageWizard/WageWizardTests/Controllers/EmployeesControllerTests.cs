@@ -207,6 +207,62 @@ namespace WageWizardTests.Controllers
             Assert.Equal("Espoo", returnedValue.City);
         }
 
+        [Fact]
+        public async Task UpdateEmployeeWithAdminRights_ShouldReturnOk()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+
+            var dto = new UpdateEmployeeRequestWithAdminRightsDto
+                (
+                null,
+                "Kimalainen",
+                null,
+                "Senior Pörriäinen",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+                );
+
+
+            var updatedEmployee = new EmployeeDto(
+                employeeId,
+                "Maija",
+                "Kimalainen",
+                new DateTime(1990, 1, 1),
+                "Senior Pörriäinen",
+                null,
+                "maija@test.com",
+                "Vanha osoite 1",
+                "00100",
+                "Helsinki",
+                "FI11",
+                20,
+                3000,
+                DateTime.Today.AddYears(-1)
+            );
+
+            _employeeServiceMock
+                .Setup(s => s.UpdateEmployeeWithAdminRightsAsync(employeeId, dto))
+                .ReturnsAsync(updatedEmployee);
+
+            // Act
+            var result = await _employeeController.UpdateEmployeeWithAdminRights(employeeId, dto);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedValue = Assert.IsType<EmployeeDto>(okResult.Value);
+
+            Assert.Equal("Senior Pörriäinen", returnedValue.JobTitle);
+            Assert.Equal("Kimalainen", returnedValue.LastName);
+        }
+
 
     }
 }

@@ -290,9 +290,69 @@ namespace WageWizardTests.Services
             Assert.NotNull(result);
             Assert.Equal("Uusi katu 123", result.HomeAddress);
             Assert.Equal("Espoo", result.City);
-
-            // PostalCode should NOT change
             Assert.Equal("00100", result.PostalCode);
+
+            _employeeRepositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Employee>()), Times.Once);
+        }
+        [Fact]
+        public async Task UpdateEmployeeWithAdminRightsAsync_ShouldUpdateOnlyProvidedFields()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+
+            var existingEmployee = new Employee
+            {
+                Id = employeeId,
+                FirstName = "Maija",
+                LastName = "Mehiläinen",
+                JobTitle = "Pörriäinen",
+                HomeAddress = "Vanha osoite 1",
+                PostalCode = "00100",
+                City = "Helsinki",
+                BankAccountNumber = "FI11",
+                TaxRate = 20,
+                GrossSalary = 3000,
+                StartDate = DateTime.Today.AddYears(-1),
+                DateOfBirth = new DateTime(1990, 1, 1)
+            };
+
+            _employeeRepositoryMock
+                .Setup(r => r.GetByIdAsync(employeeId))
+                .ReturnsAsync(existingEmployee);
+
+            var dto = new UpdateEmployeeRequestWithAdminRightsDto
+                (
+                null,
+                "Kimalainen",
+                null,
+                "Senior Pörriäinen",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+                );
+
+            Employee? updatedEmployee = null;
+
+            _employeeRepositoryMock
+                .Setup(r => r.UpdateAsync(It.IsAny<Employee>()))
+                .Callback<Employee>(e => updatedEmployee = e)
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _employeeServiceMock.UpdateEmployeeWithAdminRightsAsync(employeeId, dto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Kimalainen", result.LastName);
+            Assert.Equal("Senior Pörriäinen", result.JobTitle);
+            Assert.Equal("Maija", result.FirstName);
+            Assert.Equal("Vanha osoite 1", result.HomeAddress);
 
             _employeeRepositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Employee>()), Times.Once);
         }
