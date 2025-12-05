@@ -34,7 +34,11 @@ namespace WageWizardTests.IntegrationTests
                 JobTitle = "Developer",
                 Email = "test@test.fi",
                 GrossSalary = 3500,
-                TaxRate = 20
+                TaxRate = 20,
+                HomeAddress = "Katu 1",
+                PostalCode = "00100",
+                City = "Helsinki",
+                BankAccountNumber = "FI1234567890123456"
             };
 
             _context.Employees.Add(employee);

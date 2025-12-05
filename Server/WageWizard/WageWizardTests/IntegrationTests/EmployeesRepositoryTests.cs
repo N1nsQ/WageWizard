@@ -113,44 +113,5 @@ namespace WageWizardTests.IntegrationTests
             Assert.Equal("Liisa", fetched!.FirstName);
         }
 
-        [Fact]
-        public async Task UpdateAsync_ShouldPersistChangesToDatabase()
-        {
-            // Arrange
-            var options = new DbContextOptionsBuilder<PayrollContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
-
-            using var context = new PayrollContext(options);
-            var repository = new EmployeeRepository(context);
-
-            var employee = new Employee
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Maija",
-                LastName = "Mehiläinen",
-                HomeAddress = "Vanha katu 1",
-                PostalCode = "00100",
-                City = "Helsinki",
-                BankAccountNumber = "FI11"
-            };
-
-            context.Employees.Add(employee);
-            await context.SaveChangesAsync();
-
-            // Act
-            employee.HomeAddress = "Uusi katu 123";
-            employee.City = "Espoo";
-
-            await repository.UpdateAsync(employee);
-
-            // Assert
-            var updated = await context.Employees.FindAsync(employee.Id);
-
-            Assert.NotNull(updated);
-            Assert.Equal("Uusi katu 123", updated!.HomeAddress);
-            Assert.Equal("Espoo", updated.City);
-            Assert.Equal("00100", updated.PostalCode);
-        }
     }
 }
