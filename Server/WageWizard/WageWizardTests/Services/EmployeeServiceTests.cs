@@ -193,10 +193,12 @@ namespace WageWizardTests.Services
             _employeeRepositoryMock
                 .Setup(r => r.AddAsync(It.IsAny<Employee>()))
                 .Callback<Employee>(e => addedEmployee = e)
-                .Returns<Employee>(e => Task.FromResult(e));
+                .ReturnsAsync((Employee e) => e);
+
+            var service = new EmployeeService(_employeeRepositoryMock.Object);
 
             // Act
-            var result = await _employeeServiceMock.CreateEmployeeAsync(dto);
+            var result = await service.CreateEmployeeAsync(dto);
 
             // Assert
             Assert.NotNull(result);
@@ -209,7 +211,13 @@ namespace WageWizardTests.Services
 
             _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Once);
 
-            Assert.Equal(result, addedEmployee);
+            Assert.NotNull(addedEmployee);
+            Assert.Equal(dto.FirstName, addedEmployee.FirstName);
+            Assert.Equal(dto.LastName, addedEmployee.LastName);
+            Assert.Equal(dto.Email, addedEmployee.Email);
+            Assert.Equal(dto.MonthlySalary, addedEmployee.GrossSalary);
+            Assert.Equal(dto.StartDate.Value, addedEmployee.StartDate);
+            Assert.Equal(dto.DateOfBirth.Value, addedEmployee.DateOfBirth);
         }
 
         [Fact]

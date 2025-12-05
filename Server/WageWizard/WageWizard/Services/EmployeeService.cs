@@ -64,7 +64,7 @@ namespace WageWizard.Services
             ));
         }
 
-        public async Task<Employee> CreateEmployeeAsync(NewEmployeeRequestDto dto)
+        public async Task<EmployeeDto> CreateEmployeeAsync(NewEmployeeRequestDto dto)
         {
             var duplicate = await _employeeRepository.FindDuplicateAsync(
                dto.FirstName,
@@ -80,27 +80,42 @@ namespace WageWizard.Services
             var employee = new Employee
             {
                 Id = Guid.NewGuid(),
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
+                FirstName = dto.FirstName!,
+                LastName = dto.LastName!,
                 DateOfBirth = dto.DateOfBirth!.Value,
-                JobTitle = dto.JobTitle,
+                JobTitle = dto.JobTitle!,
                 ImageUrl = null,
-                Email = dto.Email,
-                HomeAddress = dto.HomeAddress,
-                PostalCode = dto.PostalCode,
-                City = dto.City,
-                BankAccountNumber = dto.BankAccountNumber,
+                Email = dto.Email!,
+                HomeAddress = dto.HomeAddress!,
+                PostalCode = dto.PostalCode!,
+                City = dto.City!,
+                BankAccountNumber = dto.BankAccountNumber!,
                 TaxRate = dto.TaxRate,
                 GrossSalary = dto.MonthlySalary,
                 StartDate = dto.StartDate!.Value,
-                CreatedAt = DateTime.Today,
-                UpdatedAt = DateTime.Today
-
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             await _employeeRepository.AddAsync(employee);
 
-            return employee;
+            return new EmployeeDto
+            (
+                Guid.NewGuid(),
+                dto.FirstName,
+                dto.LastName,
+                dto.DateOfBirth!.Value,
+                dto.JobTitle,
+                null,
+                dto.Email,
+                dto.HomeAddress,
+                dto.PostalCode,
+                dto.City,
+                dto.BankAccountNumber,
+                dto.TaxRate,
+                dto.MonthlySalary,
+                dto.StartDate!.Value
+            );
 
         }
     }

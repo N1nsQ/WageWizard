@@ -134,20 +134,39 @@ namespace WageWizardTests.Controllers
                 DateOfBirth = new DateTime(1990, 1, 1)
             };
 
-            var createdEmployee = new Employee { Id = Guid.NewGuid(), FirstName = newEmployeeDto.FirstName };
+            var createdEmployeeDto = new EmployeeDto(
+                Guid.NewGuid(),
+                newEmployeeDto.FirstName,
+                newEmployeeDto.LastName,
+                newEmployeeDto.DateOfBirth!.Value,
+                newEmployeeDto.JobTitle!,
+                null,
+                newEmployeeDto.Email!,
+                newEmployeeDto.HomeAddress!,
+                newEmployeeDto.PostalCode!,
+                newEmployeeDto.City!,
+                newEmployeeDto.BankAccountNumber!,
+                newEmployeeDto.TaxRate,
+                newEmployeeDto.MonthlySalary,
+                newEmployeeDto.StartDate!.Value
+            );
 
             _employeeServiceMock
                 .Setup(s => s.CreateEmployeeAsync(It.IsAny<NewEmployeeRequestDto>()))
-                .ReturnsAsync(createdEmployee);
+                .ReturnsAsync(createdEmployeeDto);
 
             // Act
             var result = await _employeeController.CreateEmployee(newEmployeeDto);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedEmployee = Assert.IsType<Employee>(okResult.Value);
+            var returnedEmployee = Assert.IsType<EmployeeDto>(okResult.Value);
+
             Assert.Equal(newEmployeeDto.FirstName, returnedEmployee.FirstName);
+            Assert.Equal(newEmployeeDto.LastName, returnedEmployee.LastName);
+            Assert.Equal(newEmployeeDto.Email, returnedEmployee.Email);
         }
+
 
     }
 }

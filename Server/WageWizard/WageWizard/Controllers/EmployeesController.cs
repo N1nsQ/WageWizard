@@ -50,5 +50,11 @@ namespace WageWizard.Controllers
             return Ok(createdEmployee);
 
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEmployee(Guid id, EmployeeDto employee)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
