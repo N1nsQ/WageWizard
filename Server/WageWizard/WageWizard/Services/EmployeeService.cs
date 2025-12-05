@@ -151,5 +151,47 @@ namespace WageWizard.Services
                 employee.StartDate
                 );
         }
+
+        public async Task<EmployeeDto> UpdateEmployeeWithAdminRightsAsync(Guid id, UpdateEmployeeRequestWithAdminRightsDto dto)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null)
+            {
+                throw new EntityNotFoundException($"Employee with ID {id} not found.");
+            }
+
+            if (dto.FirstName != null) employee.FirstName = dto.FirstName;
+            if (dto.LastName != null) employee.LastName = dto.LastName;
+            if (dto.DateOfBirth != null) employee.DateOfBirth = dto.DateOfBirth.Value;
+            if (dto.JobTitle != null) employee.JobTitle = dto.JobTitle;
+            if (dto.ImageUrl != null) employee.ImageUrl = dto.ImageUrl;
+            if (dto.Email != null) employee.Email = dto.Email;
+            if (dto.HomeAddress != null) employee.HomeAddress = dto.HomeAddress;
+            if (dto.PostalCode != null) employee.PostalCode = dto.PostalCode;
+            if (dto.City != null) employee.City = dto.City;
+            if (dto.BankAccountNumber != null) employee.BankAccountNumber = dto.BankAccountNumber;
+            if (dto.TaxRate != null) employee.TaxRate = dto.TaxRate.Value;
+            if (dto.GrossSalary != null) employee.GrossSalary = dto.GrossSalary.Value;
+            if (dto.StartDate != null) employee.StartDate = dto.StartDate.Value;
+
+            await _employeeRepository.UpdateAsync(employee);
+
+            return new EmployeeDto(
+                employee.Id,
+                employee.FirstName,
+                employee.LastName,
+                employee.DateOfBirth,
+                employee.JobTitle,
+                employee.ImageUrl,
+                employee.Email,
+                employee.HomeAddress,
+                employee.PostalCode,
+                employee.City,
+                employee.BankAccountNumber,
+                employee.TaxRate,
+                employee.GrossSalary,
+                employee.StartDate
+                );
+        }
     }
 }

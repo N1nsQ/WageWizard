@@ -7,7 +7,7 @@ namespace WageWizard.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "TestUser")]
+    [Authorize]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
@@ -51,10 +51,19 @@ namespace WageWizard.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPut("employee")]
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] UpdateEmployeeRequestDto employee)
         {
             var updated = await _employeeService.UpdateEmployeeAsync(id, employee);
+            return Ok(updated);
+        }
+
+        [HttpPut("admin/employee")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateEmployeeWithAdminRights(Guid id, [FromBody] UpdateEmployeeRequestWithAdminRightsDto employee)
+        {
+            var updated = await _employeeService.UpdateEmployeeWithAdminRightsAsync(id, employee);
             return Ok(updated);
         }
     }

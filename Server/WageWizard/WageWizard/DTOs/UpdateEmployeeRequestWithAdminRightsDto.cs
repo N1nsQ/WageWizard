@@ -1,8 +1,7 @@
 ﻿namespace WageWizard.DTOs
 {
-    public record EmployeeDto
+    public record UpdateEmployeeRequestWithAdminRightsDto
     (
-        Guid Id,
         string? FirstName,
         string? LastName,
         DateTime? DateOfBirth,
@@ -16,5 +15,5 @@
         decimal? TaxRate,
         decimal? GrossSalary,
         DateTime? StartDate
-    );
+   );
 }

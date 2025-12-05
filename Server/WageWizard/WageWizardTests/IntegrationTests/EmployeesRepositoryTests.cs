@@ -150,8 +150,6 @@ namespace WageWizardTests.IntegrationTests
             Assert.NotNull(updated);
             Assert.Equal("Uusi katu 123", updated!.HomeAddress);
             Assert.Equal("Espoo", updated.City);
-
-            // unchanged
             Assert.Equal("00100", updated.PostalCode);
         }
     }

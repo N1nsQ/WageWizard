@@ -50,6 +50,15 @@ namespace WageWizard.Middleware
                     };
                     break;
 
+                case ForbiddenException forbiddenEx:
+                    statusCode = (int)HttpStatusCode.Forbidden;
+                    response = new
+                    {
+                        message = forbiddenEx.Message ?? "Access denied. You do not have permission to perform this action.",
+                        type = forbiddenEx.GetType().Name
+                    };
+                    break;
+
                 case KeyNotFoundException keyNotFoundEx:
                     statusCode = (int)HttpStatusCode.NotFound;
                     response = new
