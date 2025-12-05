@@ -21,5 +21,8 @@ namespace WageWizard.Data.Repositories
 
         public Task<Employee?> FindDuplicateAsync(string FirstName, string LastName, string Email)
             => throw new RepositoryUnavailableException(ErrorMessage);
+
+        public Task UpdateAsync(Employee employee)
+            => throw new RepositoryUnavailableException(ErrorMessage);
     }
 }

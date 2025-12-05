@@ -42,5 +42,11 @@ namespace WageWizard.Data.Repositories
                 e.Email == Email);
         }
 
+        public async Task UpdateAsync(Employee employee)
+        {
+            _payrollContext.Employees.Update(employee);
+            await _payrollContext.SaveChangesAsync();
+        }
+
     }
 }

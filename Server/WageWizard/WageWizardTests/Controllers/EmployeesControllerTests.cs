@@ -167,6 +167,46 @@ namespace WageWizardTests.Controllers
             Assert.Equal(newEmployeeDto.Email, returnedEmployee.Email);
         }
 
+        [Fact]
+        public async Task UpdateEmployee_ShouldReturnOk()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+
+            var dto = new UpdateEmployeeRequestDto("Uusi katu 123", null, "Espoo", null);
+
+            var updatedEmployee = new EmployeeDto(
+                employeeId,
+                "Maija",
+                "Mehiläinen",
+                new DateTime(1990, 1, 1),
+                "Developer",
+                null,
+                "maija@test.com",
+                "Uusi katu 123",
+                "00100",
+                "Espoo",
+                "FI123",
+                20,
+                3000,
+                DateTime.Today
+            );
+
+            _employeeServiceMock
+                .Setup(s => s.UpdateEmployeeAsync(employeeId, dto))
+                .ReturnsAsync(updatedEmployee);
+
+            // Act
+            var result = await _employeeController.UpdateEmployee(employeeId, dto);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedValue = Assert.IsType<EmployeeDto>(okResult.Value);
+
+            Assert.Equal("Uusi katu 123", returnedValue.HomeAddress);
+            Assert.Equal("Espoo", returnedValue.City);
+        }
+
 
     }
 }

@@ -118,5 +118,38 @@ namespace WageWizard.Services
             );
 
         }
+
+        public async Task<EmployeeDto> UpdateEmployeeAsync(Guid id, UpdateEmployeeRequestDto dto)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null)
+            {
+                throw new EntityNotFoundException($"Employee with ID {id} not found.");
+            }
+
+            if (dto.HomeAddress != null) employee.HomeAddress = dto.HomeAddress;
+            if (dto.PostalCode != null) employee.PostalCode = dto.PostalCode;
+            if (dto.City != null) employee.City = dto.City;
+            if (dto.BankAccountNumber != null) employee.BankAccountNumber = dto.BankAccountNumber;
+
+            await _employeeRepository.UpdateAsync(employee);
+
+            return new EmployeeDto(
+                employee.Id,
+                employee.FirstName,
+                employee.LastName,
+                employee.DateOfBirth,
+                employee.JobTitle,
+                employee.ImageUrl,
+                employee.Email,
+                employee.HomeAddress,
+                employee.PostalCode,
+                employee.City,
+                employee.BankAccountNumber,
+                employee.TaxRate,
+                employee.GrossSalary,
+                employee.StartDate
+                );
+        }
     }
 }

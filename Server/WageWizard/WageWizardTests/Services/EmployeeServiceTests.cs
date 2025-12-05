@@ -4,6 +4,7 @@ using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
 using WageWizard.Services;
+using WageWizard.Services.Interfaces;
 
 namespace WageWizardTests.Services
 {
@@ -246,6 +247,54 @@ namespace WageWizardTests.Services
             Assert.Equal("Employee with identical details already exists.", exception.Message);
 
             _employeeRepositoryMock.Verify(r => r.AddAsync(It.IsAny<Employee>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task UpdateEmployeeAsync_ShouldUpdateOnlyProvidedFields()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid();
+
+            var existingEmployee = new Employee
+            {
+                Id = employeeId,
+                FirstName = "Maija",
+                LastName = "Mehiläinen",
+                HomeAddress = "Vanha osoite 1",
+                PostalCode = "00100",
+                City = "Helsinki",
+                BankAccountNumber = "FI11",
+                TaxRate = 20,
+                GrossSalary = 3000,
+                StartDate = DateTime.Today.AddYears(-1),
+                DateOfBirth = new DateTime(1990, 1, 1)
+            };
+
+            _employeeRepositoryMock
+                .Setup(r => r.GetByIdAsync(employeeId))
+                .ReturnsAsync(existingEmployee);
+
+            var dto = new UpdateEmployeeRequestDto("Uusi katu 123", null, "Espoo", null);
+
+            Employee? updatedEmployee = null;
+
+            _employeeRepositoryMock
+                .Setup(r => r.UpdateAsync(It.IsAny<Employee>()))
+                .Callback<Employee>(e => updatedEmployee = e)
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _employeeServiceMock.UpdateEmployeeAsync(employeeId, dto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Uusi katu 123", result.HomeAddress);
+            Assert.Equal("Espoo", result.City);
+
+            // PostalCode should NOT change
+            Assert.Equal("00100", result.PostalCode);
+
+            _employeeRepositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Employee>()), Times.Once);
         }
 
     }

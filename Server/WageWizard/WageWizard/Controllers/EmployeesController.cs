@@ -52,9 +52,10 @@ namespace WageWizard.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEmployee(Guid id, EmployeeDto employee)
+        public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] UpdateEmployeeRequestDto employee)
         {
-            throw new NotImplementedException();
+            var updated = await _employeeService.UpdateEmployeeAsync(id, employee);
+            return Ok(updated);
         }
     }
 }

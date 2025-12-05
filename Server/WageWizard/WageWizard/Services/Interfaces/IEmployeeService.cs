@@ -1,5 +1,4 @@
-﻿using WageWizard.Domain.Entities;
-using WageWizard.DTOs;
+﻿using WageWizard.DTOs;
 
 namespace WageWizard.Services.Interfaces
 {
@@ -9,5 +8,6 @@ namespace WageWizard.Services.Interfaces
         Task<IEnumerable<EmployeeLookupDto>> GetLookupAsync();
         Task<IEnumerable<EmployeesSummaryDto>> GetEmployeesSummaryAsync();
         Task<EmployeeDto> CreateEmployeeAsync(NewEmployeeRequestDto dto);
+        Task<EmployeeDto> UpdateEmployeeAsync(Guid id, UpdateEmployeeRequestDto dto);
     }
 }
