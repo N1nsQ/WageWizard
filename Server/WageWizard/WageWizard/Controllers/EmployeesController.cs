@@ -98,7 +98,7 @@ namespace WageWizard.Controllers
         /// <param name="dto">Updated employee data</param>
         /// <returns>The updated employee</returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Employee,TestUser")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
