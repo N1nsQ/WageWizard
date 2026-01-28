@@ -84,7 +84,10 @@ namespace WageWizard.Controllers
             _logger.LogInformation("Creating new employee: {FirstName} {LastName}", dto.FirstName, dto.LastName);
             var createdEmployee = await _employeeService.CreateEmployeeAsync(dto);
 
-            return Ok(createdEmployee);
+            return CreatedAtAction(
+               nameof(GetByIdAsync),
+               new { id = createdEmployee.Id },
+               createdEmployee);
 
         }
 
