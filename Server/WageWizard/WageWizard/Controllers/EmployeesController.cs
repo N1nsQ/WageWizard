@@ -94,7 +94,7 @@ namespace WageWizard.Controllers
         /// <param name="id">The employee ID</param>
         /// <param name="dto">Updated employee data</param>
         /// <returns>The updated employee</returns>
-        [HttpPut("employee")]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Employee")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -115,7 +115,7 @@ namespace WageWizard.Controllers
         /// <param name="id">The employee ID</param>
         /// <param name="dto">Updated employee data</param>
         /// <returns>The updated employee</returns>
-        [HttpPut("admin/employee")]
+        [HttpPut("admin/{id}")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
