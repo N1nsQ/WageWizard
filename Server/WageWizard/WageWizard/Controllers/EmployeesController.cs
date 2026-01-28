@@ -8,6 +8,7 @@ namespace WageWizard.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
+    [Produces("application/json")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
