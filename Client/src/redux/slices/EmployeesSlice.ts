@@ -47,10 +47,18 @@ export const fetchEmployeeById = createAsyncThunk<
   ThunkConfig
 >("employees/fetchById", async (id, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_BASE}/api/Employees/${id}`);
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_BASE}/api/Employees/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
       return rejectWithValue(await response.json());
     }
+
     return await response.json();
   } catch {
     return rejectWithValue({ message: "error_messages.server_unreachable" });
@@ -201,6 +209,7 @@ export const employeesSlice = createSlice({
 
           state.employees.push({
             id: action.payload.id,
+            userId: action.payload.userId,
             firstName: action.payload.firstName,
             lastName: action.payload.lastName,
             jobTitle: action.payload.jobTitle,

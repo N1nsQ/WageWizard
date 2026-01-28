@@ -100,5 +100,6 @@ const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 
+export const selectUserId = (state: RootState) => state.auth.userId;
 export const selectUserName = (state: RootState) => state.auth.userName;
 export const selectUserRole = (state: RootState) => state.auth.role;
