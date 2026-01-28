@@ -145,10 +145,14 @@ namespace WageWizard.Services
                 throw new EntityNotFoundException($"Employee with ID {id} not found.");
             }
 
-            if (dto.HomeAddress != null) employee.HomeAddress = dto.HomeAddress;
-            if (dto.PostalCode != null) employee.PostalCode = dto.PostalCode;
-            if (dto.City != null) employee.City = dto.City;
-            if (dto.BankAccountNumber != null) employee.BankAccountNumber = dto.BankAccountNumber;
+            if (!string.IsNullOrWhiteSpace(dto.HomeAddress))
+                employee.HomeAddress = dto.HomeAddress;
+            if (!string.IsNullOrWhiteSpace(dto.HomeAddress))
+                employee.HomeAddress = dto.HomeAddress;
+            if (!string.IsNullOrWhiteSpace(dto.City))
+                employee.City = dto.City;
+            if (!string.IsNullOrWhiteSpace(dto.BankAccountNumber))
+                employee.BankAccountNumber = dto.BankAccountNumber;
 
             await _employeeRepository.UpdateAsync(employee);
 
@@ -179,19 +183,44 @@ namespace WageWizard.Services
                 throw new EntityNotFoundException($"Employee with ID {id} not found.");
             }
 
-            if (dto.FirstName != null) employee.FirstName = dto.FirstName;
-            if (dto.LastName != null) employee.LastName = dto.LastName;
-            if (dto.DateOfBirth != null) employee.DateOfBirth = dto.DateOfBirth.Value;
-            if (dto.JobTitle != null) employee.JobTitle = dto.JobTitle;
-            if (dto.ImageUrl != null) employee.ImageUrl = dto.ImageUrl;
-            if (dto.Email != null) employee.Email = dto.Email;
-            if (dto.HomeAddress != null) employee.HomeAddress = dto.HomeAddress;
-            if (dto.PostalCode != null) employee.PostalCode = dto.PostalCode;
-            if (dto.City != null) employee.City = dto.City;
-            if (dto.BankAccountNumber != null) employee.BankAccountNumber = dto.BankAccountNumber;
-            if (dto.TaxRate != null) employee.TaxRate = dto.TaxRate.Value;
-            if (dto.GrossSalary != null) employee.GrossSalary = dto.GrossSalary.Value;
-            if (dto.StartDate != null) employee.StartDate = dto.StartDate.Value;
+            if (!string.IsNullOrWhiteSpace(dto.FirstName))
+                employee.FirstName = dto.FirstName;
+
+            if (!string.IsNullOrWhiteSpace(dto.LastName))
+                employee.LastName = dto.LastName;
+
+            if (dto.DateOfBirth.HasValue)
+                employee.DateOfBirth = dto.DateOfBirth.Value;
+
+            if (!string.IsNullOrWhiteSpace(dto.JobTitle))
+                employee.JobTitle = dto.JobTitle;
+
+            if (!string.IsNullOrWhiteSpace(dto.ImageUrl))
+                employee.ImageUrl = dto.ImageUrl;
+
+            if (!string.IsNullOrWhiteSpace(dto.Email))
+                employee.Email = dto.Email;
+
+            if (!string.IsNullOrWhiteSpace(dto.HomeAddress))
+                employee.HomeAddress = dto.HomeAddress;
+
+            if (!string.IsNullOrWhiteSpace(dto.PostalCode))
+                employee.PostalCode = dto.PostalCode;
+
+            if (!string.IsNullOrWhiteSpace(dto.City))
+                employee.City = dto.City;
+
+            if (!string.IsNullOrWhiteSpace(dto.BankAccountNumber))
+                employee.BankAccountNumber = dto.BankAccountNumber;
+
+            if (dto.TaxRate.HasValue)
+                employee.TaxRate = dto.TaxRate.Value;
+
+            if (dto.GrossSalary.HasValue)
+                employee.GrossSalary = dto.GrossSalary.Value;
+
+            if (dto.StartDate.HasValue)
+                employee.StartDate = dto.StartDate.Value;
 
             await _employeeRepository.UpdateAsync(employee);
 
