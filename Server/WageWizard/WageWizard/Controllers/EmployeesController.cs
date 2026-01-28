@@ -79,7 +79,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> CreateEmployee([FromBody] NewEmployeeRequestDto dto)
+        public async Task<ActionResult<EmployeeDto>> CreateEmployee([FromBody] NewEmployeeRequestDto dto)
         {
             _logger.LogInformation("Creating new employee: {FirstName} {LastName}", dto.FirstName, dto.LastName);
             var createdEmployee = await _employeeService.CreateEmployeeAsync(dto);
@@ -104,7 +104,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] UpdateEmployeeRequestDto employee)
+        public async Task<ActionResult<EmployeeDto>> UpdateEmployee(Guid id, [FromBody] UpdateEmployeeRequestDto employee)
         {
             _logger.LogInformation("Employee updating their own data: {EmployeeId}", id);
             var updated = await _employeeService.UpdateEmployeeAsync(id, employee);
@@ -125,7 +125,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateEmployeeWithAdminRights(Guid id, [FromBody] UpdateEmployeeRequestWithAdminRightsDto employee)
+        public async Task<ActionResult<EmployeeDto>> UpdateEmployeeWithAdminRights(Guid id, [FromBody] UpdateEmployeeRequestWithAdminRightsDto employee)
         {
             _logger.LogInformation("Admin updating employee data: {EmployeeId}", id);
             var updated = await _employeeService.UpdateEmployeeWithAdminRightsAsync(id, employee);
