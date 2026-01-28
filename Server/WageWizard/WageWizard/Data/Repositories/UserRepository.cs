@@ -18,5 +18,12 @@ namespace WageWizard.Data.Repositories
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
+
+        public async Task<User> AddAsync(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
     }
 }

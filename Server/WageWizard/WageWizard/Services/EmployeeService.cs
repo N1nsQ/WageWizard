@@ -1,4 +1,5 @@
-﻿using WageWizard.Domain.Entities;
+﻿using WageWizard.Data.Repositories;
+using WageWizard.Domain.Entities;
 using WageWizard.Domain.Exceptions;
 using WageWizard.DTOs;
 using WageWizard.Repositories;
@@ -9,10 +10,12 @@ namespace WageWizard.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IUserRepository _userRepository;
 
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository, IUserRepository userRepository)
         {
             _employeeRepository = employeeRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<EmployeeDto?> GetByIdAsync(Guid id)
@@ -80,9 +83,20 @@ namespace WageWizard.Services
                 throw new DuplicateEmployeeException("Employee with identical details already exists.");
             }
 
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Username = dto.Email,
+                Email = dto.Email,
+                RoleId = UserRole.Employee,
+            };
+
+            await _userRepository.AddAsync(user);
+
             var employee = new Employee
             {
                 Id = Guid.NewGuid(),
+                UserId = user.Id,
                 FirstName = dto.FirstName!,
                 LastName = dto.LastName!,
                 DateOfBirth = dto.DateOfBirth!.Value,
@@ -104,8 +118,8 @@ namespace WageWizard.Services
 
             return new EmployeeDto
             (
-                Guid.NewGuid(),
-                Guid.NewGuid(),
+                employee.Id,
+                employee.UserId,
                 dto.FirstName,
                 dto.LastName,
                 dto.DateOfBirth!.Value,

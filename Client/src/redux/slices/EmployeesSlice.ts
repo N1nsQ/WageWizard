@@ -99,13 +99,18 @@ export const createEmployee = createAsyncThunk<
   EmployeeDto,
   NewEmployeeRequest,
   ThunkConfig
->("employees/create", async (employee, { rejectWithValue }) => {
+>("employees/create", async (employee, { rejectWithValue, getState }) => {
   try {
     console.log("Sending POST request", employee);
+    const state = getState() as RootState;
+    const token = state.auth.token;
 
     const response = await fetch(`${API_BASE}/api/Employees`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(employee),
     });
 
@@ -124,9 +129,7 @@ export const createEmployee = createAsyncThunk<
       }
 
       console.log("Rejecting with errorBody:", errorBody);
-      return rejectWithValue(
-        errorBody ?? { message: "error_messages.unknown_server_error" }
-      );
+      return rejectWithValue(errorBody);
     }
 
     const result = (await response.json()) as EmployeeDto;
@@ -134,7 +137,9 @@ export const createEmployee = createAsyncThunk<
     return result;
   } catch (err) {
     console.error("Fetch failed:", err);
-    return rejectWithValue({ message: "error_messages.server_unreachable" });
+    return rejectWithValue({
+      message: "error_messages.server_unreachable",
+    } as BackendError);
   }
 });
 
@@ -162,7 +167,7 @@ export const employeesSlice = createSlice({
         (state, action: PayloadAction<EmployeeDto>) => {
           state.loadingDetails = false;
           state.selectedEmployee = action.payload;
-        }
+        },
       )
       .addCase(
         fetchEmployeeById.rejected,
@@ -170,7 +175,7 @@ export const employeesSlice = createSlice({
           state.loadingDetails = false;
           state.error =
             action.payload?.message ?? "error_messages.unknown_server_error";
-        }
+        },
       );
 
     // ----- Fetch summary -----
@@ -184,7 +189,7 @@ export const employeesSlice = createSlice({
         (state, action: PayloadAction<EmployeesSummaryDto[]>) => {
           state.loadingSummary = false;
           state.employees = action.payload;
-        }
+        },
       )
       .addCase(
         fetchEmployeesSummary.rejected,
@@ -192,7 +197,7 @@ export const employeesSlice = createSlice({
           state.loadingSummary = false;
           state.error =
             action.payload?.message ?? "error_messages.unknown_server_error";
-        }
+        },
       );
 
     // ----- Create employee -----
@@ -216,7 +221,7 @@ export const employeesSlice = createSlice({
             email: action.payload.email,
             imageUrl: action.payload.imageUrl,
           });
-        }
+        },
       )
       .addCase(
         createEmployee.rejected,
@@ -225,7 +230,7 @@ export const employeesSlice = createSlice({
           state.creating = false;
           state.error =
             action.payload?.message ?? "error_messages.unknown_server_error";
-        }
+        },
       );
   },
 });
