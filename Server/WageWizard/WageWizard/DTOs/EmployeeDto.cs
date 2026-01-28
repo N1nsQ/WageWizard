@@ -3,6 +3,7 @@
     public record EmployeeDto
     (
         Guid Id,
+        Guid? UserId,
         string? FirstName,
         string? LastName,
         DateTime? DateOfBirth,

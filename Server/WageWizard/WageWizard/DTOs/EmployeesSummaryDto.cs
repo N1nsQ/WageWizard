@@ -2,6 +2,7 @@
 {
     public record EmployeesSummaryDto(
         Guid Id,
+        Guid? UserId,
         string? FirstName,
         string? LastName,
         string? JobTitle,

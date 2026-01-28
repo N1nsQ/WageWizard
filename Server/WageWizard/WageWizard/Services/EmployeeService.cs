@@ -24,6 +24,7 @@ namespace WageWizard.Services
 
             return new EmployeeDto(
                 employee.Id,
+                employee.UserId,
                 employee.FirstName,
                 employee.LastName,
                 employee.DateOfBirth,
@@ -46,6 +47,7 @@ namespace WageWizard.Services
 
             return employees.Select(e => new EmployeeLookupDto(
                 e.Id,
+                e.UserId,
                 e.FirstName + " " + e.LastName
                 ));
         }
@@ -56,6 +58,7 @@ namespace WageWizard.Services
 
             return employees.Select(e => new EmployeesSummaryDto(
                 e.Id,
+                e.UserId,
                 e.FirstName,
                 e.LastName,
                 e.JobTitle,
@@ -102,6 +105,7 @@ namespace WageWizard.Services
             return new EmployeeDto
             (
                 Guid.NewGuid(),
+                Guid.NewGuid(),
                 dto.FirstName,
                 dto.LastName,
                 dto.DateOfBirth!.Value,
@@ -136,6 +140,7 @@ namespace WageWizard.Services
 
             return new EmployeeDto(
                 employee.Id,
+                employee.UserId,
                 employee.FirstName,
                 employee.LastName,
                 employee.DateOfBirth,
@@ -178,6 +183,7 @@ namespace WageWizard.Services
 
             return new EmployeeDto(
                 employee.Id,
+                employee.UserId,
                 employee.FirstName,
                 employee.LastName,
                 employee.DateOfBirth,
