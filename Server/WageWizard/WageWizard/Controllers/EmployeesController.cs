@@ -12,11 +12,13 @@ namespace WageWizard.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
+        private readonly ILogger<EmployeesController> _logger;
 
 
-        public EmployeesController(IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService, ILogger<EmployeesController> logger)
         {
             _employeeService = employeeService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -30,6 +32,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<EmployeeDto>> GetByIdAsync(Guid id)
         {
+            _logger.LogInformation("Getting employee with ID: {EmployeeId}", id);
             var employee = await _employeeService.GetByIdAsync(id);
 
             return Ok(employee);
@@ -44,6 +47,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable<EmployeeLookupDto>>> GetLookupAsync()
         {
+            _logger.LogInformation("Getting employee lookup list");
             var employees = await _employeeService.GetLookupAsync();
 
             return Ok(employees);
@@ -59,6 +63,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable<EmployeesSummaryDto>>> GetEmployeesSummaryAsync()
         {
+            _logger.LogInformation("Getting employee summary list");
             var employees = await _employeeService.GetEmployeesSummaryAsync();
 
             return Ok(employees);
@@ -76,6 +81,7 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CreateEmployee([FromBody] NewEmployeeRequestDto dto)
         {
+            _logger.LogInformation("Creating new employee: {FirstName} {LastName}", dto.FirstName, dto.LastName);
             var createdEmployee = await _employeeService.CreateEmployeeAsync(dto);
 
             return Ok(createdEmployee);
@@ -97,7 +103,9 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateEmployee(Guid id, [FromBody] UpdateEmployeeRequestDto employee)
         {
+            _logger.LogInformation("Employee updating their own data: {EmployeeId}", id);
             var updated = await _employeeService.UpdateEmployeeAsync(id, employee);
+
             return Ok(updated);
         }
 
@@ -116,7 +124,9 @@ namespace WageWizard.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateEmployeeWithAdminRights(Guid id, [FromBody] UpdateEmployeeRequestWithAdminRightsDto employee)
         {
+            _logger.LogInformation("Admin updating employee data: {EmployeeId}", id);
             var updated = await _employeeService.UpdateEmployeeWithAdminRightsAsync(id, employee);
+
             return Ok(updated);
         }
     }
