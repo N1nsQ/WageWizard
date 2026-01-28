@@ -18,6 +18,11 @@ namespace WageWizard.Controllers
             _employeeService = employeeService;
         }
 
+        /// <summary>
+        /// Gets a specific employee by ID
+        /// </summary>
+        /// <param name="id">The employee ID</param>
+        /// <returns>Employee details</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -29,6 +34,10 @@ namespace WageWizard.Controllers
             return Ok(employee);
         }
 
+        /// <summary>
+        /// Gets a simplified list of all employees for dropdown purposes
+        /// </summary>
+        /// <returns>List of employee lookup data</returns>
         [HttpGet("lookup")]
         [ProducesResponseType(typeof(IEnumerable<EmployeeLookupDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -39,6 +48,11 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
+        /// <summary>
+        /// Returns essential employee information including full name, job title, and email.
+        /// Each employee in the list can be clicked to view detailed information via the GetByIdAsync endpoint.
+        /// </summary>
+        /// <returns>A list of employee summaries containing ID, name, job title, email, and profile image</returns>
         [HttpGet("summary")]
         [ProducesResponseType(typeof(IEnumerable<EmployeesSummaryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -49,6 +63,11 @@ namespace WageWizard.Controllers
             return Ok(employees);
         }
 
+        /// <summary>
+        /// Creates a new employee
+        /// </summary>
+        /// <param name="dto">Employee creation data</param>
+        /// <returns>The created employee</returns>
         [HttpPost]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -62,6 +81,12 @@ namespace WageWizard.Controllers
 
         }
 
+        /// <summary>
+        /// Updates employee information (employee role only)
+        /// </summary>
+        /// <param name="id">The employee ID</param>
+        /// <param name="dto">Updated employee data</param>
+        /// <returns>The updated employee</returns>
         [HttpPut("employee")]
         [Authorize(Roles = "Employee")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
@@ -75,6 +100,12 @@ namespace WageWizard.Controllers
             return Ok(updated);
         }
 
+        /// <summary>
+        /// Updates employee information with admin privileges
+        /// </summary>
+        /// <param name="id">The employee ID</param>
+        /// <param name="dto">Updated employee data</param>
+        /// <returns>The updated employee</returns>
         [HttpPut("admin/employee")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(EmployeeDto), StatusCodes.Status200OK)]
