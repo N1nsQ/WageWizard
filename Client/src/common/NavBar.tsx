@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/authHook";
+import { useSelector } from "react-redux";
+import { selectUserId } from "../redux/slices/authSlice";
 
 const NavBar = () => {
   const { t } = useTranslation();
   const { role } = useAuth();
+  const currentUser = useSelector(selectUserId);
 
   return (
     <AppBar position="static" className="navbar">
@@ -28,7 +31,11 @@ const NavBar = () => {
               </Button>
             )}
             {role === "Employee" && (
-              <Button color="inherit" component={Link} to="/">
+              <Button
+                color="inherit"
+                component={Link}
+                to={`/employees/${currentUser}`}
+              >
                 {t("common.profile")}
               </Button>
             )}

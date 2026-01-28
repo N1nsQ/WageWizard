@@ -15,6 +15,7 @@ import Layout from "./common/Layout";
 import Timesheet from "./pages/Timesheet/Timesheet";
 
 import { AuthProvider } from "./common/AuthProvider";
+import Profile from "./pages/Employees/Profile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/employees/:id" element={<EmployeeDetailsPage />} />
+            <Route path="/profile/:id" element={<Profile />} />
             <Route path="/salarystatements" element={<SalaryStatements />} />
             <Route path="/timesheet" element={<Timesheet />} />
             <Route
