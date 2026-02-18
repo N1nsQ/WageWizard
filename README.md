@@ -3,7 +3,6 @@
 
 🚧 This project is under active development 🚧  
 💻 See [Setup & Configuration](https://github.com/N1nsQ/WageWizard/blob/main/Documentation/setup_instructions.md) for details on running WageWizard locally.  
-💡 See [development history](https://github.com/N1nsQ/WageWizard/blob/main/Documentation/development_history.md) to peek the most newest updates and how all have been changed. This page is updated when all features of new release are ready and working, but for those who are curious there might be some teasers 🍬
 
 #### SonarQube Statistics for backend: 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=N1nsQ_WageWizard&metric=bugs)](https://sonarcloud.io/summary/new_code?id=N1nsQ_WageWizard)  
@@ -32,6 +31,7 @@ Layout updated 12 Nov 2025
 - List of all employees
 - Employee details page (for every employee)
 - Add new Employee
+- Update employee information
 - Calculate salary for selected employee and view payroll calculation results
 
 #### Frontend
@@ -96,10 +96,12 @@ The user selects an employee from the list whose salary they want to calculate. 
 Planned future updates will expand Wage Wizard into a more complete and versatile payroll management system. The upcoming features will enhance employee management, automate complex payroll calculations, and provide powerful reporting and data export tools for deeper financial insights.
 
 #### 👥 Employee Management
-- Add new employees
-- Edit employee information
 - Mark employees as inactive / no longer employed
 - Track job titles and department history
+
+#### 🧑‍🦲 Single employee (Employee view)
+- Report working hours
+- View own salary statements
 
 #### 💰 Payroll Enhancements
 - Generate salary statements for all employees at once
